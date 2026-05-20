@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.gmail_app_password.sec
+.run_server_with_env.ps1
+*.log
+.env

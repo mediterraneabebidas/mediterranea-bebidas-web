@@ -1,0 +1,3233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mediterr&aacute;nea Bebidas | Distribuidora de vinos en C&oacute;rdoba</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #7B2FBE;
+    --purple-light: #9B59D0;
+    --purple-dim: #4A1D72;
+    --bg: #FFFFFF;
+    --bg2: #FFFFFF;
+    --bg3: #F7F5FA;
+    --bg4: #EEEAF7;
+    --border: rgba(37,24,53,0.12);
+    --border-hover: rgba(123,47,190,0.45);
+    --text: #251E1A;
+    --text-muted: #665D70;
+    --text-dim: #988FA3;
+    --accent: #7B2FBE;
+    --gold: #B58A45;
+    --nav-bg: rgba(255,255,255,0.88);
+    --hero-wash: rgba(255,255,255,0.74);
+    --shadow: 0 18px 60px rgba(38,24,54,0.10);
+  }
+  body.dark-theme {
+    --purple: #7B2FBE;
+    --purple-light: #9B59D0;
+    --purple-dim: #3D1560;
+    --bg: #0A0A0C;
+    --bg2: #111115;
+    --bg3: #18181E;
+    --bg4: #1F1F28;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(123,47,190,0.5);
+    --text: #F0EEF5;
+    --text-muted: #AAA3B7;
+    --text-dim: #686174;
+    --accent: #B06AFF;
+    --gold: #C9A96E;
+    --nav-bg: rgba(10,10,12,0.85);
+    --hero-wash: rgba(10,10,12,0.72);
+    --shadow: 0 18px 60px rgba(0,0,0,0.35);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  html.custom-cursor-active,
+  html.custom-cursor-active *,
+  html.custom-cursor-active *::before,
+  html.custom-cursor-active *::after {
+    cursor:none !important;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  @media (hover:hover) and (pointer:fine) {
+    html, body, body * {
+      cursor: none !important;
+    }
+    .site-cursor {
+      position:fixed;
+      top:0;
+      left:0;
+      z-index:9999;
+      width:28px;
+      height:28px;
+      border:1.5px solid var(--accent);
+      border-radius:999px;
+      pointer-events:none;
+      transform:translate3d(-80px, -80px, 0);
+      opacity:1;
+      transition:width 0.16s ease, height 0.16s ease, background 0.16s ease, border-color 0.16s ease, opacity 0.16s ease;
+    }
+    .site-cursor::after {
+      content:'';
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:6px;
+      height:6px;
+      border-radius:999px;
+      background:var(--accent);
+      transform:translate(-50%, -50%);
+    }
+    .site-cursor.hover {
+      width:46px;
+      height:46px;
+      background:rgba(123,47,190,0.12);
+      border-color:var(--purple-light);
+    }
+    .site-cursor.hidden {
+      opacity:0;
+    }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display: flex; align-items:center; justify-content:space-between;
+    padding: 1.2rem 3rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    display:flex; align-items:center; gap:0.75rem;
+    text-decoration:none;
+  }
+  .nav-logo img { height:42px; width:auto; display:block; }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; align-items:center; }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration:none;
+    font-size:0.85rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--purple);
+    color: #fff;
+    border:none;
+    padding: 0.55rem 1.5rem;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.07em;
+    text-transform:uppercase;
+    cursor:pointer;
+    text-decoration:none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .nav-cta:hover { background: var(--purple-light); transform:translateY(-1px); box-shadow:0 10px 28px rgba(123,47,190,0.24); }
+  .nav-actions { display:flex; align-items:center; gap:0.75rem; }
+  .theme-toggle {
+    width:44px; height:44px;
+    display:inline-flex; align-items:center; justify-content:center;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--bg2);
+    color:var(--text);
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s;
+  }
+  .theme-toggle:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-1px); }
+  .theme-toggle svg { width:19px; height:19px; stroke:currentColor; }
+  .theme-toggle .moon-icon { display:none; }
+  body.dark-theme .theme-toggle .sun-icon { display:none; }
+  body.dark-theme .theme-toggle .moon-icon { display:block; }
+
+  /* ── HERO ── */
+  #inicio {
+    min-height: 100vh;
+    display:flex; align-items:center; justify-content:center;
+    position: relative;
+    overflow:hidden;
+    padding-top: 80px;
+  }
+  .hero-bg {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 18% 22%, rgba(123,47,190,0.10), transparent 32%),
+      radial-gradient(circle at 82% 18%, rgba(201,169,110,0.08), transparent 30%),
+      var(--bg);
+  }
+  .hero-bg::before,
+  .hero-bg::after {
+    content:'';
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:110vw;
+    height:9.5rem;
+    pointer-events:none;
+    border-radius:999px;
+    filter:blur(28px);
+    opacity:0.54;
+    mix-blend-mode:multiply;
+  }
+  .hero-bg::before {
+    background:linear-gradient(90deg, transparent 9%, rgba(123,47,190,0.06) 24%, rgba(123,47,190,0.40) 48%, rgba(176,106,255,0.28) 58%, transparent 86%);
+    transform:translate(-50%, -56%) rotate(-19deg);
+  }
+  .hero-bg::after {
+    background:linear-gradient(90deg, transparent 8%, rgba(176,106,255,0.05) 22%, rgba(176,106,255,0.30) 46%, rgba(123,47,190,0.38) 58%, transparent 86%);
+    transform:translate(-50%, -43%) rotate(17deg);
+  }
+  body.dark-theme .hero-bg::before,
+  body.dark-theme .hero-bg::after {
+    opacity:0.46;
+    mix-blend-mode:screen;
+  }
+  .hero-grid-lines {
+    position:absolute; inset:-2rem;
+    background-image:
+      linear-gradient(rgba(47,35,28,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(47,35,28,0.07) 1px, transparent 1px);
+    background-size: 72px 72px;
+    filter:blur(0.7px);
+    opacity:0.58;
+    mask-image: radial-gradient(ellipse 72% 68% at center, black 18%, rgba(0,0,0,0.42) 58%, transparent 100%);
+  }
+  body.dark-theme .hero-grid-lines {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.055) 1px, transparent 1px);
+    opacity:0.48;
+  }
+  .hero-content {
+    position:relative; z-index:1;
+    text-align:center;
+    max-width: 900px;
+    padding: 0 2rem;
+  }
+  .hero-eyebrow {
+    display:inline-block;
+    font-size:0.75rem;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(176,106,255,0.3);
+    padding: 0.35rem 1.2rem;
+    margin-bottom: 2rem;
+    border-radius: 1px;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 550px;
+    margin: 0 auto 3rem;
+    font-weight:300;
+    line-height: 1.8;
+  }
+  .hero-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn-primary {
+    background: var(--purple);
+    color:#fff; text-decoration:none;
+    padding: 0.85rem 2.5rem;
+    border-radius:12px;
+    font-size: 0.85rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    transition: background 0.2s, transform 0.15s;
+    display:inline-block;
+  }
+  .btn-primary:hover { background: var(--purple-light); transform:translateY(-1px); }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text-muted);
+    text-decoration:none;
+    padding: 0.85rem 2.5rem;
+    border-radius:12px;
+    font-size: 0.85rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    transition: border-color 0.2s, color 0.2s;
+    display:inline-block;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-scroll {
+    position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+    color: var(--text-dim); font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase;
+  }
+  .hero-scroll-line {
+    width:1px; height:50px;
+    background: linear-gradient(to bottom, transparent, var(--text-dim));
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  /* ── STATS ── */
+  .stats-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    padding: 2.5rem 3rem;
+    display:flex; justify-content:center; gap:0;
+  }
+  .stat-item {
+    flex:1; max-width:200px;
+    text-align:center;
+    padding: 0 2rem;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right:none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight:600;
+    color: var(--accent);
+    line-height:1;
+    margin-bottom:0.3rem;
+  }
+  .stat-label { font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--text); }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size:0.72rem; letter-spacing:0.25em; text-transform:uppercase;
+    color: var(--accent); margin-bottom:1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight:300; line-height:1.1;
+    margin-bottom:1.5rem;
+  }
+  .section-body { color:var(--text-muted); max-width:560px; font-size:1rem; line-height:1.85; }
+  .container { max-width:1280px; margin:0 auto; }
+
+  /* ── NOSOTROS ── */
+  #nosotros {
+    background: linear-gradient(180deg, var(--bg2), var(--bg));
+    position:relative;
+    overflow:hidden;
+  }
+  #nosotros::before {
+    content:'';
+    position:absolute;
+    inset:8% auto auto -12%;
+    width:34rem;
+    height:34rem;
+    border-radius:999px;
+    background:radial-gradient(circle, rgba(123,47,190,0.13), transparent 68%);
+    pointer-events:none;
+  }
+  .nosotros-grid {
+    display:grid;
+    grid-template-columns:minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap:3.2rem;
+    align-items:stretch;
+    position:relative;
+  }
+  .nosotros-grid > div:first-child { position:relative; z-index:1; }
+  .nosotros-visual {
+    position:relative;
+    display:flex;
+    align-items:stretch;
+  }
+  .nosotros-box {
+    width:100%;
+    min-height:100%;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(123,47,190,0.16), transparent 34%),
+      linear-gradient(145deg, var(--bg3), var(--bg2));
+    border: 1px solid var(--border);
+    border-radius:24px;
+    padding: 3.2rem;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    overflow:hidden;
+    box-shadow:0 24px 70px rgba(58,39,25,0.10);
+  }
+  body.dark-theme .nosotros-box { box-shadow:0 24px 70px rgba(0,0,0,0.28); }
+  .nosotros-box::before {
+    content:'';
+    position:absolute; top:0; left:2rem; width:5rem; height:2px;
+    background: var(--purple);
+  }
+  .nosotros-box::after {
+    content:'';
+    position:absolute;
+    right:-5rem;
+    bottom:-5rem;
+    width:16rem;
+    height:16rem;
+    border-radius:999px;
+    background:radial-gradient(circle, rgba(123,47,190,0.16), transparent 70%);
+    pointer-events:none;
+  }
+  .nosotros-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:clamp(1.7rem, 3vw, 2.35rem);
+    font-style:italic;
+    font-weight:400;
+    line-height:1.38;
+    color:var(--text);
+    margin-bottom:2rem;
+    position:relative;
+    z-index:1;
+  }
+  .nosotros-cite {
+    font-size:0.78rem;
+    color:var(--text-muted);
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    position:relative;
+    z-index:1;
+  }
+  .feature-list { list-style:none; margin-top:2rem; display:grid; gap:0.85rem; }
+  .feature-item {
+    display:flex; align-items:center; gap:1rem;
+    padding: 1rem 1.1rem;
+    background: linear-gradient(135deg, var(--bg3), rgba(123,47,190,0.05));
+    border: 1px solid var(--border);
+    border-radius:18px;
+    transition: border-color 0.2s, transform 0.18s, box-shadow 0.18s;
+    box-shadow:0 12px 34px rgba(58,39,25,0.06);
+  }
+  .feature-item:hover {
+    border-color: var(--border-hover);
+    transform:translateY(-2px);
+    box-shadow:0 18px 42px rgba(58,39,25,0.10);
+  }
+  .feature-icon {
+    width:46px; height:46px; flex-shrink:0;
+    background:
+      radial-gradient(circle at 35% 28%, rgba(255,255,255,0.55), transparent 34%),
+      rgba(123,47,190,0.13);
+    color:var(--accent);
+    border:1px solid rgba(123,47,190,0.22);
+    border-radius:16px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .feature-icon svg {
+    width:23px;
+    height:23px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .feature-title { font-size:0.94rem; font-weight:700; margin-bottom:0.12rem; }
+  .feature-desc { font-size:0.82rem; color:var(--text-muted); line-height:1.55; }
+
+  /* ── CATÁLOGO ── */
+  #catalogo { background: var(--bg); }
+  .catalog-tabs {
+    display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:3rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    background:none; border:none; cursor:pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size:0.82rem; letter-spacing:0.08em; text-transform:uppercase;
+    color: var(--text-muted);
+    padding: 0.75rem 1.5rem; border-radius:999px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom:-1px;
+    white-space:nowrap;
+  }
+  .tab-btn.active { color:var(--accent); border-bottom-color: var(--accent); background:var(--bg3); }
+  .tab-btn:hover:not(.active) { color:var(--text); background:var(--bg3); }
+
+  .catalog-panel { display:none; }
+  .catalog-panel.active { display:block; }
+
+  .bodega-section { margin-bottom:4rem; }
+  .bodega-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:1.8rem; font-weight:300;
+    color:var(--text);
+    margin-bottom:0.4rem;
+    display:flex; align-items:center; gap:1rem;
+  }
+  .bodega-name::after {
+    content:''; flex:1; height:1px; background: var(--border);
+  }
+  .bodega-desc { font-size:0.82rem; color:var(--text-muted); margin-bottom:1.8rem; letter-spacing:0.02em; }
+
+  .wine-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap:1.25rem;
+    background: transparent;
+    border: 0;
+    border-radius:0;
+    overflow:visible;
+  }
+  .wine-card {
+    background: var(--bg2);
+    padding: 1.7rem 1.55rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    cursor:default;
+    position:relative;
+    overflow:hidden;
+  }
+  .wine-card:hover { background: var(--bg3); }
+  .wine-image {
+    height:190px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    margin-bottom:1.1rem;
+    border-radius:12px;
+    background:linear-gradient(180deg, transparent, rgba(123,47,190,0.06));
+  }
+  .wine-image img {
+    max-width:100%;
+    max-height:184px;
+    object-fit:contain;
+    filter:drop-shadow(0 14px 16px rgba(0,0,0,0.22));
+  }
+  .wine-card::after {
+    content:'';
+    position:absolute; bottom:0; left:0; right:0; height:2px;
+    background: var(--purple);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition: transform 0.3s ease;
+  }
+  .wine-card:hover::after { transform:scaleX(1); }
+  .wine-type-badge {
+    display:inline-block;
+    font-size:0.64rem; letter-spacing:0.14em; text-transform:uppercase;
+    padding: 0.22rem 0.68rem;
+    border-radius:999px;
+    margin-bottom:0.8rem;
+  }
+  .badge-tinto { background:rgba(176,106,255,0.1); color: var(--accent); border:1px solid rgba(176,106,255,0.2); }
+  .badge-blanco { background:rgba(201,169,110,0.1); color: var(--gold); border:1px solid rgba(201,169,110,0.2); }
+  .badge-rose { background:rgba(220,100,130,0.12); color: #E08BA0; border:1px solid rgba(220,100,130,0.2); }
+  .badge-espumante { background:rgba(100,180,220,0.1); color: #7EC8E3; border:1px solid rgba(100,180,220,0.2); }
+  .badge-dulce { background:rgba(220,170,60,0.1); color: #DDB54B; border:1px solid rgba(220,170,60,0.2); }
+  .badge-bag-in-box { background:rgba(100,180,100,0.1); color: #7DC47D; border:1px solid rgba(100,180,100,0.2); }
+  .badge-damajuana { background:rgba(180,130,60,0.1); color: #C9944A; border:1px solid rgba(180,130,60,0.2); }
+  .wine-name {
+    font-size:1.1rem; font-weight:600; color:var(--text);
+    margin-bottom:0.25rem; line-height:1.25;
+  }
+  .wine-varietal { font-size:0.84rem; color:var(--text-muted); }
+  .wine-price {
+    margin-top:0.75rem;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:0.8rem;
+    border-top:1px solid var(--border);
+    padding-top:0.65rem;
+  }
+  .wine-price span {
+    color:var(--text-dim);
+    font-size:0.58rem;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+  .wine-price strong {
+    color:var(--text);
+    font-size:1.14rem;
+    font-weight:800;
+    white-space:nowrap;
+  }
+  .purchase-mode {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0.45rem;
+    margin-top:0.85rem;
+    padding:0.28rem;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(123,47,190,0.045);
+  }
+  .purchase-mode-option {
+    min-height:36px;
+    border:0;
+    border-radius:10px;
+    background:transparent;
+    color:var(--text-muted);
+    font-family:'DM Sans', sans-serif;
+    font-size:0.66rem;
+    font-weight:800;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background 0.18s, color 0.18s, box-shadow 0.18s;
+  }
+  .purchase-mode-option.active {
+    background:var(--purple);
+    color:#fff;
+    box-shadow:0 10px 24px rgba(123,47,190,0.22);
+  }
+  .purchase-mode-note {
+    margin-top:0.45rem;
+    color:var(--text-dim);
+    font-size:0.68rem;
+    line-height:1.35;
+  }
+  .cart-item-price,
+  .checkout-summary-price {
+    margin-top:0.35rem;
+    color:var(--text);
+    font-size:0.82rem;
+    font-weight:800;
+  }
+  .wine-spec-list {
+    list-style:none;
+    display:grid;
+    gap:0.42rem;
+    margin:0.65rem 0 0;
+  }
+  .wine-spec-list li {
+    display:grid;
+    grid-template-columns:minmax(92px, 0.36fr) 1fr;
+    gap:0.5rem;
+    align-items:start;
+    padding:0.42rem 0.54rem;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:rgba(123,47,190,0.035);
+  }
+  .wine-spec-label {
+    color:var(--text-dim);
+    font-size:0.57rem;
+    font-weight:700;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    overflow-wrap:anywhere;
+  }
+  .wine-spec-value {
+    color:var(--text-muted);
+    font-size:0.8rem;
+    line-height:1.26;
+  }
+  @media(min-width:760px) {
+    .wine-spec-list {
+      grid-template-columns:minmax(0, 1.35fr) minmax(112px, 1.22fr) minmax(72px, 0.78fr);
+      align-items:stretch;
+    }
+    .wine-spec-list li {
+      display:block;
+      min-width:0;
+      padding-inline:0.55rem;
+    }
+    .wine-spec-label {
+      display:block;
+      margin-bottom:0.22rem;
+    }
+    .wine-spec-value {
+      display:block;
+    }
+  }
+
+  .other-brands-wrap { position:relative; display:inline-flex; }
+  .other-brands-menu {
+    position:absolute;
+    top:calc(100% + 0.55rem);
+    right:0;
+    z-index:20;
+    width:min(330px, 82vw);
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:0.35rem;
+    padding:0.8rem;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  }
+  .other-brands-wrap:hover .other-brands-menu,
+  .other-brands-wrap:focus-within .other-brands-menu {
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+  }
+  .other-brands-menu a {
+    color:var(--text-muted);
+    text-decoration:none;
+    font-size:0.76rem;
+    padding:0.35rem 0.45rem;
+    border-radius:8px;
+  }
+  .other-brands-menu a:hover { background:var(--bg3); color:var(--accent); }
+
+  /* ── BODEGAS SHOWCASE ── */
+  #bodegas { background:var(--bg2); }
+  .bodegas-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap:1.25rem;
+    background: transparent;
+    border: 0;
+    border-radius:0;
+    overflow:visible;
+    margin-top:3rem;
+  }
+  .bodega-card {
+    background:var(--bg3);
+    padding:2rem 1.8rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    cursor:default;
+  }
+  .bodega-card:hover { background:var(--bg4); }
+  .bodega-card-name {
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.25rem; font-weight:300; margin-bottom:0.4rem;
+  }
+  .bodega-card-region { font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase; }
+  .bodega-card-count {
+    margin-top:1.2rem;
+    font-size:0.75rem; color:var(--text-dim);
+  }
+  .bodega-card-count span { color:var(--accent); font-weight:500; }
+  .bodega-card-details {
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    margin-top:0;
+    color:var(--text-muted);
+    font-size:0.78rem;
+    line-height:1.7;
+    transition:max-height 0.25s ease, opacity 0.2s ease, margin-top 0.2s ease;
+  }
+  .bodega-card:hover .bodega-card-details {
+    max-height:220px;
+    opacity:1;
+    margin-top:1rem;
+  }
+
+  /* ── CONTACTO ── */
+  #contacto { background: var(--bg); }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+  .contact-form { display:flex; flex-direction:column; gap:1rem; }
+  .form-group { display:flex; flex-direction:column; gap:0.4rem; }
+  .form-label { font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); }
+  .form-input, .form-select, .form-textarea {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem 1rem;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.9rem;
+    border-radius:12px;
+    transition: border-color 0.2s;
+    outline:none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--purple);
+  }
+  .form-select option { background: var(--bg3); }
+  .form-textarea { resize:vertical; min-height:120px; }
+  .contact-info { display:flex; flex-direction:column; gap:1.5rem; }
+  .info-card {
+    background:var(--bg3);
+    border: 1px solid var(--border);
+    border-radius:12px;
+    padding:1.5rem;
+  }
+  .info-card-icon { font-size:1.5rem; margin-bottom:0.75rem; }
+  .info-card-title { font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; }
+  .info-card-value { font-size:1rem; color:var(--text); }
+  .info-card-sub { font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem; }
+
+
+  .sales-contact {
+    display:grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap:4rem;
+    align-items:start;
+  }
+  .sales-actions { display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.2rem; }
+  .order-card {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:2rem;
+  }
+  .order-card-number {
+    font-family:'Cormorant Garamond', serif;
+    font-size:2.1rem;
+    color:var(--text);
+    line-height:1;
+    margin:0.35rem 0 1rem;
+  }
+  .order-card a { color:var(--accent); text-decoration:none; }
+  .add-to-cart {
+    margin-top:0.85rem;
+    width:100%;
+    border:1px solid rgba(123,47,190,0.32);
+    background:rgba(123,47,190,0.10);
+    color:var(--accent);
+    border-radius:12px;
+    padding:0.62rem 0.8rem;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.11em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .add-to-cart:hover { background:var(--purple); color:#fff; transform:translateY(-1px); }
+  .cart-toggle {
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+    gap:0.55rem;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--bg2);
+    color:var(--text);
+    padding:0 0.9rem;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.75rem;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .cart-toggle strong {
+    min-width:22px;
+    height:22px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:999px;
+    background:var(--purple);
+    color:#fff;
+    font-size:0.72rem;
+  }
+  .cart-overlay {
+    position:fixed;
+    inset:0;
+    z-index:190;
+    background:rgba(0,0,0,0.44);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 0.2s, visibility 0.2s;
+  }
+  .cart-overlay.open { opacity:1; visibility:visible; }
+  .cart-drawer {
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    z-index:200;
+    width:min(440px, 100vw);
+    background:var(--bg2);
+    border-left:1px solid var(--border);
+    box-shadow:-24px 0 60px rgba(0,0,0,0.25);
+    transform:translateX(100%);
+    transition:transform 0.24s ease;
+    display:flex;
+    flex-direction:column;
+  }
+  .cart-drawer.open { transform:translateX(0); }
+  .cart-head, .cart-footer {
+    padding:1.4rem;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+  }
+  .cart-footer { border-top:1px solid var(--border); border-bottom:none; flex-direction:column; align-items:stretch; }
+  .cart-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.8rem;
+    color:var(--text);
+  }
+  .cart-close {
+    border:1px solid var(--border);
+    background:var(--bg3);
+    color:var(--text);
+    border-radius:10px;
+    width:38px;
+    height:38px;
+    cursor:pointer;
+  }
+  .cart-list {
+    flex:1;
+    overflow:auto;
+    padding:1rem 1.4rem;
+    display:flex;
+    flex-direction:column;
+    gap:0.85rem;
+  }
+  .cart-empty { color:var(--text-muted); line-height:1.7; padding:1rem 0; }
+  .cart-item {
+    display:grid;
+    grid-template-columns:56px 1fr auto;
+    gap:0.85rem;
+    align-items:center;
+    border:1px solid var(--border);
+    background:var(--bg3);
+    border-radius:12px;
+    padding:0.7rem;
+  }
+  .cart-item img { width:56px; height:68px; object-fit:contain; }
+  .cart-item-name { color:var(--text); font-weight:500; line-height:1.3; }
+  .cart-item-meta { color:var(--text-muted); font-size:0.78rem; }
+  .mini-specs {
+    display:grid;
+    gap:0.18rem;
+    margin-top:0.25rem;
+  }
+  .mini-specs div {
+    display:grid;
+    grid-template-columns:68px 1fr;
+    gap:0.4rem;
+    line-height:1.28;
+  }
+  .mini-specs dt {
+    color:var(--text-dim);
+    font-size:0.6rem;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .mini-specs dd {
+    margin:0;
+    color:var(--text-muted);
+    font-size:0.8rem;
+  }
+  .qty-control { display:flex; align-items:center; gap:0.35rem; }
+  .qty-control button {
+    width:28px;
+    height:28px;
+    border:1px solid var(--border);
+    background:var(--bg2);
+    color:var(--text);
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .cart-actions { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+  .cart-actions button, .cart-actions a {
+    border:none;
+    border-radius:12px;
+    padding:0.85rem 1rem;
+    font-family:'DM Sans', sans-serif;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    text-align:center;
+    text-decoration:none;
+    cursor:pointer;
+  }
+  .cart-clear { background:var(--bg3); color:var(--text-muted); }
+  .cart-pay { background:var(--purple); color:#fff; }
+  .cart-send { background:#25D366; color:#07140B; grid-column:1 / -1; }
+  body.dark-theme .cart-pay { background:var(--purple-light); }
+  .checkout-overlay {
+    position:fixed;
+    inset:0;
+    z-index:210;
+    background:rgba(0,0,0,0.48);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 0.2s, visibility 0.2s;
+  }
+  .checkout-overlay.open { opacity:1; visibility:visible; }
+  .checkout-modal {
+    position:fixed;
+    inset:50% auto auto 50%;
+    z-index:220;
+    width:min(860px, calc(100vw - 2rem));
+    max-height:min(760px, calc(100vh - 2rem));
+    overflow:auto;
+    background:var(--bg2);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:0 30px 90px rgba(0,0,0,0.30);
+    transform:translate(-50%, -46%) scale(0.96);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 0.2s, visibility 0.2s, transform 0.2s;
+  }
+  .checkout-modal.open {
+    opacity:1;
+    visibility:visible;
+    transform:translate(-50%, -50%) scale(1);
+  }
+  .checkout-head {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    padding:1.35rem 1.5rem;
+    border-bottom:1px solid var(--border);
+  }
+  .checkout-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:2rem;
+    line-height:1;
+  }
+  .checkout-close {
+    width:38px;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg3);
+    color:var(--text);
+    cursor:pointer;
+  }
+  .checkout-body {
+    display:grid;
+    grid-template-columns:minmax(0, 1.1fr) minmax(270px, 0.9fr);
+    gap:1.2rem;
+    padding:1.5rem;
+  }
+  .checkout-panel {
+    border:1px solid var(--border);
+    background:var(--bg);
+    border-radius:14px;
+    padding:1rem;
+  }
+  .checkout-panel-title {
+    font-size:0.78rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin-bottom:1.1rem;
+  }
+  .checkout-field-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0.8rem;
+  }
+  .checkout-field { display:flex; flex-direction:column; gap:0.35rem; }
+  .checkout-field.full { grid-column:1 / -1; }
+  .checkout-field label {
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+  }
+  .checkout-field input,
+  .checkout-field select,
+  .checkout-field textarea {
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg2);
+    color:var(--text);
+    padding:0.72rem 0.8rem;
+    font-family:'DM Sans', sans-serif;
+    outline:none;
+  }
+  .checkout-field textarea { min-height:78px; resize:vertical; }
+  .payment-options {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0.8rem;
+    margin-bottom:0.9rem;
+  }
+  .payment-option {
+    border:1px solid var(--border);
+    background:var(--bg2);
+    color:var(--text);
+    border-radius:14px;
+    padding:0.9rem;
+    text-align:left;
+    cursor:pointer;
+    transition:border-color 0.2s, background 0.2s, transform 0.15s;
+  }
+  .payment-option.active {
+    border-color:var(--accent);
+    background:rgba(123,47,190,0.10);
+  }
+  .payment-option:hover { transform:translateY(-1px); border-color:var(--border-hover); }
+  .payment-option strong { display:block; font-size:0.92rem; margin-bottom:0.2rem; }
+  .payment-option span { display:block; color:var(--text-muted); font-size:0.76rem; line-height:1.45; }
+  .payment-pane { display:none; }
+  .payment-pane.active { display:block; }
+  .payment-card-preview {
+    min-height:190px;
+    border-radius:16px;
+    padding:1rem;
+    color:#fff;
+    background:
+      radial-gradient(circle at 88% 14%, rgba(255,255,255,0.28), transparent 28%),
+      linear-gradient(135deg, #251E1A, #7B2FBE);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    margin-bottom:0.9rem;
+  }
+  .payment-card-row {
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .mp-box {
+    border:1px solid rgba(0,158,227,0.30);
+    border-radius:14px;
+    background:rgba(0,158,227,0.08);
+    padding:1rem;
+    color:var(--text);
+  }
+  .mp-mark {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:42px;
+    height:28px;
+    padding:0 0.5rem;
+    border-radius:999px;
+    background:#00A6E6;
+    color:#fff;
+    font-weight:700;
+    margin-bottom:0.7rem;
+  }
+  .checkout-summary-list {
+    display:flex;
+    flex-direction:column;
+    gap:0.65rem;
+    max-height:260px;
+    overflow:auto;
+    padding-right:0.2rem;
+  }
+  .checkout-summary-item {
+    display:grid;
+    grid-template-columns:38px 1fr auto;
+    gap:0.65rem;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+    padding-bottom:0.65rem;
+  }
+  .checkout-summary-item img { width:38px; height:48px; object-fit:contain; }
+  .checkout-summary-name { font-size:0.86rem; line-height:1.25; font-weight:500; }
+  .checkout-summary-meta { color:var(--text-muted); font-size:0.8rem; line-height:1.35; }
+  .checkout-summary-total {
+    margin-top:1rem;
+    border-radius:12px;
+    background:var(--bg3);
+    padding:0.95rem;
+  }
+  .checkout-summary-total strong {
+    display:block;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.55rem;
+    line-height:1.1;
+  }
+  .checkout-summary-total span { color:var(--text-muted); font-size:0.78rem; }
+  .checkout-submit {
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:0.95rem 1rem;
+    margin-top:1rem;
+    background:var(--purple);
+    color:#fff;
+    font-family:'DM Sans', sans-serif;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+
+  .checkout-modal {
+    width:min(1120px, calc(100vw - 2rem));
+    max-height:min(820px, calc(100vh - 2rem));
+  }
+  .checkout-head {
+    align-items:flex-start;
+  }
+  .checkout-kicker {
+    color:var(--text-muted);
+    font-size:0.78rem;
+    letter-spacing:0.11em;
+    text-transform:uppercase;
+    margin-top:0.35rem;
+  }
+  .checkout-progress {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0;
+    padding:1rem 1.5rem 0;
+  }
+  .checkout-step {
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0.35rem;
+    color:var(--text-muted);
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .checkout-step::before {
+    content:'';
+    position:absolute;
+    top:23px;
+    left:-50%;
+    width:100%;
+    height:1px;
+    background:var(--border);
+  }
+  .checkout-step:first-child::before { display:none; }
+  .checkout-step span {
+    width:46px;
+    height:46px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:999px;
+    background:var(--bg3);
+    border:1px solid var(--border);
+    color:var(--accent);
+    font-weight:700;
+    position:relative;
+    z-index:1;
+    box-shadow:0 10px 28px rgba(58,39,25,0.10);
+  }
+  .checkout-step span svg {
+    width:22px;
+    height:22px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .checkout-step.active { color:var(--text); }
+  .checkout-step.active span { background:var(--purple); color:#fff; border-color:var(--purple); }
+  .checkout-body {
+    grid-template-columns:minmax(0, 1.35fr) minmax(320px, 0.65fr);
+    align-items:start;
+  }
+  .checkout-column { display:flex; flex-direction:column; gap:1rem; }
+  .checkout-panel {
+    border-radius:18px;
+    padding:1.2rem;
+  }
+  .checkout-panel-title {
+    color:var(--text);
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+  }
+  .checkout-panel-sub {
+    color:var(--text-muted);
+    font-size:0.8rem;
+    line-height:1.55;
+    margin:-0.35rem 0 0.9rem;
+  }
+  .checkout-inline-check {
+    display:flex;
+    align-items:center;
+    gap:0.55rem;
+    margin-top:0.8rem;
+    color:var(--text-muted);
+    font-size:0.78rem;
+  }
+  .zip-row {
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:0.75rem;
+  }
+  .zip-button {
+    border:none;
+    border-radius:12px;
+    background:var(--bg3);
+    color:var(--accent);
+    padding:0 1rem;
+    font-family:'DM Sans', sans-serif;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .shipping-result {
+    margin-top:0.75rem;
+    border-radius:12px;
+    background:rgba(123,47,190,0.08);
+    color:var(--text-muted);
+    padding:0.75rem 0.9rem;
+    font-size:0.8rem;
+    line-height:1.55;
+  }
+  .delivery-map-card {
+    margin-top:0.95rem;
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--bg2);
+  }
+  .delivery-map-head {
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    padding:0.85rem 0.95rem;
+    border-bottom:1px solid var(--border);
+  }
+  .delivery-map-title {
+    color:var(--text);
+    font-size:0.86rem;
+    font-weight:800;
+  }
+  .delivery-map-sub {
+    color:var(--text-muted);
+    font-size:0.72rem;
+    line-height:1.45;
+    margin-top:0.18rem;
+  }
+  .delivery-map-price {
+    color:var(--accent);
+    font-size:0.76rem;
+    font-weight:800;
+    text-align:right;
+    white-space:nowrap;
+  }
+  .delivery-map-frame {
+    position:relative;
+    min-height:260px;
+    background:var(--bg3);
+  }
+  .delivery-map-frame iframe {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+    filter:saturate(0.9) contrast(1.02);
+    pointer-events:none;
+  }
+  .delivery-zone-overlay {
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 34% 58%, rgba(123,47,190,0.20) 0 9%, rgba(123,47,190,0.08) 10% 22%, transparent 23%),
+      radial-gradient(circle at 34% 58%, transparent 0 27%, rgba(123,47,190,0.16) 28% 29%, transparent 30%),
+      radial-gradient(circle at 34% 58%, transparent 0 46%, rgba(123,47,190,0.12) 47% 48%, transparent 49%);
+  }
+  .north-zone-shape {
+    position:absolute;
+    left:24%;
+    top:10%;
+    width:62%;
+    height:68%;
+    border:2px solid rgba(123,47,190,0.70);
+    background:rgba(123,47,190,0.14);
+    clip-path:polygon(16% 18%, 62% 4%, 96% 28%, 82% 86%, 31% 78%, 4% 52%);
+    box-shadow:0 0 28px rgba(123,47,190,0.22);
+  }
+  .map-pin {
+    position:absolute;
+    left:34%;
+    top:58%;
+    transform:translate(-50%, -100%) rotate(-45deg);
+    display:grid;
+    place-items:center;
+    width:34px;
+    height:34px;
+    border-radius:999px 999px 999px 0;
+    background:var(--purple);
+    color:#fff;
+    box-shadow:0 12px 28px rgba(0,0,0,0.24);
+  }
+  .map-pin span {
+    transform:rotate(45deg);
+    font-size:0.64rem;
+    font-weight:800;
+    letter-spacing:0.05em;
+  }
+  .map-tag {
+    position:absolute;
+    left:38%;
+    top:49%;
+    border-radius:999px;
+    padding:0.36rem 0.65rem;
+    background:rgba(255,255,255,0.92);
+    color:#231A2C;
+    border:1px solid rgba(37,24,53,0.12);
+    font-size:0.68rem;
+    font-weight:800;
+    box-shadow:0 10px 26px rgba(38,24,54,0.12);
+  }
+  .zone-label {
+    position:absolute;
+    right:9%;
+    top:18%;
+    border-radius:999px;
+    padding:0.42rem 0.7rem;
+    background:rgba(123,47,190,0.90);
+    color:#fff;
+    font-size:0.68rem;
+    font-weight:800;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .delivery-map-legend {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0.65rem;
+    padding:0.85rem 0.95rem 0.95rem;
+    border-top:1px solid var(--border);
+  }
+  .delivery-map-legend span {
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:0.55rem 0.6rem;
+    color:var(--text-muted);
+    font-size:0.7rem;
+    line-height:1.35;
+    background:rgba(123,47,190,0.045);
+  }
+  .delivery-map-legend strong {
+    display:block;
+    color:var(--text);
+    font-size:0.82rem;
+  }
+  .delivery-options {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0.75rem;
+    margin-top:1rem;
+  }
+  .delivery-option {
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:var(--bg2);
+    color:var(--text);
+    padding:0.85rem;
+    text-align:left;
+    cursor:pointer;
+    min-height:108px;
+  }
+  .delivery-option.active {
+    border-color:var(--accent);
+    background:rgba(123,47,190,0.10);
+  }
+  .delivery-option strong {
+    display:block;
+    font-size:0.85rem;
+    margin-bottom:0.25rem;
+  }
+  .delivery-option span {
+    display:block;
+    color:var(--text-muted);
+    font-size:0.73rem;
+    line-height:1.45;
+  }
+  .payment-logos {
+    display:flex;
+    align-items:center;
+    gap:0.45rem;
+    flex-wrap:wrap;
+    margin-bottom:0.95rem;
+  }
+  .pay-logo {
+    min-width:66px;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:#fff;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0.25rem 0.55rem;
+    box-shadow:0 8px 24px rgba(58,39,25,0.07);
+  }
+  .pay-logo svg {
+    display:block;
+    width:100%;
+    height:100%;
+  }
+  .pay-logo.visa { width:72px; }
+  .pay-logo.mastercard { width:86px; }
+  .pay-logo.amex { width:66px; padding:0.18rem; background:#2E77BC; border-color:#2E77BC; }
+  .pay-logo.mercadopago { width:128px; }
+  .secure-note {
+    display:flex;
+    align-items:flex-start;
+    gap:0.7rem;
+    border:1px solid rgba(37,211,102,0.24);
+    background:rgba(37,211,102,0.08);
+    border-radius:14px;
+    padding:0.9rem;
+    margin-top:0.9rem;
+    color:var(--text-muted);
+    font-size:0.8rem;
+    line-height:1.55;
+  }
+  .secure-note strong { color:var(--text); display:block; }
+  .trust-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0.85rem;
+  }
+  .trust-item {
+    display:flex;
+    gap:0.75rem;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:0.9rem;
+    background:var(--bg2);
+  }
+  .trust-icon {
+    width:34px;
+    height:34px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(123,47,190,0.12);
+    color:var(--accent);
+    flex-shrink:0;
+  }
+  .trust-icon svg {
+    width:19px;
+    height:19px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .trust-item strong {
+    display:block;
+    font-size:0.85rem;
+    margin-bottom:0.12rem;
+  }
+  .trust-item span {
+    color:var(--text-muted);
+    font-size:0.76rem;
+    line-height:1.45;
+  }
+  .checkout-side {
+    position:sticky;
+    top:1rem;
+  }
+  .protected-badge {
+    display:flex;
+    align-items:center;
+    gap:0.65rem;
+    color:var(--text);
+    border:1px solid rgba(37,211,102,0.25);
+    background:rgba(37,211,102,0.08);
+    border-radius:14px;
+    padding:0.75rem;
+    margin-bottom:1rem;
+    font-weight:700;
+    font-size:0.82rem;
+  }
+  .protected-badge svg {
+    width:22px;
+    height:22px;
+    stroke:#25D366;
+    fill:none;
+    stroke-width:2;
+  }
+  .checkout-summary-total.locked {
+    border:1px solid rgba(123,47,190,0.22);
+    background:linear-gradient(135deg, rgba(123,47,190,0.12), var(--bg3));
+  }
+  .checkout-summary-total .lock-line {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    margin-top:0.5rem;
+    color:var(--text-muted);
+    font-size:0.76rem;
+  }
+  .checkout-summary-total .lock-pill {
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:0.2rem 0.55rem;
+    color:var(--accent);
+    background:var(--bg2);
+    white-space:nowrap;
+  }
+  .mercadopago-dev-note {
+    color:var(--text-muted);
+    font-size:0.72rem;
+    line-height:1.45;
+    margin-top:0.75rem;
+  }
+  .order-email-status {
+    display:none;
+    margin-top:0.75rem;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:0.75rem 0.85rem;
+    color:var(--text-muted);
+    background:var(--bg2);
+    font-size:0.78rem;
+    line-height:1.45;
+  }
+  .order-email-status.visible { display:block; }
+  .order-email-status.success {
+    border-color:rgba(37,211,102,0.26);
+    background:rgba(37,211,102,0.08);
+    color:var(--text);
+  }
+  .order-email-status.error {
+    border-color:rgba(220,80,80,0.28);
+    background:rgba(220,80,80,0.08);
+    color:var(--text);
+  }
+  @media(max-width:900px) {
+    .checkout-progress { padding:0.85rem 1rem 0; }
+    .checkout-body { grid-template-columns:1fr; padding:1rem; }
+    .checkout-side { position:static; }
+    .delivery-options, .trust-grid, .delivery-map-legend { grid-template-columns:1fr; }
+  }
+  @media(max-width:720px) {
+    .checkout-body { grid-template-columns:1fr; padding:1rem; }
+    .checkout-field-grid, .payment-options { grid-template-columns:1fr; }
+  }
+  .whatsapp-float {
+    position:fixed;
+    right:1.35rem;
+    bottom:1.35rem;
+    z-index:150;
+    background:#25D366;
+    color:#07140b;
+    border-radius:999px;
+    padding:0.85rem 1.15rem;
+    text-decoration:none;
+    font-weight:500;
+    box-shadow:0 16px 40px rgba(0,0,0,0.25);
+  }
+  @media(max-width:900px) {
+    .sales-contact { grid-template-columns:1fr; gap:2rem; }
+    .cart-toggle span { display:none; }
+    .cart-actions { grid-template-columns:1fr; }
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background:var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 3rem;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:2rem;
+  }
+  .footer-logo { display:flex; align-items:center; gap:0.75rem; }
+  .footer-logo img { height:38px; width:auto; }
+  .footer-copy { font-size:0.78rem; color:var(--text-dim); }
+  .footer-links { display:flex; gap:2rem; }
+  .footer-links a { font-size:0.78rem; color:var(--text-muted); text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--accent); }
+  .footer-legal { font-size:0.72rem; color:var(--text-dim); text-align:center; width:100%; padding-top:1rem; border-top:1px solid var(--border); margin-top:1rem; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:760px) {
+    .wine-grid { grid-template-columns:1fr; }
+    .wine-card { padding:1.35rem 1.1rem; }
+    .wine-image { height:174px; }
+    .wine-image img { max-height:168px; }
+  }
+
+  @media(max-width:900px) {
+    nav { padding:0.8rem 1rem; gap:0.75rem; }
+    .nav-logo img { height:36px; }
+    .nav-links { display:none; }
+    .nav-actions { gap:0.45rem; flex-shrink:0; }
+    .theme-toggle { width:40px; height:40px; flex:0 0 40px; }
+    .nav-cta { padding:0.55rem 1rem; font-size:0.72rem; border-radius:14px; }
+    .cart-toggle { min-height:40px; padding:0 0.55rem; border-radius:14px; }
+    .cart-toggle strong { min-width:20px; height:20px; font-size:0.66rem; }
+    section { padding:4rem 1.5rem; }
+    .nosotros-grid, .contact-grid { grid-template-columns:1fr; gap:2.5rem; }
+    .stats-bar { flex-wrap:wrap; gap:2rem; }
+    .stat-item { border-right:none; border-bottom: 1px solid var(--border); padding-bottom:1.5rem; }
+    footer { padding:2rem 1.5rem; flex-direction:column; align-items:flex-start; }
+  }
+
+  /* ── DIVIDERS ── */
+  .divider-line {
+    height:1px; background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal { opacity:0; transform:translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+
+  /* LIGHT MODE POLISH */
+  body:not(.dark-theme) {
+    --bg: #FFFFFF;
+    --bg2: #FFFFFF;
+    --bg3: #F7F5FA;
+    --bg4: #EEEAF7;
+    --border: rgba(37,24,53,0.13);
+    --text: #231A2C;
+    --text-muted: #665D70;
+    --text-dim: #988FA3;
+    --gold: #B58A45;
+    --olive: #B58A45;
+    --nav-bg: rgba(255,255,255,0.84);
+    --shadow: 0 24px 70px rgba(38,24,54,0.12);
+    background:
+      linear-gradient(90deg, rgba(123,47,190,0.026) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(37,24,53,0.026) 1px, transparent 1px),
+      radial-gradient(ellipse at 50% 0%, rgba(123,47,190,0.06), transparent 46%),
+      #FFFFFF;
+    background-size: 112px 112px, 112px 112px, auto, auto;
+  }
+  body:not(.dark-theme)::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:
+      repeating-linear-gradient(112deg, rgba(37,24,53,0.012) 0 1px, transparent 1px 9px),
+      linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0));
+    opacity:0.85;
+  }
+  body:not(.dark-theme) nav {
+    box-shadow:0 18px 50px rgba(38,24,54,0.08);
+  }
+  body:not(.dark-theme) .nav-logo {
+    background:rgba(255,255,255,0.74);
+    border:1px solid rgba(37,24,53,0.08);
+    border-radius:16px;
+    padding:0.45rem 0.7rem;
+  }
+  body:not(.dark-theme) .nav-cta,
+  body:not(.dark-theme) .btn-primary,
+  body:not(.dark-theme) .checkout-submit,
+  body:not(.dark-theme) .cart-pay {
+    background:linear-gradient(135deg, #6E27B2, #8A38CC 58%, #B06AFF);
+    box-shadow:0 16px 38px rgba(123,47,190,0.23);
+  }
+  body:not(.dark-theme) .btn-outline {
+    background:rgba(255,255,255,0.72);
+    border-color:rgba(37,24,53,0.12);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.5);
+  }
+  body:not(.dark-theme) .hero-bg {
+    background:
+      radial-gradient(ellipse at 20% 18%, rgba(123,47,190,0.08), transparent 34%),
+      radial-gradient(ellipse at 78% 18%, rgba(176,106,255,0.07), transparent 32%),
+      radial-gradient(ellipse at 50% 43%, rgba(123,47,190,0.10), transparent 46%),
+      #FFFFFF;
+  }
+  body:not(.dark-theme) .hero-bg::before,
+  body:not(.dark-theme) .hero-bg::after {
+    filter:blur(34px);
+    opacity:0.36;
+  }
+  body:not(.dark-theme) .hero-content::before {
+    content:'';
+    position:absolute;
+    inset:-3.4rem 2rem auto;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(123,47,190,0.34), rgba(176,106,255,0.24), transparent);
+  }
+  body:not(.dark-theme) .hero-eyebrow {
+    background:rgba(255,255,255,0.78);
+    border-color:rgba(123,47,190,0.22);
+    border-radius:999px;
+    box-shadow:0 12px 34px rgba(38,24,54,0.08);
+  }
+  body:not(.dark-theme) .hero-title {
+    text-shadow:0 18px 52px rgba(38,24,54,0.10);
+  }
+  body:not(.dark-theme) .hero-title em {
+    color:#7A2CC0;
+    text-decoration: underline;
+    text-decoration-color:rgba(123,47,190,0.32);
+    text-decoration-thickness:0.08em;
+    text-underline-offset:0.08em;
+  }
+  body:not(.dark-theme) .stats-bar {
+    background:
+      linear-gradient(90deg, rgba(255,255,255,0.96), rgba(247,245,252,0.86), rgba(255,255,255,0.96));
+    box-shadow:inset 0 1px rgba(255,255,255,0.78), inset 0 -1px rgba(37,24,53,0.08);
+  }
+  body:not(.dark-theme) #nosotros,
+  body:not(.dark-theme) #bodegas {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,246,252,0.88));
+  }
+  body:not(.dark-theme) #catalogo {
+    background:
+      linear-gradient(180deg, #FFFFFF, rgba(248,246,252,0.86));
+  }
+  body:not(.dark-theme) .section-label {
+    color:#7A2CC0;
+    font-weight:500;
+  }
+  body:not(.dark-theme) .catalog-tabs {
+    border-bottom:none;
+    gap:0.65rem;
+    padding-bottom:0.7rem;
+  }
+  body:not(.dark-theme) .tab-btn {
+    background:rgba(255,255,255,0.82);
+    border:1px solid rgba(37,24,53,0.10);
+    box-shadow:0 10px 26px rgba(38,24,54,0.06);
+  }
+  body:not(.dark-theme) .tab-btn.active {
+    background:#231A2C;
+    color:#fff;
+    border-color:#231A2C;
+  }
+  body:not(.dark-theme) .bodega-name {
+    font-weight:400;
+  }
+  body:not(.dark-theme) .bodega-name::after {
+    background:linear-gradient(90deg, rgba(123,47,190,0.28), transparent);
+  }
+  body:not(.dark-theme) .wine-grid {
+    gap:1.35rem;
+    background:transparent;
+    border:none;
+    border-radius:0;
+    overflow:visible;
+  }
+  body:not(.dark-theme) .wine-card {
+    border:1px solid rgba(37,24,53,0.12);
+    border-radius:22px;
+    background:
+      linear-gradient(180deg, #FFFFFF, #FBFAFE);
+    box-shadow:0 18px 44px rgba(38,24,54,0.08);
+  }
+  body:not(.dark-theme) .wine-card::before {
+    content:'';
+    position:absolute;
+    top:0.9rem;
+    left:1rem;
+    right:1rem;
+    height:1px;
+    background:linear-gradient(90deg, rgba(123,47,190,0.24), rgba(176,106,255,0.18), transparent);
+  }
+  body:not(.dark-theme) .wine-card:hover {
+    background:#FFFFFF;
+    transform:translateY(-4px);
+    box-shadow:0 26px 60px rgba(38,24,54,0.13);
+  }
+  body:not(.dark-theme) .wine-image {
+    background:
+      radial-gradient(ellipse at center bottom, rgba(123,47,190,0.10), transparent 58%),
+      linear-gradient(180deg, rgba(255,255,255,0), rgba(123,47,190,0.035));
+    border:1px solid rgba(37,24,53,0.06);
+  }
+  body:not(.dark-theme) .wine-name {
+    font-weight:700;
+    color:#231A2C;
+  }
+  body:not(.dark-theme) .wine-varietal {
+    color:#665D70;
+  }
+  body:not(.dark-theme) .bodega-card,
+  body:not(.dark-theme) .info-card,
+  body:not(.dark-theme) .order-card,
+  body:not(.dark-theme) .checkout-panel,
+  body:not(.dark-theme) .nosotros-box,
+  body:not(.dark-theme) .feature-item {
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.98), rgba(248,246,252,0.90));
+    border-color:rgba(37,24,53,0.12);
+    box-shadow:0 18px 44px rgba(38,24,54,0.08);
+  }
+  body:not(.dark-theme) .bodega-card:hover {
+    background:#FFFFFF;
+    transform:translateY(-2px);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#inicio" class="nav-logo">
+    <img src="LOGO/LOGO MEDITERRANEA TRANSPARENTE.png" alt="Mediterránea Bebidas">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#bodegas">Bodegas</a></li>
+    <li><a href="#contacto">Pedido</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" type="button" aria-label="Cambiar a modo oscuro" title="Cambiar modo claro/oscuro" onclick="toggleTheme()">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 7 7 0 1 0 20.5 14.5Z"></path>
+      </svg>
+    </button>
+    <a href="https://wa.me/5493512114069?text=Hola%20Mediterranea%20Bebidas%2C%20quiero%20hacer%20un%20pedido." target="_self" class="nav-cta" rel="noopener">WhatsApp</a>
+    <button class="cart-toggle" type="button" onclick="openCart()" aria-label="Abrir carrito"><span>Carrito</span><strong id="cartCount">0</strong></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Distribuidora de vinos &middot; C&oacute;rdoba Capital</div>
+    <h1 class="hero-title">
+      El vino<br>que <em>elegís</em>,<br>donde estés.
+    </h1>
+    <p class="hero-sub">Mediterr&aacute;nea Bebidas acerca etiquetas argentinas seleccionadas a vinotecas, restaurantes, hoteles y comercios de C&oacute;rdoba Capital.</p>
+    <div class="hero-actions">
+      <a href="#catalogo" class="btn-primary">Ver catálogo</a>
+      <a href="https://wa.me/5493512114069?text=Hola%20Mediterranea%20Bebidas%2C%20quiero%20hacer%20un%20pedido." target="_self" class="btn-outline" rel="noopener">Comprar por WhatsApp</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">8+</div>
+    <div class="stat-label">Bodegas representadas</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">90+</div>
+    <div class="stat-label">Etiquetas disponibles</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Regiones vitivinícolas</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">CBA</div>
+    <div class="stat-label">Zona de distribuci&oacute;n</div>
+  </div>
+</div>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="container">
+    <div class="nosotros-grid">
+      <div>
+        <div class="section-label">Quiénes somos</div>
+        <h2 class="section-title">Una empresa con<br>amor por el vino.</h2>
+        <p class="section-body">Mediterr&aacute;nea Bebidas es una distribuidora especializada en vinos argentinos para comercios, restaurantes y vinotecas de C&oacute;rdoba Capital y alrededores.</p>
+        <p class="section-body" style="margin-top:1rem;">
+          Nuestro compromiso es ofrecer un servicio personalizado, con asesoramiento real y un catálogo cuidado que abarca desde vinos de entrada accesibles hasta etiquetas de alta gama y premiadas internacionalmente.
+        </p>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8l-1 7a4 4 0 0 1-6 0L8 3Z"/><path d="M12 13v6"/><path d="M8.5 21h7"/><path d="M9 7h6"/></svg></div>
+            <div>
+              <div class="feature-title">Selección curada</div>
+              <div class="feature-desc">Trabajamos solo con bodegas que comparten nuestra pasión por la calidad.</div>
+            </div>
+          </li>
+          <li class="feature-item">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h3.5L21 14v2h-7z"/><path d="M6.5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M17.5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg></div>
+            <div>
+              <div class="feature-title">Distribución confiable</div>
+              <div class="feature-desc">Entregas puntuales en C&oacute;rdoba Capital con atenci&oacute;n personalizada.</div>
+            </div>
+          </li>
+          <li class="feature-item">
+            <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5v-7Z"/><path d="m4 8.5 8 4.5 8-4.5"/><path d="M12 13v7"/><path d="m9 6.2 8 4.5"/></svg></div>
+            <div>
+              <div class="feature-title">Pedidos mayoristas</div>
+              <div class="feature-desc">Precios especiales para vinotecas, restaurantes, hoteles y comercios.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="nosotros-visual">
+        <div class="nosotros-box">
+          <p class="nosotros-quote">"Llevamos el mejor vino argentino directo a tu negocio, con el asesoramiento y la cercanía que merecés."</p>
+          <div class="nosotros-cite">— Mediterránea Bebidas</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- CATÁLOGO -->
+<section id="catalogo">
+  <div class="container">
+    <div class="section-label">Catálogo</div>
+    <h2 class="section-title">Nuestros vinos.</h2>
+    <p class="section-body" style="margin-bottom:3rem;">Explorá la selección completa. Filtrá por bodega para encontrar exactamente lo que buscás.</p>
+
+    <div class="catalog-tabs">
+      <button class="tab-btn active" onclick="showTab('todos', event)">Todos</button>
+      <button class="tab-btn" onclick="showTab('losharoldos', event)">Los Haroldos</button>
+      <button class="tab-btn" onclick="showTab('nampe', event)">Nampe</button>
+      <button class="tab-btn" onclick="showTab('lairide', event)">La &#205;ride</button>
+      <button class="tab-btn" onclick="showTab('chacabuco', event)">Chacabuco</button>
+      <button class="tab-btn" onclick="showTab('domingo', event)">Domingo</button>
+      <button class="tab-btn" onclick="showTab('profugo', event)">Pr&#243;fugo</button>
+      <div class="other-brands-wrap">
+        <button class="tab-btn" onclick="showTab('otros', event)">Otras marcas</button>
+        <div class="other-brands-menu" aria-label="Listado de otras marcas">
+          <a href="#tab-otros">Vi&ntilde;as Riojanas</a>
+          <a href="#tab-otros">Balbo</a>
+          <a href="#tab-otros">Santa Florentina</a>
+          <a href="#tab-otros">Club de Playa</a>
+          <a href="#tab-otros">Corrales Negros</a>
+          <a href="#tab-otros">Killari</a>
+          <a href="#tab-otros">Oveja Black</a>
+          <a href="#tab-otros">Safari</a>
+          <a href="#tab-otros">Sensei</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODOS -->
+    <div class="catalog-panel active" id="tab-todos">
+      <div class="bodega-section">
+        <div class="bodega-name">Los Haroldos</div>
+        <div class="bodega-desc">Mendoza &#183; espumantes, Estate y Reserva seg&#250;n cat&#225;logo para imprimir.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_001.png" alt="Los Haroldos Extra Brut"></div><div class="wine-type-badge badge-espumante">Espumante</div><div class="wine-name">Los Haroldos Extra Brut</div><div class="wine-varietal">70% Chardonnay &#183; 30% Sauvignon Blanc &#183; Valle de Uco y Valle Este &#183; 750 ml</div><div class="wine-price" data-price="45335.51" data-price-label="$45.335,51" data-price-code="15"><span>Caja x6</span><strong>$45.335,51</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_002.png" alt="Los Haroldos Brut Ros&#233;"></div><div class="wine-type-badge badge-espumante">Espumante</div><div class="wine-name">Los Haroldos Brut Ros&#233;</div><div class="wine-varietal">Pinot Noir, Chardonnay y Syrah &#183; Mendoza &#183; 750 ml</div><div class="wine-price" data-price="45301.20" data-price-label="$45.301,20" data-price-code="16"><span>Caja x6</span><strong>$45.301,20</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_003.png" alt="Los Haroldos Estate Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Estate Malbec</div><div class="wine-varietal">100% Malbec &#183; La Consulta, San Carlos &#183; 750 ml</div><div class="wine-price" data-price="24886.92" data-price-label="$24.886,92" data-price-code="379"><span>Caja x6</span><strong>$24.886,92</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_004.png" alt="Los Haroldos Estate Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Estate Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="24886.92" data-price-label="$24.886,92" data-price-code="377"><span>Caja x6</span><strong>$24.886,92</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_005.png" alt="Los Haroldos Estate Blend"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Estate Blend</div><div class="wine-varietal">60% Malbec, 25% Cabernet, 15% Petit Verdot &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="24886.92" data-price-label="$24.886,92" data-price-code="375"><span>Caja x6</span><strong>$24.886,92</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_006.png" alt="Los Haroldos Estate Bonarda"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Estate Bonarda</div><div class="wine-varietal">100% Bonarda &#183; Medrano, Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="24886.92" data-price-label="$24.886,92" data-price-code="372"><span>Caja x6</span><strong>$24.886,92</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_007.png" alt="Los Haroldos Reserva Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Reserva Malbec</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="36960.00" data-price-label="$36.960,00" data-price-code="480"><span>Caja x6</span><strong>$36.960,00</strong></div></div>
+        </div>
+      </div>
+      <div class="bodega-section">
+        <div class="bodega-name">Nampe</div>
+        <div class="bodega-desc">Mendoza &#183; tintos y blancos varietales de Zona Este, Maip&#250;, Luj&#225;n de Cuyo y Valle de Uco.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_008.png" alt="Nampe Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Nampe Chardonnay</div><div class="wine-varietal">100% Chardonnay &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="368"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_009.png" alt="Nampe Torront&#233;s"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Nampe Torront&#233;s</div><div class="wine-varietal">100% Torront&#233;s &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="361"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_010.png" alt="Nampe Sauvignon Blanc"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Nampe Sauvignon Blanc</div><div class="wine-varietal">100% Sauvignon Blanc &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="362"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_011.png" alt="Nampe Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Malbec</div><div class="wine-varietal">100% Malbec &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="369"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_012.png" alt="Nampe Merlot"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Merlot</div><div class="wine-varietal">100% Merlot &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="364"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_013.png" alt="Nampe Syrah"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Syrah</div><div class="wine-varietal">100% Syrah &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="365"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_014.png" alt="Nampe Tempranillo"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Tempranillo</div><div class="wine-varietal">100% Tempranillo &#183; Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="366"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_015.png" alt="Nampe Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Cabernet Sauvignon</div><div class="wine-varietal">100% Cabernet Sauvignon &#183; Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="367"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_016.png" alt="Nampe Blanco Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Nampe Blanco Dulce</div><div class="wine-varietal">Blanco dulce &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="22743.00" data-price-label="$22.743,00" data-price-code="363"><span>Caja x6</span><strong>$22.743,00</strong></div></div>
+        </div>
+      </div>
+      <div class="bodega-section">
+        <div class="bodega-name">La &#205;ride &#183; Bodegas &amp; Vi&#241;edos</div>
+        <div class="bodega-desc">Mendoza &#183; etiquetas Dorada, Roja, Plata, Verde, Huelgas de Amor, damajuanas y Bag in Box.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_017.png" alt="La &#205;ride Etiqueta Dorada Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Dorada Malbec</div><div class="wine-varietal">100% Malbec &#183; Villa Seca, Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="34019.99" data-price-label="$34.019,99" data-price-code="329"><span>Caja x6</span><strong>$34.019,99</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_018.png" alt="La &#205;ride Etiqueta Dorada Cabernet Franc"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Dorada Cabernet Franc</div><div class="wine-varietal">100% Cabernet Franc &#183; Villa Seca, Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="34019.99" data-price-label="$34.019,99" data-price-code="327"><span>Caja x6</span><strong>$34.019,99</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_019.png" alt="La &#205;ride Etiqueta Dorada Pinot Noir"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Dorada Pinot Noir</div><div class="wine-varietal">100% Pinot Noir &#183; Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="34019.99" data-price-label="$34.019,99" data-price-code="328"><span>Caja x6</span><strong>$34.019,99</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_020.png" alt="La &#205;ride Coordenada Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Coordenada Malbec</div><div class="wine-varietal">100% Malbec &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="65840.59" data-price-label="$65.840,59" data-price-code="340"><span>Caja x6</span><strong>$65.840,59</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_021.png" alt="La &#205;ride Trilog&#237;a"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">La &#205;ride Trilog&#237;a</div><div class="wine-varietal">Naranjo, Merlot y Petit &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="40976.80" data-price-label="$40.976,80" data-price-code="316"><span>Caja x6</span><strong>$40.976,80</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_022.png" alt="La &#205;ride Etiqueta Roja Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Roja Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="26582.81" data-price-label="$26.582,81" data-price-code="317"><span>Caja x6</span><strong>$26.582,81</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_023.png" alt="La &#205;ride Etiqueta Roja Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Roja Malbec</div><div class="wine-varietal">100% Malbec &#183; Villa Seca, Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="26582.81" data-price-label="$26.582,81" data-price-code="319"><span>Caja x6</span><strong>$26.582,81</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_024.png" alt="La &#205;ride Abducido Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Abducido Malbec</div><div class="wine-varietal">100% Malbec &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="36403.68" data-price-label="$36.403,68" data-price-code="336"><span>Caja x6</span><strong>$36.403,68</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_057.png" alt="Damajuana La &#205;ride Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Malbec</div><div class="wine-varietal">Vino tinto &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_058.png" alt="Damajuana La &#205;ride Cabernet"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Cabernet</div><div class="wine-varietal">Vino tinto &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_059.png" alt="Damajuana La &#205;ride Mimbre Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Mimbre Malbec</div><div class="wine-varietal">Malbec &#183; damajuana mimbre</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_060.png" alt="Damajuana La &#205;ride Mimbre Cabernet"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Mimbre Cabernet</div><div class="wine-varietal">Cabernet &#183; damajuana mimbre</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_061.png" alt="Damajuana La &#205;ride Etiqueta Roja Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Etiqueta Roja Malbec</div><div class="wine-varietal">Malbec &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_062.png" alt="Damajuana La &#205;ride Etiqueta Plata Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Etiqueta Plata Malbec</div><div class="wine-varietal">Malbec &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_063.png" alt="Damajuana La &#205;ride Etiqueta Plata Cabernet"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Etiqueta Plata Cabernet</div><div class="wine-varietal">Cabernet &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_064.png" alt="La &#205;ride Etiqueta Verde Chardonnay Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">La &#205;ride Etiqueta Verde Chardonnay Dulce</div><div class="wine-varietal">100% Chardonnay &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="29416.52" data-price-label="$29.416,52" data-price-code="312"><span>Caja x6</span><strong>$29.416,52</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_065.png" alt="La &#205;ride Huelgas de Amor Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Huelgas de Amor Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="29416.52" data-price-label="$29.416,52" data-price-code="337"><span>Caja x6</span><strong>$29.416,52</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_066.png" alt="La &#205;ride Huelgas de Amor Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Huelgas de Amor Malbec</div><div class="wine-varietal">100% Malbec &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="29416.52" data-price-label="$29.416,52" data-price-code="339"><span>Caja x6</span><strong>$29.416,52</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_067.png" alt="La &#205;ride Ros&#233;"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">La &#205;ride Ros&#233;</div><div class="wine-varietal">Ros&#233; &#183; 750 ml</div><div class="wine-price" data-price="29416.52" data-price-label="$29.416,52" data-price-code="313"><span>Caja x6</span><strong>$29.416,52</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_068.png" alt="La &#205;ride Etiqueta Plata Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Plata Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="23329.17" data-price-label="$23.329,17" data-price-code="309"><span>Caja x6</span><strong>$23.329,17</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_069.png" alt="La &#205;ride Etiqueta Plata Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Plata Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="23329.17" data-price-label="$23.329,17" data-price-code="307"><span>Caja x6</span><strong>$23.329,17</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_070.png" alt="La &#205;ride Etiqueta Verde Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">La &#205;ride Etiqueta Verde Chardonnay</div><div class="wine-varietal">100% Chardonnay &#183; Maip&#250; &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_071.png" alt="La &#205;ride Mimbre Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">La &#205;ride Mimbre Malbec</div><div class="wine-varietal">Malbec &#183; damajuana mimbre</div><div class="wine-price" data-price="16044.90" data-price-label="$16.044,90" data-price-code="300"><span>Unidad</span><strong>$16.044,90</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_072.png" alt="La &#205;ride Mimbre Cabernet"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">La &#205;ride Mimbre Cabernet</div><div class="wine-varietal">Cabernet &#183; damajuana mimbre</div><div class="wine-price" data-price="16044.38" data-price-label="$16.044,38" data-price-code="301"><span>Unidad</span><strong>$16.044,38</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_073.png" alt="La &#205;ride BIB Plata Cabernet"></div><div class="wine-type-badge badge-bag-in-box">Bag in Box</div><div class="wine-name">La &#205;ride BIB Plata Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Luj&#225;n de Cuyo &#183; 5000 ml</div><div class="wine-price" data-price="19906.59" data-price-label="$19.906,59" data-price-code="947"><span>Unidad</span><strong>$19.906,59</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_074.png" alt="La &#205;ride BIB Plata Corte de Autor"></div><div class="wine-type-badge badge-bag-in-box">Bag in Box</div><div class="wine-name">La &#205;ride BIB Plata Corte de Autor</div><div class="wine-varietal">Blend &#183; Luj&#225;n de Cuyo &#183; 5000 ml</div><div class="wine-price" data-price="19906.59" data-price-label="$19.906,59" data-price-code="944"><span>Unidad</span><strong>$19.906,59</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_075.png" alt="La &#205;ride BIB Plata Malbec"></div><div class="wine-type-badge badge-bag-in-box">Bag in Box</div><div class="wine-name">La &#205;ride BIB Plata Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 5000 ml</div><div class="wine-price" data-price="19906.59" data-price-label="$19.906,59" data-price-code="949"><span>Unidad</span><strong>$19.906,59</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_076.png" alt="La &#205;ride BIB Damajuana Malbec"></div><div class="wine-type-badge badge-bag-in-box">Bag in Box</div><div class="wine-name">La &#205;ride BIB Damajuana Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 4750 ml</div><div class="wine-price" data-price="17469.72" data-price-label="$17.469,72" data-price-code="946"><span>Unidad</span><strong>$17.469,72</strong></div></div>
+        </div>
+      </div>
+      <div class="bodega-section">
+        <div class="bodega-name">Chacabuco &#183; Conejo Verde</div>
+        <div class="bodega-desc">Mendoza &#183; Chacabuco y Conejo Verde seg&#250;n cat&#225;logo para imprimir.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_025.png" alt="Chacabuco Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Chacabuco Malbec</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="24129.00" data-price-label="$24.129,00" data-price-code="399"><span>Caja x6</span><strong>$24.129,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_026.png" alt="Chacabuco Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Chacabuco Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="24129.00" data-price-label="$24.129,00" data-price-code="397"><span>Caja x6</span><strong>$24.129,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_027.png" alt="Chacabuco Viognier"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Chacabuco Viognier</div><div class="wine-varietal">100% Viognier &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="24129.00" data-price-label="$24.129,00" data-price-code="392"><span>Caja x6</span><strong>$24.129,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_028.png" alt="Chacabuco Rosado"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">Chacabuco Rosado</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="24129.00" data-price-label="$24.129,00" data-price-code="393"><span>Caja x6</span><strong>$24.129,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_029.png" alt="Chacabuco Chenin Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Chacabuco Chenin Dulce</div><div class="wine-varietal">100% Chenin Blanc &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="36887.20" data-price-label="$36.887,20" data-price-code="394"><span>Caja x6</span><strong>$36.887,20</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_030.png" alt="Chacabuco Botella Chenin Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Chacabuco Botella Chenin Dulce</div><div class="wine-varietal">100% Chenin Blanc &#183; Valle de Uco y Norte Mendoza &#183; 500 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_031.png" alt="Conejo Verde Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Conejo Verde Malbec</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="27790.00" data-price-label="$27.790,00" data-price-code="425"><span>Caja x6</span><strong>$27.790,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_032.png" alt="Conejo Verde Chenin"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Conejo Verde Chenin</div><div class="wine-varietal">100% Chenin Blanc &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_033.png" alt="Conejo Verde Ros&#233;"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">Conejo Verde Ros&#233;</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="36638.00" data-price-label="$36.638,00" data-price-code="423"><span>Caja x6</span><strong>$36.638,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_034.png" alt="Conejo Verde Blanc de Blancs"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Conejo Verde Blanc de Blancs</div><div class="wine-varietal">Chardonnay y Chenin &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="27790.00" data-price-label="$27.790,00" data-price-code="424"><span>Caja x6</span><strong>$27.790,00</strong></div></div>
+        </div>
+      </div>
+      <div class="bodega-section">
+        <div class="bodega-name">Domingo Hermanos &#183; Domingo Molina</div>
+        <div class="bodega-desc">Salta &#183; Valles Calchaqu&#237;es, vinos de altura y damajuanas.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_035.png" alt="Domingo Hermanos Origen Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Hermanos Origen Malbec</div><div class="wine-varietal">100% Malbec &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div><div class="wine-price" data-price="35532.00" data-price-label="$35.532,00" data-price-code="389"><span>Caja x6</span><strong>$35.532,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_036.png" alt="Domingo Hermanos Origen Torront&#233;s"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Domingo Hermanos Origen Torront&#233;s</div><div class="wine-varietal">100% Torront&#233;s &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div><div class="wine-price" data-price="35532.00" data-price-label="$35.532,00" data-price-code="383"><span>Caja x6</span><strong>$35.532,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_037.png" alt="Domingo Hermanos Expresi&#243;n"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Hermanos Expresi&#243;n</div><div class="wine-varietal">100% Malbec &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div><div class="wine-price" data-price="32300.00" data-price-label="$32.300,00" data-price-code="359"><span>Caja x6</span><strong>$32.300,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_038.png" alt="Domingo Molina Mortero"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Molina Mortero</div><div class="wine-varietal">100% Malbec &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_039.png" alt="Domingo Molina Hermanos"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Molina Hermanos</div><div class="wine-varietal">100% Malbec &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_040.png" alt="Domingo Molina Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Molina Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_090.png" alt="Damajuana Domingo Hermanos Tinto"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana Domingo Hermanos Tinto</div><div class="wine-varietal">Vino tinto &#183; presentaci&#243;n familiar</div><div class="wine-price" data-price="14829.32" data-price-label="$14.829,32" data-price-code="244"><span>Unidad</span><strong>$14.829,32</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_091.png" alt="Damajuana Domingo Hermanos Torront&#233;s"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana Domingo Hermanos Torront&#233;s</div><div class="wine-varietal">Torront&#233;s &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_092.png" alt="Damajuana Domingo Hermanos Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana Domingo Hermanos Malbec</div><div class="wine-varietal">Malbec &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_093.png" alt="Damajuana Domingo Hermanos Regional"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana Domingo Hermanos Regional</div><div class="wine-varietal">Vino regional &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_094.png" alt="Domingo Hermanos Regional Blanco"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Domingo Hermanos Regional Blanco</div><div class="wine-varietal">Blend de blancas &#183; Valle de Uco, Mendoza &#183; 5000 ml</div><div class="wine-price" data-price="12240.03" data-price-label="$12.240,03" data-price-code="240"><span>Unidad</span><strong>$12.240,03</strong></div></div>
+        </div>
+      </div>
+      <div class="bodega-section">
+        <div class="bodega-name">Pr&#243;fugo &#183; Sin Palabras &#183; Cuatro Monos Locos</div>
+        <div class="bodega-desc">Mendoza &#183; vinos de autor presentes en el cat&#225;logo para imprimir.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_054.png" alt="Sin Palabras Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sin Palabras Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_056.png" alt="Sin Palabras Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sin Palabras Cabernet Sauvignon</div><div class="wine-varietal">100% Cabernet Sauvignon &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_077.png" alt="Pr&#243;fugo Frutos Rojos"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Pr&#243;fugo Frutos Rojos</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_078.png" alt="Pr&#243;fugo El Escapista"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Pr&#243;fugo El Escapista</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_079.png" alt="Pr&#243;fugo Chenin D."></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Pr&#243;fugo Chenin D.</div><div class="wine-varietal">100% Chenin Blanc &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_080.png" alt="Pr&#243;fugo Mr. Franc"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Pr&#243;fugo Mr. Franc</div><div class="wine-varietal">100% Cabernet Franc &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_081.png" alt="Sin Palabras Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sin Palabras Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_082.png" alt="Sin Palabras Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sin Palabras Cabernet Sauvignon</div><div class="wine-varietal">100% Cabernet Sauvignon &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_083.png" alt="Cuatro Monos Locos Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Cuatro Monos Locos Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+        </div>
+      </div>
+      <div class="bodega-section">
+        <div class="bodega-name">Otras marcas</div>
+        <div class="bodega-desc">Vi&#241;as Riojanas &#183; Balbo &#183; Santa Florentina &#183; Club de Playa &#183; Corrales Negros &#183; Killari &#183; Oveja Black &#183; Safari &#183; Sensei.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_041.png" alt="Vi&#241;as Riojanas Tetra Tinto"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Vi&#241;as Riojanas Tetra Tinto</div><div class="wine-varietal">Blend de tintos &#183; Valle del Famatina, La Rioja &#183; 1000 ml</div><div class="wine-price" data-price="23027.87" data-price-label="$23.027,87" data-price-code="906"><span>Caja x6</span><strong>$23.027,87</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_042.png" alt="Vi&#241;as Riojanas Tetra Blanco Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Vi&#241;as Riojanas Tetra Blanco Dulce</div><div class="wine-varietal">Torront&#233;s riojano &#183; Valle del Famatina, La Rioja &#183; 1000 ml</div><div class="wine-price" data-price="20760.35" data-price-label="$20.760,35" data-price-code="903"><span>Caja x6</span><strong>$20.760,35</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_043.png" alt="Vi&#241;as Riojanas Tetra Blanco"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Vi&#241;as Riojanas Tetra Blanco</div><div class="wine-varietal">Blend de blancas &#183; Valle del Famatina, La Rioja &#183; 1000 ml</div><div class="wine-price" data-price="20760.35" data-price-label="$20.760,35" data-price-code="904"><span>Caja x6</span><strong>$20.760,35</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_044.png" alt="Balbo 3/4 Blanco"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Balbo 3/4 Blanco</div><div class="wine-varietal">Blend, Chenin Blanc y Chardonnay &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="13896.18" data-price-label="$13.896,18" data-price-code="411"><span>Caja x6</span><strong>$13.896,18</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_045.png" alt="Balbo 3/4 Tinto"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Balbo 3/4 Tinto</div><div class="wine-varietal">Bivarietal Malbec, Syrah y Cabernet Sauvignon &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="13896.18" data-price-label="$13.896,18" data-price-code="410"><span>Caja x6</span><strong>$13.896,18</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_046.png" alt="Santa Florentina Syrah Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Santa Florentina Syrah Malbec</div><div class="wine-varietal">Blend Malbec y Syrah &#183; Valle del Famatina, La Rioja &#183; 750 ml</div><div class="wine-price" data-price="23803.20" data-price-label="$23.803,20" data-price-code="447"><span>Caja x6</span><strong>$23.803,20</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_047.png" alt="Santa Florentina Torront&#233;s Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Santa Florentina Torront&#233;s Chardonnay</div><div class="wine-varietal">Blend Torront&#233;s y Chardonnay &#183; Valle del Famatina, La Rioja &#183; 750 ml</div><div class="wine-price" data-price="21898.50" data-price-label="$21.898,50" data-price-code="456"><span>Caja x6</span><strong>$21.898,50</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_048.png" alt="Club de Playa Ros&#233;"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">Club de Playa Ros&#233;</div><div class="wine-varietal">100% Malbec &#183; Valle del Famatina, La Rioja &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; 1500 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; 1500 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_051.png" alt="Corrales Negros Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Corrales Negros Malbec</div><div class="wine-varietal">Malbec &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_052.png" alt="Corrales Negros Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Corrales Negros Cabernet Sauvignon</div><div class="wine-varietal">Cabernet Sauvignon &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_053.png" alt="Corrales Negros Patero"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Corrales Negros Patero</div><div class="wine-varietal">Vino dulce tinto &#183; 750 ml</div><div class="wine-price" data-price="11619.40" data-price-label="$11.619,40" data-price-code="740"><span>Caja x6</span><strong>$11.619,40</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_055.png" alt="Killari Patero"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Killari Patero</div><div class="wine-varietal">Vino tinto patero &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_084.png" alt="Oveja Black Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Oveja Black Cabernet</div><div class="wine-varietal">100% Cabernet Sauvignon &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_085.png" alt="Oveja Black Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Oveja Black Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_086.png" alt="Oveja Black Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Oveja Black Chardonnay</div><div class="wine-varietal">100% Chardonnay &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_087.png" alt="Oveja Black Chenin Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Oveja Black Chenin Dulce</div><div class="wine-varietal">100% Chenin Blanc &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_088.png" alt="Safari Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Safari Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_089.png" alt="Sensei Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sensei Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-panel" id="tab-losharoldos">
+      <div class="bodega-section">
+        <div class="bodega-name">Los Haroldos</div>
+        <div class="bodega-desc">Mendoza &#183; espumantes, Estate y Reserva seg&#250;n cat&#225;logo para imprimir.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_001.png" alt="Los Haroldos Extra Brut"></div><div class="wine-type-badge badge-espumante">Espumante</div><div class="wine-name">Los Haroldos Extra Brut</div><div class="wine-varietal">70% Chardonnay &#183; 30% Sauvignon Blanc &#183; Valle de Uco y Valle Este &#183; 750 ml</div><div class="wine-price" data-price="45335.51" data-price-label="$45.335,51" data-price-code="15"><span>Caja x6</span><strong>$45.335,51</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_002.png" alt="Los Haroldos Brut Ros&#233;"></div><div class="wine-type-badge badge-espumante">Espumante</div><div class="wine-name">Los Haroldos Brut Ros&#233;</div><div class="wine-varietal">Pinot Noir, Chardonnay y Syrah &#183; Mendoza &#183; 750 ml</div><div class="wine-price" data-price="45301.20" data-price-label="$45.301,20" data-price-code="16"><span>Caja x6</span><strong>$45.301,20</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_003.png" alt="Los Haroldos Estate Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Estate Malbec</div><div class="wine-varietal">100% Malbec &#183; La Consulta, San Carlos &#183; 750 ml</div><div class="wine-price" data-price="24886.92" data-price-label="$24.886,92" data-price-code="379"><span>Caja x6</span><strong>$24.886,92</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_004.png" alt="Los Haroldos Estate Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Estate Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="24886.92" data-price-label="$24.886,92" data-price-code="377"><span>Caja x6</span><strong>$24.886,92</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_005.png" alt="Los Haroldos Estate Blend"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Estate Blend</div><div class="wine-varietal">60% Malbec, 25% Cabernet, 15% Petit Verdot &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="24886.92" data-price-label="$24.886,92" data-price-code="375"><span>Caja x6</span><strong>$24.886,92</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_006.png" alt="Los Haroldos Estate Bonarda"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Estate Bonarda</div><div class="wine-varietal">100% Bonarda &#183; Medrano, Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="24886.92" data-price-label="$24.886,92" data-price-code="372"><span>Caja x6</span><strong>$24.886,92</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_007.png" alt="Los Haroldos Reserva Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Los Haroldos Reserva Malbec</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="36960.00" data-price-label="$36.960,00" data-price-code="480"><span>Caja x6</span><strong>$36.960,00</strong></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-panel" id="tab-nampe">
+      <div class="bodega-section">
+        <div class="bodega-name">Nampe</div>
+        <div class="bodega-desc">Mendoza &#183; tintos y blancos varietales de Zona Este, Maip&#250;, Luj&#225;n de Cuyo y Valle de Uco.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_008.png" alt="Nampe Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Nampe Chardonnay</div><div class="wine-varietal">100% Chardonnay &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="368"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_009.png" alt="Nampe Torront&#233;s"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Nampe Torront&#233;s</div><div class="wine-varietal">100% Torront&#233;s &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="361"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_010.png" alt="Nampe Sauvignon Blanc"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Nampe Sauvignon Blanc</div><div class="wine-varietal">100% Sauvignon Blanc &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="362"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_011.png" alt="Nampe Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Malbec</div><div class="wine-varietal">100% Malbec &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="369"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_012.png" alt="Nampe Merlot"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Merlot</div><div class="wine-varietal">100% Merlot &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="364"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_013.png" alt="Nampe Syrah"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Syrah</div><div class="wine-varietal">100% Syrah &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="365"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_014.png" alt="Nampe Tempranillo"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Tempranillo</div><div class="wine-varietal">100% Tempranillo &#183; Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="366"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_015.png" alt="Nampe Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Nampe Cabernet Sauvignon</div><div class="wine-varietal">100% Cabernet Sauvignon &#183; Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="18116.00" data-price-label="$18.116,00" data-price-code="367"><span>Caja x6</span><strong>$18.116,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_016.png" alt="Nampe Blanco Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Nampe Blanco Dulce</div><div class="wine-varietal">Blanco dulce &#183; Zona Este, Maip&#250; y Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="22743.00" data-price-label="$22.743,00" data-price-code="363"><span>Caja x6</span><strong>$22.743,00</strong></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-panel" id="tab-lairide">
+      <div class="bodega-section">
+        <div class="bodega-name">La &#205;ride &#183; Bodegas &amp; Vi&#241;edos</div>
+        <div class="bodega-desc">Mendoza &#183; etiquetas Dorada, Roja, Plata, Verde, Huelgas de Amor, damajuanas y Bag in Box.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_017.png" alt="La &#205;ride Etiqueta Dorada Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Dorada Malbec</div><div class="wine-varietal">100% Malbec &#183; Villa Seca, Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="34019.99" data-price-label="$34.019,99" data-price-code="329"><span>Caja x6</span><strong>$34.019,99</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_018.png" alt="La &#205;ride Etiqueta Dorada Cabernet Franc"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Dorada Cabernet Franc</div><div class="wine-varietal">100% Cabernet Franc &#183; Villa Seca, Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="34019.99" data-price-label="$34.019,99" data-price-code="327"><span>Caja x6</span><strong>$34.019,99</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_019.png" alt="La &#205;ride Etiqueta Dorada Pinot Noir"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Dorada Pinot Noir</div><div class="wine-varietal">100% Pinot Noir &#183; Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="34019.99" data-price-label="$34.019,99" data-price-code="328"><span>Caja x6</span><strong>$34.019,99</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_020.png" alt="La &#205;ride Coordenada Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Coordenada Malbec</div><div class="wine-varietal">100% Malbec &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="65840.59" data-price-label="$65.840,59" data-price-code="340"><span>Caja x6</span><strong>$65.840,59</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_021.png" alt="La &#205;ride Trilog&#237;a"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">La &#205;ride Trilog&#237;a</div><div class="wine-varietal">Naranjo, Merlot y Petit &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="40976.80" data-price-label="$40.976,80" data-price-code="316"><span>Caja x6</span><strong>$40.976,80</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_022.png" alt="La &#205;ride Etiqueta Roja Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Roja Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="26582.81" data-price-label="$26.582,81" data-price-code="317"><span>Caja x6</span><strong>$26.582,81</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_023.png" alt="La &#205;ride Etiqueta Roja Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Roja Malbec</div><div class="wine-varietal">100% Malbec &#183; Villa Seca, Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="26582.81" data-price-label="$26.582,81" data-price-code="319"><span>Caja x6</span><strong>$26.582,81</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_024.png" alt="La &#205;ride Abducido Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Abducido Malbec</div><div class="wine-varietal">100% Malbec &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="36403.68" data-price-label="$36.403,68" data-price-code="336"><span>Caja x6</span><strong>$36.403,68</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_057.png" alt="Damajuana La &#205;ride Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Malbec</div><div class="wine-varietal">Vino tinto &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_058.png" alt="Damajuana La &#205;ride Cabernet"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Cabernet</div><div class="wine-varietal">Vino tinto &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_059.png" alt="Damajuana La &#205;ride Mimbre Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Mimbre Malbec</div><div class="wine-varietal">Malbec &#183; damajuana mimbre</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_060.png" alt="Damajuana La &#205;ride Mimbre Cabernet"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Mimbre Cabernet</div><div class="wine-varietal">Cabernet &#183; damajuana mimbre</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_061.png" alt="Damajuana La &#205;ride Etiqueta Roja Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Etiqueta Roja Malbec</div><div class="wine-varietal">Malbec &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_062.png" alt="Damajuana La &#205;ride Etiqueta Plata Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Etiqueta Plata Malbec</div><div class="wine-varietal">Malbec &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_063.png" alt="Damajuana La &#205;ride Etiqueta Plata Cabernet"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana La &#205;ride Etiqueta Plata Cabernet</div><div class="wine-varietal">Cabernet &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_064.png" alt="La &#205;ride Etiqueta Verde Chardonnay Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">La &#205;ride Etiqueta Verde Chardonnay Dulce</div><div class="wine-varietal">100% Chardonnay &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="29416.52" data-price-label="$29.416,52" data-price-code="312"><span>Caja x6</span><strong>$29.416,52</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_065.png" alt="La &#205;ride Huelgas de Amor Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Huelgas de Amor Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="29416.52" data-price-label="$29.416,52" data-price-code="337"><span>Caja x6</span><strong>$29.416,52</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_066.png" alt="La &#205;ride Huelgas de Amor Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Huelgas de Amor Malbec</div><div class="wine-varietal">100% Malbec &#183; Maip&#250; &#183; 750 ml</div><div class="wine-price" data-price="29416.52" data-price-label="$29.416,52" data-price-code="339"><span>Caja x6</span><strong>$29.416,52</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_067.png" alt="La &#205;ride Ros&#233;"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">La &#205;ride Ros&#233;</div><div class="wine-varietal">Ros&#233; &#183; 750 ml</div><div class="wine-price" data-price="29416.52" data-price-label="$29.416,52" data-price-code="313"><span>Caja x6</span><strong>$29.416,52</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_068.png" alt="La &#205;ride Etiqueta Plata Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Plata Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="23329.17" data-price-label="$23.329,17" data-price-code="309"><span>Caja x6</span><strong>$23.329,17</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_069.png" alt="La &#205;ride Etiqueta Plata Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">La &#205;ride Etiqueta Plata Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Luj&#225;n de Cuyo &#183; 750 ml</div><div class="wine-price" data-price="23329.17" data-price-label="$23.329,17" data-price-code="307"><span>Caja x6</span><strong>$23.329,17</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_070.png" alt="La &#205;ride Etiqueta Verde Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">La &#205;ride Etiqueta Verde Chardonnay</div><div class="wine-varietal">100% Chardonnay &#183; Maip&#250; &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_071.png" alt="La &#205;ride Mimbre Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">La &#205;ride Mimbre Malbec</div><div class="wine-varietal">Malbec &#183; damajuana mimbre</div><div class="wine-price" data-price="16044.90" data-price-label="$16.044,90" data-price-code="300"><span>Unidad</span><strong>$16.044,90</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_072.png" alt="La &#205;ride Mimbre Cabernet"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">La &#205;ride Mimbre Cabernet</div><div class="wine-varietal">Cabernet &#183; damajuana mimbre</div><div class="wine-price" data-price="16044.38" data-price-label="$16.044,38" data-price-code="301"><span>Unidad</span><strong>$16.044,38</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_073.png" alt="La &#205;ride BIB Plata Cabernet"></div><div class="wine-type-badge badge-bag-in-box">Bag in Box</div><div class="wine-name">La &#205;ride BIB Plata Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Luj&#225;n de Cuyo &#183; 5000 ml</div><div class="wine-price" data-price="19906.59" data-price-label="$19.906,59" data-price-code="947"><span>Unidad</span><strong>$19.906,59</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_074.png" alt="La &#205;ride BIB Plata Corte de Autor"></div><div class="wine-type-badge badge-bag-in-box">Bag in Box</div><div class="wine-name">La &#205;ride BIB Plata Corte de Autor</div><div class="wine-varietal">Blend &#183; Luj&#225;n de Cuyo &#183; 5000 ml</div><div class="wine-price" data-price="19906.59" data-price-label="$19.906,59" data-price-code="944"><span>Unidad</span><strong>$19.906,59</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_075.png" alt="La &#205;ride BIB Plata Malbec"></div><div class="wine-type-badge badge-bag-in-box">Bag in Box</div><div class="wine-name">La &#205;ride BIB Plata Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 5000 ml</div><div class="wine-price" data-price="19906.59" data-price-label="$19.906,59" data-price-code="949"><span>Unidad</span><strong>$19.906,59</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_076.png" alt="La &#205;ride BIB Damajuana Malbec"></div><div class="wine-type-badge badge-bag-in-box">Bag in Box</div><div class="wine-name">La &#205;ride BIB Damajuana Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 4750 ml</div><div class="wine-price" data-price="17469.72" data-price-label="$17.469,72" data-price-code="946"><span>Unidad</span><strong>$17.469,72</strong></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-panel" id="tab-chacabuco">
+      <div class="bodega-section">
+        <div class="bodega-name">Chacabuco &#183; Conejo Verde</div>
+        <div class="bodega-desc">Mendoza &#183; Chacabuco y Conejo Verde seg&#250;n cat&#225;logo para imprimir.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_025.png" alt="Chacabuco Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Chacabuco Malbec</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="24129.00" data-price-label="$24.129,00" data-price-code="399"><span>Caja x6</span><strong>$24.129,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_026.png" alt="Chacabuco Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Chacabuco Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="24129.00" data-price-label="$24.129,00" data-price-code="397"><span>Caja x6</span><strong>$24.129,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_027.png" alt="Chacabuco Viognier"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Chacabuco Viognier</div><div class="wine-varietal">100% Viognier &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="24129.00" data-price-label="$24.129,00" data-price-code="392"><span>Caja x6</span><strong>$24.129,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_028.png" alt="Chacabuco Rosado"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">Chacabuco Rosado</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="24129.00" data-price-label="$24.129,00" data-price-code="393"><span>Caja x6</span><strong>$24.129,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_029.png" alt="Chacabuco Chenin Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Chacabuco Chenin Dulce</div><div class="wine-varietal">100% Chenin Blanc &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="36887.20" data-price-label="$36.887,20" data-price-code="394"><span>Caja x6</span><strong>$36.887,20</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_030.png" alt="Chacabuco Botella Chenin Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Chacabuco Botella Chenin Dulce</div><div class="wine-varietal">100% Chenin Blanc &#183; Valle de Uco y Norte Mendoza &#183; 500 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_031.png" alt="Conejo Verde Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Conejo Verde Malbec</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="27790.00" data-price-label="$27.790,00" data-price-code="425"><span>Caja x6</span><strong>$27.790,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_032.png" alt="Conejo Verde Chenin"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Conejo Verde Chenin</div><div class="wine-varietal">100% Chenin Blanc &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_033.png" alt="Conejo Verde Ros&#233;"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">Conejo Verde Ros&#233;</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="36638.00" data-price-label="$36.638,00" data-price-code="423"><span>Caja x6</span><strong>$36.638,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_034.png" alt="Conejo Verde Blanc de Blancs"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Conejo Verde Blanc de Blancs</div><div class="wine-varietal">Chardonnay y Chenin &#183; Valle de Uco &#183; 750 ml</div><div class="wine-price" data-price="27790.00" data-price-label="$27.790,00" data-price-code="424"><span>Caja x6</span><strong>$27.790,00</strong></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-panel" id="tab-domingo">
+      <div class="bodega-section">
+        <div class="bodega-name">Domingo Hermanos &#183; Domingo Molina</div>
+        <div class="bodega-desc">Salta &#183; Valles Calchaqu&#237;es, vinos de altura y damajuanas.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_035.png" alt="Domingo Hermanos Origen Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Hermanos Origen Malbec</div><div class="wine-varietal">100% Malbec &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div><div class="wine-price" data-price="35532.00" data-price-label="$35.532,00" data-price-code="389"><span>Caja x6</span><strong>$35.532,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_036.png" alt="Domingo Hermanos Origen Torront&#233;s"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Domingo Hermanos Origen Torront&#233;s</div><div class="wine-varietal">100% Torront&#233;s &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div><div class="wine-price" data-price="35532.00" data-price-label="$35.532,00" data-price-code="383"><span>Caja x6</span><strong>$35.532,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_037.png" alt="Domingo Hermanos Expresi&#243;n"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Hermanos Expresi&#243;n</div><div class="wine-varietal">100% Malbec &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div><div class="wine-price" data-price="32300.00" data-price-label="$32.300,00" data-price-code="359"><span>Caja x6</span><strong>$32.300,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_038.png" alt="Domingo Molina Mortero"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Molina Mortero</div><div class="wine-varietal">100% Malbec &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_039.png" alt="Domingo Molina Hermanos"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Molina Hermanos</div><div class="wine-varietal">100% Malbec &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_040.png" alt="Domingo Molina Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Domingo Molina Cabernet</div><div class="wine-varietal">100% Cabernet &#183; Valles Calchaqu&#237;es, Salta &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_090.png" alt="Damajuana Domingo Hermanos Tinto"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana Domingo Hermanos Tinto</div><div class="wine-varietal">Vino tinto &#183; presentaci&#243;n familiar</div><div class="wine-price" data-price="14829.32" data-price-label="$14.829,32" data-price-code="244"><span>Unidad</span><strong>$14.829,32</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_091.png" alt="Damajuana Domingo Hermanos Torront&#233;s"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana Domingo Hermanos Torront&#233;s</div><div class="wine-varietal">Torront&#233;s &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_092.png" alt="Damajuana Domingo Hermanos Malbec"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana Domingo Hermanos Malbec</div><div class="wine-varietal">Malbec &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_093.png" alt="Damajuana Domingo Hermanos Regional"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Damajuana Domingo Hermanos Regional</div><div class="wine-varietal">Vino regional &#183; presentaci&#243;n familiar</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_094.png" alt="Domingo Hermanos Regional Blanco"></div><div class="wine-type-badge badge-damajuana">Damajuana</div><div class="wine-name">Domingo Hermanos Regional Blanco</div><div class="wine-varietal">Blend de blancas &#183; Valle de Uco, Mendoza &#183; 5000 ml</div><div class="wine-price" data-price="12240.03" data-price-label="$12.240,03" data-price-code="240"><span>Unidad</span><strong>$12.240,03</strong></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-panel" id="tab-profugo">
+      <div class="bodega-section">
+        <div class="bodega-name">Pr&#243;fugo &#183; Sin Palabras &#183; Cuatro Monos Locos</div>
+        <div class="bodega-desc">Mendoza &#183; vinos de autor presentes en el cat&#225;logo para imprimir.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_054.png" alt="Sin Palabras Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sin Palabras Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_056.png" alt="Sin Palabras Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sin Palabras Cabernet Sauvignon</div><div class="wine-varietal">100% Cabernet Sauvignon &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_077.png" alt="Pr&#243;fugo Frutos Rojos"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Pr&#243;fugo Frutos Rojos</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_078.png" alt="Pr&#243;fugo El Escapista"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Pr&#243;fugo El Escapista</div><div class="wine-varietal">100% Malbec &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_079.png" alt="Pr&#243;fugo Chenin D."></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Pr&#243;fugo Chenin D.</div><div class="wine-varietal">100% Chenin Blanc &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_080.png" alt="Pr&#243;fugo Mr. Franc"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Pr&#243;fugo Mr. Franc</div><div class="wine-varietal">100% Cabernet Franc &#183; Valle de Uco &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_081.png" alt="Sin Palabras Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sin Palabras Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_082.png" alt="Sin Palabras Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sin Palabras Cabernet Sauvignon</div><div class="wine-varietal">100% Cabernet Sauvignon &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_083.png" alt="Cuatro Monos Locos Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Cuatro Monos Locos Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo &#183; 750 ml</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-panel" id="tab-otros">
+      <div class="bodega-section">
+        <div class="bodega-name">Otras marcas</div>
+        <div class="bodega-desc">Vi&#241;as Riojanas &#183; Balbo &#183; Santa Florentina &#183; Club de Playa &#183; Corrales Negros &#183; Killari &#183; Oveja Black &#183; Safari &#183; Sensei.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_041.png" alt="Vi&#241;as Riojanas Tetra Tinto"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Vi&#241;as Riojanas Tetra Tinto</div><div class="wine-varietal">Blend de tintos &#183; Valle del Famatina, La Rioja &#183; 1000 ml</div><div class="wine-price" data-price="23027.87" data-price-label="$23.027,87" data-price-code="906"><span>Caja x6</span><strong>$23.027,87</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_042.png" alt="Vi&#241;as Riojanas Tetra Blanco Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Vi&#241;as Riojanas Tetra Blanco Dulce</div><div class="wine-varietal">Torront&#233;s riojano &#183; Valle del Famatina, La Rioja &#183; 1000 ml</div><div class="wine-price" data-price="20760.35" data-price-label="$20.760,35" data-price-code="903"><span>Caja x6</span><strong>$20.760,35</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_043.png" alt="Vi&#241;as Riojanas Tetra Blanco"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Vi&#241;as Riojanas Tetra Blanco</div><div class="wine-varietal">Blend de blancas &#183; Valle del Famatina, La Rioja &#183; 1000 ml</div><div class="wine-price" data-price="20760.35" data-price-label="$20.760,35" data-price-code="904"><span>Caja x6</span><strong>$20.760,35</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_044.png" alt="Balbo 3/4 Blanco"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Balbo 3/4 Blanco</div><div class="wine-varietal">Blend, Chenin Blanc y Chardonnay &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="13896.18" data-price-label="$13.896,18" data-price-code="411"><span>Caja x6</span><strong>$13.896,18</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_045.png" alt="Balbo 3/4 Tinto"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Balbo 3/4 Tinto</div><div class="wine-varietal">Bivarietal Malbec, Syrah y Cabernet Sauvignon &#183; Valle de Uco y Norte Mendoza &#183; 750 ml</div><div class="wine-price" data-price="13896.18" data-price-label="$13.896,18" data-price-code="410"><span>Caja x6</span><strong>$13.896,18</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_046.png" alt="Santa Florentina Syrah Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Santa Florentina Syrah Malbec</div><div class="wine-varietal">Blend Malbec y Syrah &#183; Valle del Famatina, La Rioja &#183; 750 ml</div><div class="wine-price" data-price="23803.20" data-price-label="$23.803,20" data-price-code="447"><span>Caja x6</span><strong>$23.803,20</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_047.png" alt="Santa Florentina Torront&#233;s Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Santa Florentina Torront&#233;s Chardonnay</div><div class="wine-varietal">Blend Torront&#233;s y Chardonnay &#183; Valle del Famatina, La Rioja &#183; 750 ml</div><div class="wine-price" data-price="21898.50" data-price-label="$21.898,50" data-price-code="456"><span>Caja x6</span><strong>$21.898,50</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_048.png" alt="Club de Playa Ros&#233;"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">Club de Playa Ros&#233;</div><div class="wine-varietal">100% Malbec &#183; Valle del Famatina, La Rioja &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; 1500 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; 1500 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_051.png" alt="Corrales Negros Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Corrales Negros Malbec</div><div class="wine-varietal">Malbec &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_052.png" alt="Corrales Negros Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Corrales Negros Cabernet Sauvignon</div><div class="wine-varietal">Cabernet Sauvignon &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_053.png" alt="Corrales Negros Patero"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Corrales Negros Patero</div><div class="wine-varietal">Vino dulce tinto &#183; 750 ml</div><div class="wine-price" data-price="11619.40" data-price-label="$11.619,40" data-price-code="740"><span>Caja x6</span><strong>$11.619,40</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_055.png" alt="Killari Patero"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Killari Patero</div><div class="wine-varietal">Vino tinto patero &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_084.png" alt="Oveja Black Cabernet"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Oveja Black Cabernet</div><div class="wine-varietal">100% Cabernet Sauvignon &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_085.png" alt="Oveja Black Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Oveja Black Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_086.png" alt="Oveja Black Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Oveja Black Chardonnay</div><div class="wine-varietal">100% Chardonnay &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_087.png" alt="Oveja Black Chenin Dulce"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Oveja Black Chenin Dulce</div><div class="wine-varietal">100% Chenin Blanc &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_088.png" alt="Safari Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Safari Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_089.png" alt="Sensei Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Sensei Malbec</div><div class="wine-varietal">100% Malbec &#183; Luj&#225;n de Cuyo, Mendoza &#183; 750 ml</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- BODEGAS -->
+<section id="bodegas">
+  <div class="container">
+    <div class="section-label">Nuestras bodegas</div>
+    <h2 class="section-title">Representamos<br>lo mejor de cada región.</h2>
+    <p class="section-body">Trabajamos con bodegas seleccionadas de Mendoza, Salta y La Rioja, garantizando calidad en cada línea del catálogo.</p>
+    <div class="bodegas-grid">
+      <div class="bodega-card"><div class="bodega-card-name">Los Haroldos</div><div class="bodega-card-region">Mendoza · Estate</div><div class="bodega-card-count"><span>7</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Nampe Natural Expressions</div><div class="bodega-card-region">Mendoza</div><div class="bodega-card-count"><span>9</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">La Íride</div><div class="bodega-card-region">Mendoza · Bodegas & Viñedos</div><div class="bodega-card-count"><span>20+</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Chacabuco</div><div class="bodega-card-region">Mendoza</div><div class="bodega-card-count"><span>6</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Conejo Verde</div><div class="bodega-card-region">Mendoza</div><div class="bodega-card-count"><span>4</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Domingo Hermanos</div><div class="bodega-card-region">Salta · Valles Calchaquíes</div><div class="bodega-card-count"><span>5+</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Domingo Molina</div><div class="bodega-card-region">Salta · Valles Calchaquíes</div><div class="bodega-card-count"><span>2</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Prófugo</div><div class="bodega-card-region">Mendoza</div><div class="bodega-card-count"><span>4</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Sin Palabras</div><div class="bodega-card-region">Mendoza</div><div class="bodega-card-count"><span>2</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Viñas Riojanas</div><div class="bodega-card-region">La Rioja · Regional</div><div class="bodega-card-count"><span>3</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Viñas de Balbo</div><div class="bodega-card-region">Mendoza · Clásico</div><div class="bodega-card-count"><span>4</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Santa Florentina</div><div class="bodega-card-region">La Rioja</div><div class="bodega-card-count"><span>2</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Oveja Black</div><div class="bodega-card-region">Mendoza</div><div class="bodega-card-count"><span>3</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Corrales Negros</div><div class="bodega-card-region">Mendoza · Patagonia</div><div class="bodega-card-count"><span>3</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Safari · Sensei · Abducido</div><div class="bodega-card-region">Mendoza</div><div class="bodega-card-count"><span>3</span> etiquetas</div></div>
+      <div class="bodega-card"><div class="bodega-card-name">Club de Playa</div><div class="bodega-card-region">Argentina</div><div class="bodega-card-count"><span>1</span> etiqueta</div></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="sales-contact">
+      <div>
+        <div class="section-label">Pedido directo</div>
+        <h2 class="section-title">Compr&aacute; vinos<br>para tu negocio.</h2>
+        <p class="section-body">Eleg&iacute; productos del cat&aacute;logo, sumalos al carrito y envi&aacute; el pedido por WhatsApp. Tambi&eacute;n pod&eacute;s escribirnos directo para consultar precios, disponibilidad y entregas.</p>
+        <div class="sales-actions">
+          <a href="https://wa.me/5493512114069?text=Hola%20Mediterranea%20Bebidas%2C%20quiero%20hacer%20un%20pedido." target="_self" class="btn-primary" rel="noopener">WhatsApp directo</a>
+          <button type="button" class="btn-outline" onclick="openCart()" style="background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;">Ver carrito</button>
+        </div>
+      </div>
+      <div class="order-card">
+        <div class="info-card-title">WhatsApp pedidos</div>
+        <div class="order-card-number">+54 9 3512 11-4069</div>
+        <p class="section-body">Atenci&oacute;n mayorista para vinotecas, restaurantes, hoteles y comercios de C&oacute;rdoba Capital.</p>
+        <div class="contact-info" style="margin-top:1.5rem;">
+          <div class="info-card">
+            <div class="info-card-title">C&oacute;mo comprar</div>
+            <div class="info-card-value">Agreg&aacute; productos al carrito</div>
+            <div class="info-card-sub">El pedido se arma y se env&iacute;a por WhatsApp.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-title">Zona de entrega</div>
+            <div class="info-card-value">C&oacute;rdoba Capital</div>
+            <div class="info-card-sub">Consultar cobertura por zona.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Carrito de compras">
+  <div class="cart-head">
+    <div class="cart-title">Carrito</div>
+    <button class="cart-close" type="button" onclick="closeCart()" aria-label="Cerrar carrito">x</button>
+  </div>
+  <div class="cart-list" id="cartList"></div>
+  <div class="cart-footer">
+    <div class="cart-actions">
+      <button class="cart-clear" type="button" onclick="clearCart()">Vaciar</button>
+      <button class="cart-pay" type="button" onclick="openCheckout()">Finalizar pedido</button>
+      <button class="cart-send" type="button" onclick="sendCartToWhatsApp()">Enviar por WhatsApp</button>
+    </div>
+  </div>
+</aside>
+
+<div class="checkout-overlay" id="checkoutOverlay" onclick="closeCheckout()"></div>
+<section class="checkout-modal" id="checkoutModal" aria-label="Finalizar compra">
+  <div class="checkout-head">
+    <div>
+      <div class="checkout-title">Finalizar compra</div>
+      <div class="checkout-kicker">Datos, entrega y pago seguro</div>
+    </div>
+    <button class="checkout-close" type="button" onclick="closeCheckout()" aria-label="Cerrar pago">x</button>
+  </div>
+  <div class="checkout-progress" aria-hidden="true">
+    <div class="checkout-step active">
+      <span><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1.5"></circle><circle cx="19" cy="21" r="1.5"></circle><path d="M2 3h3l2.3 12.2a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.5L22 7H6"></path></svg></span>
+      Carrito
+    </div>
+    <div class="checkout-step active">
+      <span><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"></path><path d="M14 10h3.5L21 14v2h-7z"></path><circle cx="7" cy="19" r="2"></circle><circle cx="18" cy="19" r="2"></circle></svg></span>
+      Entrega
+    </div>
+    <div class="checkout-step active">
+      <span><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path><path d="M7 15h4"></path><path d="M15 15h2"></path></svg></span>
+      Pago
+    </div>
+  </div>
+  <form class="checkout-body" id="checkoutForm" onsubmit="submitCheckout(event)">
+    <div class="checkout-column">
+      <div class="checkout-panel">
+        <div class="checkout-panel-title">Datos de contacto</div>
+        <div class="checkout-panel-sub">Te contactamos para confirmar stock, precios finales y coordinar la entrega.</div>
+        <div class="checkout-field-grid">
+          <div class="checkout-field">
+            <label for="buyerName">Nombre y apellido</label>
+            <input id="buyerName" name="buyerName" autocomplete="name" required>
+          </div>
+          <div class="checkout-field">
+            <label for="buyerPhone">Tel&eacute;fono</label>
+            <input id="buyerPhone" name="buyerPhone" autocomplete="tel" required>
+          </div>
+          <div class="checkout-field">
+            <label for="buyerEmail">Email</label>
+            <input id="buyerEmail" name="buyerEmail" type="email" autocomplete="email" required>
+          </div>
+          <div class="checkout-field">
+            <label for="buyerBusiness">Comercio</label>
+            <input id="buyerBusiness" name="buyerBusiness" autocomplete="organization" placeholder="Vinoteca, restaurante, hotel">
+          </div>
+        </div>
+        <label class="checkout-inline-check">
+          <input type="checkbox" id="buyerOffers" checked>
+          Quiero recibir ofertas y novedades por email.
+        </label>
+      </div>
+
+      <div class="checkout-panel">
+        <div class="checkout-panel-title">Entrega</div>
+        <div class="checkout-panel-sub">Calcul&aacute; cobertura con tu c&oacute;digo postal o eleg&iacute; retiro por punto acordado.</div>
+        <div class="zip-row">
+          <div class="checkout-field">
+            <label for="deliveryZip">C&oacute;digo postal</label>
+            <input id="deliveryZip" name="deliveryZip" inputmode="numeric" autocomplete="postal-code" placeholder="Ej. 5000">
+          </div>
+          <button class="zip-button" type="button" onclick="calculateShipping()">Calcular</button>
+        </div>
+        <div class="shipping-result" id="shippingResult">Zona norte: referencia desde Valle Escondido. Env&iacute;os cercanos desde $2.000 y lejanos dentro de zona norte hasta $10.000.</div>
+        <div class="delivery-map-card" aria-label="Mapa de cobertura zona norte C&oacute;rdoba">
+          <div class="delivery-map-head">
+            <div>
+              <div class="delivery-map-title">Cobertura zona norte</div>
+              <div class="delivery-map-sub">Mapa centrado en Valle Escondido. La zona violeta marca el radio operativo de entregas.</div>
+            </div>
+            <div class="delivery-map-price">Env&iacute;o $2.000 - $10.000</div>
+          </div>
+          <div class="delivery-map-frame">
+            <iframe title="Mapa de zona norte de C&oacute;rdoba centrado en Valle Escondido" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-64.335%2C-31.425%2C-64.205%2C-31.315&amp;layer=mapnik&amp;marker=-31.36442%2C-64.28626"></iframe>
+            <div class="delivery-zone-overlay" aria-hidden="true">
+              <div class="north-zone-shape"></div>
+              <div class="zone-label">Zona norte</div>
+              <div class="map-pin"><span>VE</span></div>
+              <div class="map-tag">Valle Escondido</div>
+            </div>
+          </div>
+          <div class="delivery-map-legend">
+            <span><strong>$2.000</strong>Cercano a Valle Escondido</span>
+            <span><strong>$5.000 - $7.000</strong>Distancia media zona norte</span>
+            <span><strong>$10.000</strong>M&aacute;s lejano dentro de zona norte</span>
+          </div>
+        </div>
+        <div class="delivery-options" role="group" aria-label="Opciones de entrega">
+          <button class="delivery-option active" type="button" data-delivery="delivery" onclick="selectDelivery('delivery', this)">
+            <strong>Env&iacute;o a domicilio</strong>
+            <span>C&oacute;rdoba Capital y zonas a confirmar seg&uacute;n pedido.</span>
+          </button>
+          <button class="delivery-option" type="button" data-delivery="jbjusto" onclick="selectDelivery('jbjusto', this)">
+            <strong>Retiro Juan B. Justo</strong>
+            <span>Juan B. Justo 8620, coordinando horario.</span>
+          </button>
+          <button class="delivery-option" type="button" data-delivery="santina" onclick="selectDelivery('santina', this)">
+            <strong>Retiro Valle Escondido</strong>
+            <span>Santina Norte. Disponible para pedidos chicos.</span>
+          </button>
+        </div>
+        <div class="checkout-field full" style="margin-top:1rem;">
+          <label for="buyerAddress" id="buyerAddressLabel">Direcci&oacute;n exacta de entrega</label>
+          <input id="buyerAddress" name="buyerAddress" autocomplete="street-address" placeholder="Calle, altura, barrio, piso/depto">
+        </div>
+      </div>
+
+      <div class="checkout-panel">
+        <div class="checkout-panel-title">Medio de pago</div>
+        <div class="payment-logos" aria-label="Medio de pago disponible">
+          <span class="pay-logo mercadopago" role="img" aria-label="Mercado Pago">
+            <svg viewBox="0 0 150 40" aria-hidden="true" focusable="false">
+              <ellipse cx="24" cy="20" rx="21" ry="14" fill="#00A7E1"></ellipse>
+              <path d="M11 20c4-5 8-5 13 0 4-5 9-5 14 0" fill="none" stroke="#FFFFFF" stroke-width="2.7" stroke-linecap="round"></path>
+              <path d="M14 23c5 5 14 5 20 0" fill="none" stroke="#FFFFFF" stroke-width="2.7" stroke-linecap="round"></path>
+              <text x="52" y="17" fill="#00A7E1" font-family="Arial, sans-serif" font-size="13" font-weight="700">Mercado</text>
+              <text x="52" y="31" fill="#00A7E1" font-family="Arial, sans-serif" font-size="13" font-weight="700">Pago</text>
+            </svg>
+          </span>
+        </div>
+        <div class="mp-box">
+          <div class="mp-mark">MP</div>
+          <p class="section-body" style="font-size:0.88rem;line-height:1.65;">El pedido se env&iacute;a primero para confirmar stock, precios y env&iacute;o. Despu&eacute;s se comparte un link o alias de Mercado Pago con el monto validado.</p>
+        </div>
+        <div class="secure-note">
+          <span class="trust-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg></span>
+          <div><strong>Compra protegida</strong> No ingreses datos bancarios en esta p&aacute;gina. El monto se valida antes de generar o enviar cualquier medio de pago.</div>
+        </div>
+      </div>
+
+      <div class="checkout-panel">
+        <div class="checkout-panel-title">Cambios y devoluciones</div>
+        <div class="trust-grid">
+          <div class="trust-item">
+            <span class="trust-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></span>
+            <div><strong>Cambios</strong><span>Si el producto no coincide o llega con inconvenientes, coordinamos cambio.</span></div>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="m15 3 5 4-5 4"/><path d="M4 17h9"/><path d="m9 21-5-4 5-4"/></svg></span>
+            <div><strong>Devoluciones</strong><span>Las condiciones se informan antes de confirmar el pago y entrega.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="checkout-panel checkout-side">
+      <div class="protected-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg>
+        Compra segura 100% protegida
+      </div>
+      <div class="checkout-panel-title">Tu carrito</div>
+      <div class="checkout-summary-list" id="checkoutSummary"></div>
+      <div class="checkout-summary-total locked">
+        <strong id="checkoutTotal">Total a corroborar</strong>
+        <span id="checkoutTotalNote">Stock, precios, impuestos y env&iacute;o se validan antes de generar el pago.</span>
+        <div class="lock-line"><span>Monto no editable</span><span class="lock-pill">Validaci&oacute;n segura</span></div>
+      </div>
+      <div class="checkout-field full" style="margin-top:1rem;">
+        <label for="checkoutNotes">Notas del pedido</label>
+        <textarea id="checkoutNotes" name="checkoutNotes" placeholder="Horario de entrega, CUIT, aclaraciones"></textarea>
+      </div>
+      <button class="checkout-submit" id="checkoutSubmit" type="submit">Enviar pedido por email</button>
+      <div class="order-email-status" id="orderEmailStatus" role="status" aria-live="polite"></div>
+      <div class="mercadopago-dev-note">El pedido se env&iacute;a a mediterraneabebidas60@gmail.com desde un servidor propio. El total se vuelve a calcular del lado servidor antes de enviar el email.</div>
+    </aside>
+  </form>
+</section>
+
+<a class="whatsapp-float" href="https://wa.me/5493512114069?text=Hola%20Mediterranea%20Bebidas%2C%20quiero%20hacer%20un%20pedido." target="_self" rel="noopener">WhatsApp</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="LOGO/LOGO MEDITERRANEA TRANSPARENTE.png" alt="Mediterránea Bebidas">
+  </div>
+  <div class="footer-copy">© 2025 Mediterránea Bebidas. Todos los derechos reservados.</div>
+  <div class="footer-links">
+    <a href="#nosotros">Nosotros</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#bodegas">Bodegas</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <div class="footer-legal">Bebida alcohólica. Prohibida su venta a menores de 18 años. Beber con moderación.</div>
+</footer>
+
+<script>
+document.body.classList.remove('dark-theme');
+
+function setThemeButtonLabel() {
+  const btn = document.querySelector('.theme-toggle');
+  if(!btn) return;
+  const isDark = document.body.classList.contains('dark-theme');
+  btn.setAttribute('aria-label', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('dark-theme');
+  setThemeButtonLabel();
+}
+
+function showTab(id, evt) {
+  document.querySelectorAll('.catalog-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('tab-' + id);
+  if(panel) panel.classList.add('active');
+  if(evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+}
+
+
+
+
+const WHATSAPP_NUMBER = '5493512114069';
+const WHATSAPP_DEFAULT_TEXT = 'Hola Mediterranea Bebidas, quiero hacer un pedido.';
+const ORDER_EMAIL_TO = 'mediterraneabebidas60@gmail.com';
+const ORDER_EMAIL_ENDPOINT = '/api/orders';
+let cart = [];
+let selectedPayment = 'mp';
+let selectedDelivery = 'delivery';
+
+function whatsAppUrl(message = WHATSAPP_DEFAULT_TEXT) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+function escapeHtml(value) {
+  return String(value || '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
+}
+
+function parseWineSpecs(meta) {
+  const parts = String(meta || '')
+    .split(/\s*·\s*/)
+    .map(part => part.trim())
+    .filter(Boolean);
+  const quantityPattern = /(\d+\s*(ml|l)\b|presentaci[oó]n|familiar|damajuana|mimbre|bag\s*in\s*box)/i;
+  const provenancePattern = /(valle|mendoza|rioja|salta|calchaqu|maip|luj[aá]n|consulta|san carlos|villa seca|zona este|norte|famatina|patagonia|argentina)/i;
+  let quantity = 'A confirmar';
+  if(parts.length && quantityPattern.test(parts[parts.length - 1])) {
+    quantity = parts.pop();
+  }
+  const provenanceIndex = parts.findIndex(part => provenancePattern.test(part));
+  let varietyParts = parts;
+  let provenanceParts = [];
+  if(provenanceIndex >= 0) {
+    varietyParts = parts.slice(0, provenanceIndex);
+    provenanceParts = parts.slice(provenanceIndex);
+  }
+  const variety = varietyParts.length ? varietyParts.join(' · ') : 'A confirmar';
+  const provenance = provenanceParts.length ? provenanceParts.join(' · ') : 'A confirmar';
+  return { variety, provenance, quantity };
+}
+
+function specSummary(specs) {
+  if(!specs) return '';
+  return `Variedad: ${specs.variety} · Procedencia: ${specs.provenance} · Cantidad: ${specs.quantity}`;
+}
+
+function specMessage(specs) {
+  if(!specs) return '';
+  return `Variedad: ${specs.variety}; Procedencia: ${specs.provenance}; Cantidad: ${specs.quantity}`;
+}
+
+function renderMiniSpecs(specs) {
+  if(!specs) return '';
+  return `
+    <dl class="mini-specs">
+      <div><dt>Variedad</dt><dd>${escapeHtml(specs.variety)}</dd></div>
+      <div><dt>Origen</dt><dd>${escapeHtml(specs.provenance)}</dd></div>
+      <div><dt>Cantidad</dt><dd>${escapeHtml(specs.quantity)}</dd></div>
+    </dl>
+  `;
+}
+
+function setupProductSpecs() {
+  document.querySelectorAll('.wine-varietal').forEach(metaEl => {
+    if(metaEl.dataset.structured === 'true') return;
+    const rawMeta = metaEl.dataset.rawMeta || metaEl.textContent.trim();
+    const specs = parseWineSpecs(rawMeta);
+    metaEl.dataset.rawMeta = rawMeta;
+    metaEl.dataset.variety = specs.variety;
+    metaEl.dataset.provenance = specs.provenance;
+    metaEl.dataset.quantity = specs.quantity;
+    metaEl.dataset.structured = 'true';
+    metaEl.innerHTML = `
+      <ul class="wine-spec-list">
+        <li><span class="wine-spec-label">Variedad</span><span class="wine-spec-value">${escapeHtml(specs.variety)}</span></li>
+        <li><span class="wine-spec-label">Procedencia</span><span class="wine-spec-value">${escapeHtml(specs.provenance)}</span></li>
+        <li><span class="wine-spec-label">Cantidad</span><span class="wine-spec-value">${escapeHtml(specs.quantity)}</span></li>
+      </ul>
+    `;
+  });
+}
+
+function getProductFromCard(card) {
+  const metaEl = card.querySelector('.wine-varietal');
+  const priceEl = card.querySelector('.wine-price');
+  const rawMeta = metaEl?.dataset.rawMeta || metaEl?.textContent.trim() || '';
+  const specs = metaEl?.dataset.variety
+    ? {
+        variety: metaEl.dataset.variety,
+        provenance: metaEl.dataset.provenance,
+        quantity: metaEl.dataset.quantity
+      }
+    : parseWineSpecs(rawMeta);
+  const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
+  const basePrice = priceEl ? Number(priceEl.dataset.price) : null;
+  const purchaseMode = isUnitProduct({ type: productType }) ? 'unit' : getSelectedPurchaseMode(card);
+  const price = purchaseMode === 'unit' && !isUnitProduct({ type: productType })
+    ? unitPriceFromBox(basePrice)
+    : basePrice;
+  return {
+    name: card.querySelector('.wine-name')?.textContent.trim() || 'Producto',
+    meta: rawMeta,
+    specs,
+    type: productType,
+    image: card.querySelector('.wine-image img')?.getAttribute('src') || '',
+    price: Number.isFinite(price) ? price : null,
+    basePrice: Number.isFinite(basePrice) ? basePrice : null,
+    purchaseMode,
+    purchaseLabel: purchaseModeLabel(purchaseMode),
+    priceLabel: priceEl?.dataset.priceLabel || '',
+    priceCode: priceEl?.dataset.priceCode || ''
+  };
+}
+
+function setupSiteCursor() {
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  document.documentElement.classList.add('custom-cursor-active');
+
+  const cursor = document.createElement('div');
+  cursor.className = 'site-cursor hidden';
+  document.body.appendChild(cursor);
+
+  let x = -80;
+  let y = -80;
+  let frame = null;
+
+  function paint() {
+    cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+    frame = null;
+  }
+
+  function moveCursor(event) {
+    x = event.clientX;
+    y = event.clientY;
+    cursor.classList.remove('hidden');
+    if(!frame) frame = requestAnimationFrame(paint);
+  }
+
+  window.addEventListener('pointermove', moveCursor, { passive:true });
+  window.addEventListener('mousemove', moveCursor, { passive:true });
+
+  document.addEventListener('pointerover', (event) => {
+    const hot = event.target.closest('a, button, [role="button"], .tab-btn, .wine-card, .bodega-card, .add-to-cart, .cart-toggle');
+    cursor.classList.toggle('hover', Boolean(hot));
+  }, true);
+
+  document.addEventListener('mouseleave', () => {
+    cursor.classList.add('hidden');
+  });
+
+  window.addEventListener('blur', () => {
+    cursor.classList.add('hidden');
+  });
+}
+
+function isUnitProduct(product) {
+  const type = String(product?.type || '').toLowerCase();
+  return type.includes('bag in box') || type.includes('damajuana');
+}
+
+function purchaseModeLabel(mode) {
+  return mode === 'unit' ? 'unidad' : 'caja x6';
+}
+
+function isSingleUnitPurchase(product) {
+  return isUnitProduct(product) || product?.purchaseMode === 'unit';
+}
+
+function unitLabel(product) {
+  return isSingleUnitPurchase(product) ? 'unidad' : 'caja x6';
+}
+
+function unitLabelPlural(product) {
+  return isSingleUnitPurchase(product) ? 'unidades' : 'cajas x6';
+}
+
+function quantityLabel(item) {
+  return item.qty === 1 ? unitLabel(item) : unitLabelPlural(item);
+}
+
+function cartUnitSummary() {
+  const hasUnits = cart.some(isSingleUnitPurchase);
+  const hasBoxes = cart.some(item => !isSingleUnitPurchase(item));
+  if(hasUnits && hasBoxes) return 'pedido';
+  if(hasUnits) return 'unidades';
+  return 'cajas x6';
+}
+
+function getSelectedPurchaseMode(card) {
+  const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
+  if(isUnitProduct({ type: productType })) return 'unit';
+  return card.querySelector('.purchase-mode-option.active')?.dataset.purchaseMode || 'box';
+}
+
+function unitPriceFromBox(boxPrice) {
+  return Number.isFinite(boxPrice) ? boxPrice / 6 : null;
+}
+
+function updateProductPriceMode(card, mode = getSelectedPurchaseMode(card)) {
+  const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
+  const unitOnly = isUnitProduct({ type: productType });
+  const priceEl = card.querySelector('.wine-price');
+  const addBtn = card.querySelector('.add-to-cart');
+  const normalizedMode = unitOnly ? 'unit' : mode;
+  card.dataset.purchaseMode = normalizedMode;
+  card.querySelectorAll('.purchase-mode-option').forEach(option => {
+    option.classList.toggle('active', option.dataset.purchaseMode === normalizedMode);
+  });
+  if(priceEl) {
+    const basePrice = Number(priceEl.dataset.price);
+    const price = normalizedMode === 'unit' && !unitOnly ? unitPriceFromBox(basePrice) : basePrice;
+    const label = priceEl.querySelector('span');
+    const value = priceEl.querySelector('strong');
+    if(label) label.textContent = purchaseModeLabel(normalizedMode);
+    if(value && Number.isFinite(price)) value.textContent = formatPrice(price);
+  }
+  if(addBtn) addBtn.textContent = `Agregar ${purchaseModeLabel(normalizedMode)}`;
+}
+
+function setupPurchaseMode(card) {
+  const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
+  if(isUnitProduct({ type: productType }) || card.querySelector('.purchase-mode')) return;
+  const control = document.createElement('div');
+  control.className = 'purchase-mode';
+  control.setAttribute('aria-label', 'Elegir precio');
+  control.innerHTML = `
+    <button type="button" class="purchase-mode-option" data-purchase-mode="unit">Unidad</button>
+    <button type="button" class="purchase-mode-option active" data-purchase-mode="box">Caja x6</button>
+  `;
+  control.querySelectorAll('.purchase-mode-option').forEach(option => {
+    option.addEventListener('click', () => updateProductPriceMode(card, option.dataset.purchaseMode));
+  });
+  const priceEl = card.querySelector('.wine-price');
+  if(priceEl) priceEl.insertAdjacentElement('afterend', control);
+  else card.appendChild(control);
+  const note = document.createElement('div');
+  note.className = 'purchase-mode-note';
+  note.textContent = 'Precio unitario calculado desde la caja x6.';
+  control.insertAdjacentElement('afterend', note);
+  updateProductPriceMode(card, 'box');
+}
+
+function setupCartButtons() {
+  document.querySelectorAll('.wine-card').forEach(card => {
+    if(card.querySelector('.add-to-cart')) return;
+    const btn = document.createElement('button');
+    const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
+    btn.type = 'button';
+    btn.className = 'add-to-cart';
+    setupPurchaseMode(card);
+    card.appendChild(btn);
+    updateProductPriceMode(card, isUnitProduct({ type: productType }) ? 'unit' : getSelectedPurchaseMode(card));
+    btn.addEventListener('click', () => addToCart(getProductFromCard(card)));
+  });
+}
+
+function formatPrice(value) {
+  if(!Number.isFinite(value)) return '';
+  return new Intl.NumberFormat('es-AR', { style:'currency', currency:'ARS' }).format(value);
+}
+
+function cartTotals() {
+  const subtotal = cart.reduce((sum, item) => sum + (Number.isFinite(item.price) ? item.price * item.qty : 0), 0);
+  const missing = cart.some(item => !Number.isFinite(item.price));
+  return { subtotal, missing };
+}
+
+function renderPriceLine(item) {
+  if(!Number.isFinite(item.price)) return `<div class="cart-item-price">Precio a confirmar por ${unitLabel(item)}</div>`;
+  return `<div class="cart-item-price">${formatPrice(item.price)} por ${unitLabel(item)}</div>`;
+}
+
+function renderCheckoutPriceLine(item) {
+  if(!Number.isFinite(item.price)) return `<div class="checkout-summary-price">Precio a confirmar por ${unitLabel(item)}</div>`;
+  return `<div class="checkout-summary-price">${formatPrice(item.price * item.qty)} &middot; ${item.qty} ${quantityLabel(item)}</div>`;
+}
+
+function addToCart(product) {
+  const existing = cart.find(item => item.name === product.name && item.meta === product.meta && item.purchaseMode === product.purchaseMode);
+  if(existing) existing.qty += 1;
+  else cart.push({ ...product, qty: 1 });
+  renderCart();
+  openCart();
+}
+
+function changeQty(index, delta) {
+  if(!cart[index]) return;
+  cart[index].qty += delta;
+  if(cart[index].qty <= 0) cart.splice(index, 1);
+  renderCart();
+}
+
+function clearCart() {
+  cart = [];
+  renderCart();
+}
+
+function openCart() {
+  document.getElementById('cartDrawer')?.classList.add('open');
+  document.getElementById('cartOverlay')?.classList.add('open');
+}
+
+function closeCart() {
+  document.getElementById('cartDrawer')?.classList.remove('open');
+  document.getElementById('cartOverlay')?.classList.remove('open');
+}
+
+function renderCart() {
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  const countEl = document.getElementById('cartCount');
+  if(countEl) countEl.textContent = count;
+  const list = document.getElementById('cartList');
+  if(!list) return;
+  if(!cart.length) {
+    list.innerHTML = '<div class="cart-empty">Todavia no agregaste productos. Elegi vinos del catalogo y arma tu pedido.</div>';
+    renderCheckoutSummary();
+    return;
+  }
+  list.innerHTML = cart.map((item, index) => `
+    <div class="cart-item">
+      ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<div></div>'}
+      <div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-meta">${item.type}${item.specs ? renderMiniSpecs(item.specs) : (item.meta ? ' &middot; ' + item.meta : '')}</div>${renderPriceLine(item)}
+      </div>
+      <div class="qty-control">
+        <button type="button" onclick="changeQty(${index}, -1)">-</button>
+        <span>${item.qty}</span>
+        <button type="button" onclick="changeQty(${index}, 1)">+</button>
+      </div>
+    </div>
+  `).join('');
+  renderCheckoutSummary();
+}
+
+
+function openCheckout() {
+  if(!cart.length) {
+    openCart();
+    return;
+  }
+  closeCart();
+  renderCheckoutSummary();
+  document.getElementById('checkoutOverlay')?.classList.add('open');
+  document.getElementById('checkoutModal')?.classList.add('open');
+}
+
+function closeCheckout() {
+  document.getElementById('checkoutOverlay')?.classList.remove('open');
+  document.getElementById('checkoutModal')?.classList.remove('open');
+}
+
+function selectDelivery(method, button) {
+  selectedDelivery = method;
+  document.querySelectorAll('.delivery-option').forEach(option => option.classList.remove('active'));
+  button?.classList.add('active');
+  const address = document.getElementById('buyerAddress');
+  const label = document.getElementById('buyerAddressLabel');
+  const result = document.getElementById('shippingResult');
+  if(method === 'jbjusto') {
+    if(label) label.textContent = 'Retiro seleccionado';
+    if(address) {
+      address.value = 'Retiro en Juan B. Justo 8620';
+      address.readOnly = true;
+    }
+    if(result) result.textContent = 'Retiro por Juan B. Justo 8620. Coordinamos horario antes de confirmar el pago.';
+  } else if(method === 'santina') {
+    if(label) label.textContent = 'Retiro seleccionado';
+    if(address) {
+      address.value = 'Retiro en Valle Escondido - Santina Norte';
+      address.readOnly = true;
+    }
+    if(result) result.textContent = 'Retiro por Valle Escondido, Santina Norte. Disponible para pedidos chicos.';
+  } else {
+    if(label) label.textContent = 'Dirección exacta de entrega';
+    if(address) {
+      address.readOnly = false;
+      if(address.value.startsWith('Retiro en ')) address.value = '';
+      address.placeholder = 'Calle, altura, barrio, piso/depto';
+    }
+    calculateShipping();
+  }
+}
+
+function shippingEstimateText() {
+  return document.getElementById('shippingResult')?.textContent.trim() || 'Zona norte: envio a confirmar.';
+}
+
+function calculateShipping() {
+  const zip = document.getElementById('deliveryZip')?.value.trim() || '';
+  const result = document.getElementById('shippingResult');
+  if(!result) return;
+  if(!zip) {
+    result.textContent = 'Zona norte: referencia desde Valle Escondido. Envios cercanos desde $2.000 y lejanos dentro de zona norte hasta $10.000.';
+    return;
+  }
+  if(/^50\d{2}$/.test(zip)) {
+    result.textContent = `CP ${zip}: cobertura en Cordoba Capital/zona norte a confirmar. Referencia: $2.000 cerca de Valle Escondido, hasta $10.000 para puntos mas lejanos dentro de zona norte.`;
+  } else {
+    result.textContent = `CP ${zip}: fuera de la referencia inmediata de zona norte. Consultamos cobertura y costo antes de generar el link de pago.`;
+  }
+}
+
+function renderCheckoutSummary() {
+  const summary = document.getElementById('checkoutSummary');
+  const totalEl = document.getElementById('checkoutTotal');
+  const totalNote = document.getElementById('checkoutTotalNote');
+  if(!summary) return;
+  if(!cart.length) {
+    summary.innerHTML = '<div class="cart-empty">No hay productos en el carrito.</div>';
+    if(totalEl) totalEl.textContent = 'Total a corroborar';
+    if(totalNote) totalNote.textContent = 'Stock, precios, impuestos y envío se validan antes de generar el pago.';
+    return;
+  }
+  const totals = cartTotals();
+  if(totalEl) totalEl.textContent = totals.subtotal ? `${totals.missing ? 'Subtotal' : 'Total'} ${cartUnitSummary()} ${formatPrice(totals.subtotal)}` : 'Total a corroborar';
+  if(totalNote) totalNote.textContent = totals.missing
+    ? 'Hay productos sin precio en lista. El total final se confirma antes de generar el pago.'
+    : 'Podés combinar unidades y cajas x6. BIB y damajuanas se manejan por unidad. Envío e impuestos se confirman antes de generar el pago.';
+  summary.innerHTML = cart.map(item => `
+    <div class="checkout-summary-item">
+      ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<div></div>'}
+      <div>
+        <div class="checkout-summary-name">${item.name}</div>
+        <div class="checkout-summary-meta">${item.type}${item.specs ? renderMiniSpecs(item.specs) : (item.meta ? ' &middot; ' + item.meta : '')}</div>${renderCheckoutPriceLine(item)}
+      </div>
+      <strong>x${item.qty}</strong>
+    </div>
+  `).join('');
+}
+
+function deliveryLabel() {
+  const deliveryLabels = {
+    delivery: 'Envio a domicilio',
+    jbjusto: 'Retiro en Juan B. Justo 8620',
+    santina: 'Retiro en Valle Escondido - Santina Norte'
+  };
+  return deliveryLabels[selectedDelivery] || 'Envio a domicilio';
+}
+
+function orderLine(item) {
+  return `${item.qty} ${quantityLabel(item)} de ${item.name}${item.specs ? ' (' + specMessage(item.specs) + ')' : (item.meta ? ' (' + item.meta + ')' : '')}${Number.isFinite(item.price) ? ' - ' + formatPrice(item.price * item.qty) : ' - precio a confirmar'}`;
+}
+
+function orderTotalLine() {
+  const totals = cartTotals();
+  if(!totals.subtotal) return 'Total estimado: a corroborar';
+  return `${totals.missing ? 'Subtotal estimado' : 'Total estimado'}: ${formatPrice(totals.subtotal)}${totals.missing ? ' (hay productos con precio a confirmar)' : ''}`;
+}
+
+function checkoutMessage() {
+  const name = document.getElementById('buyerName')?.value.trim() || '-';
+  const phone = document.getElementById('buyerPhone')?.value.trim() || '-';
+  const email = document.getElementById('buyerEmail')?.value.trim() || '-';
+  const business = document.getElementById('buyerBusiness')?.value.trim() || '-';
+  const address = document.getElementById('buyerAddress')?.value.trim() || '-';
+  const zip = document.getElementById('deliveryZip')?.value.trim() || '-';
+  const notes = document.getElementById('checkoutNotes')?.value.trim() || '-';
+  const paymentDetail = 'Mercado Pago a coordinar luego de validar stock, envio y total';
+  return [
+    'Hola Mediterranea Bebidas, quiero finalizar esta compra:',
+    ...cart.map(item => `- ${orderLine(item)}`),
+    '',
+    orderTotalLine(),
+    '',
+    `Metodo de pago: ${paymentDetail}`,
+    `Entrega: ${deliveryLabel()}`,
+    `Codigo postal: ${zip}`,
+    `Costo envio estimado: ${shippingEstimateText()}`,
+    `Nombre: ${name}`,
+    `Telefono: ${phone}`,
+    `Email: ${email}`,
+    `Comercio: ${business}`,
+    `Direccion/retiro: ${address}`,
+    `Notas: ${notes}`,
+    '',
+    'Solicito confirmacion de stock, total no editable, envio y medio de pago seguro.'
+  ].join('\n');
+}
+
+function checkoutEmailPayload() {
+  const totals = cartTotals();
+  const name = document.getElementById('buyerName')?.value.trim() || '-';
+  const phone = document.getElementById('buyerPhone')?.value.trim() || '-';
+  const email = document.getElementById('buyerEmail')?.value.trim() || '-';
+  const business = document.getElementById('buyerBusiness')?.value.trim() || '-';
+  const address = document.getElementById('buyerAddress')?.value.trim() || '-';
+  const zip = document.getElementById('deliveryZip')?.value.trim() || '-';
+  const notes = document.getElementById('checkoutNotes')?.value.trim() || '-';
+  return {
+    _subject: `Nuevo pedido web - Mediterranea Bebidas - ${name !== '-' ? name : phone}`,
+    _template: 'table',
+    _captcha: 'false',
+    nombre: name,
+    telefono: phone,
+    email,
+    comercio: business,
+    entrega: deliveryLabel(),
+    codigo_postal: zip,
+    costo_envio_estimado: shippingEstimateText(),
+    direccion_o_retiro: address,
+    productos: cart.map(orderLine).join('\n'),
+    cart_items: cart.map(item => ({
+      name: item.name,
+      type: item.type,
+      quantity: item.qty,
+      purchaseMode: item.purchaseMode,
+      priceCode: item.priceCode,
+      clientPrice: item.price,
+      specs: item.specs
+    })),
+    subtotal_estimado: totals.subtotal ? formatPrice(totals.subtotal) : 'A corroborar',
+    precios: totals.missing ? 'Hay productos con precio a confirmar' : 'Precios cargados en la web, sujetos a validacion final',
+    medio_de_pago: 'Mercado Pago a coordinar luego de validar stock, envio y total',
+    notas: notes,
+    mensaje_completo: checkoutMessage()
+  };
+}
+
+function setOrderEmailStatus(type, message) {
+  const status = document.getElementById('orderEmailStatus');
+  if(!status) return;
+  status.className = `order-email-status visible ${type || ''}`.trim();
+  status.textContent = message;
+}
+
+async function sendOrderEmail() {
+  const response = await fetch(ORDER_EMAIL_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(checkoutEmailPayload())
+  });
+  const result = await response.json().catch(() => ({}));
+  if(!response.ok || result.ok === false) {
+    throw new Error(result.message || `No se pudo enviar el pedido por email (${response.status})`);
+  }
+  return result;
+}
+
+async function submitCheckout(event) {
+  event.preventDefault();
+  if(!cart.length) {
+    closeCheckout();
+    openCart();
+    return;
+  }
+  const submit = document.getElementById('checkoutSubmit');
+  if(submit) {
+    submit.disabled = true;
+    submit.textContent = 'Enviando pedido...';
+  }
+  setOrderEmailStatus('', `Enviando el pedido a ${ORDER_EMAIL_TO}...`);
+  try {
+    await sendOrderEmail();
+    setOrderEmailStatus('success', `Pedido enviado a ${ORDER_EMAIL_TO}. Revisá ese Gmail para confirmar stock, entrega y pago.`);
+  } catch(error) {
+    setOrderEmailStatus('error', `${error.message || 'No se pudo enviar el email automaticamente.'} Podes usar "Enviar por WhatsApp" para no perder el pedido.`);
+  } finally {
+    if(submit) {
+      submit.disabled = false;
+      submit.textContent = 'Enviar pedido por email';
+    }
+  }
+}
+
+function cartMessage() {
+  if(!cart.length) return 'Hola Mediterranea Bebidas, quiero hacer una consulta.';
+  const lines = cart.map(item => `- ${orderLine(item)}`);
+  return ['Hola Mediterranea Bebidas, quiero hacer este pedido:', ...lines, '', orderTotalLine(), 'Total sujeto a confirmacion de stock, envio e impuestos.'].join('\n');
+}
+
+function sendCartToWhatsApp() {
+  window.location.href = whatsAppUrl(cartMessage());
+}
+
+setupSiteCursor();
+setupProductSpecs();
+setupCartButtons();
+renderCart();
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+window.addEventListener('scroll', () => {
+  const sections = ['inicio','nosotros','catalogo','bodegas','contacto'];
+  const scrollY = window.scrollY;
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const top = el.offsetTop - 100;
+    const bottom = top + el.offsetHeight;
+    if(scrollY >= top && scrollY < bottom) {
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + id ? 'var(--accent)' : '';
+      });
+    }
+  });
+});
+
+setThemeButtonLabel();
+</script>
+</body>
+</html>

@@ -8,6 +8,7 @@ from email.message import EmailMessage
 from html import escape, unescape
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
@@ -222,10 +223,12 @@ def send_email_resend(subject, plain, html, reply_to):
         },
         method="POST",
     )
-    with urlopen(request, timeout=15) as response:
-        if response.status >= 400:
-            raise RuntimeError(f"Resend rechazo el envio: HTTP {response.status}")
-        return json.loads(response.read().decode("utf-8") or "{}")
+    try:
+        with urlopen(request, timeout=15) as response:
+            return json.loads(response.read().decode("utf-8") or "{}")
+    except HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Resend rechazo el envio: HTTP {exc.code}. {detail}") from exc
 
 
 def send_email_smtp(subject, plain, html, reply_to):

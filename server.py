@@ -9,6 +9,7 @@ from html import escape, unescape
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
+from urllib.request import Request, urlopen
 
 BASE_DIR = Path(__file__).resolve().parent
 INDEX_FILE = BASE_DIR / "index.html"
@@ -17,6 +18,8 @@ SMTP_USER = os.environ.get("MEDITERRANEA_GMAIL_USER") or os.environ.get("GMAIL_U
 SMTP_PASSWORD = os.environ.get("MEDITERRANEA_GMAIL_APP_PASSWORD") or os.environ.get("GMAIL_APP_PASSWORD")
 SMTP_HOST = os.environ.get("MEDITERRANEA_SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.environ.get("MEDITERRANEA_SMTP_PORT", "465"))
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
+RESEND_FROM = os.environ.get("RESEND_FROM", "Mediterranea Bebidas <onboarding@resend.dev>")
 
 
 def money(value):
@@ -199,13 +202,38 @@ def build_email(payload):
     return subject, plain, html, buyer_email
 
 
-def send_email(payload):
+def send_email_resend(subject, plain, html, reply_to):
+    body = {
+        "from": RESEND_FROM,
+        "to": [ORDER_TO],
+        "subject": subject,
+        "text": plain,
+        "html": html,
+    }
+    if reply_to and reply_to != "-":
+        body["reply_to"] = reply_to
+
+    request = Request(
+        "https://api.resend.com/emails",
+        data=json.dumps(body).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {RESEND_API_KEY}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    with urlopen(request, timeout=15) as response:
+        if response.status >= 400:
+            raise RuntimeError(f"Resend rechazo el envio: HTTP {response.status}")
+        return json.loads(response.read().decode("utf-8") or "{}")
+
+
+def send_email_smtp(subject, plain, html, reply_to):
     if not SMTP_USER or not SMTP_PASSWORD:
         raise RuntimeError(
-            "Faltan credenciales reales de Gmail. Configura MEDITERRANEA_GMAIL_USER y MEDITERRANEA_GMAIL_APP_PASSWORD en el servidor."
+            "Faltan credenciales de email. Configura RESEND_API_KEY en Render, o MEDITERRANEA_GMAIL_USER y MEDITERRANEA_GMAIL_APP_PASSWORD para SMTP local."
         )
 
-    subject, plain, html, reply_to = build_email(payload)
     msg = EmailMessage()
     msg["Subject"] = subject
     msg["From"] = SMTP_USER
@@ -239,6 +267,13 @@ def send_email(payload):
     raise RuntimeError("No se pudo conectar con Gmail SMTP. " + " | ".join(errors))
 
 
+def send_email(payload):
+    subject, plain, html, reply_to = build_email(payload)
+    if RESEND_API_KEY:
+        return send_email_resend(subject, plain, html, reply_to)
+    return send_email_smtp(subject, plain, html, reply_to)
+
+
 class Handler(SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header("X-Content-Type-Options", "nosniff")
@@ -256,7 +291,8 @@ class Handler(SimpleHTTPRequestHandler):
             send_email(payload)
             self.respond_json(200, {"ok": True, "message": "Pedido enviado por email."})
         except Exception as exc:
-            status = 503 if "credenciales" in str(exc).lower() else 400
+            error_text = str(exc).lower()
+            status = 503 if "credenciales" in error_text or "resend" in error_text or "smtp" in error_text else 400
             self.respond_json(status, {"ok": False, "message": str(exc)})
 
     def respond_json(self, status, payload):

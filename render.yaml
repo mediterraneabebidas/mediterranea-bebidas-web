@@ -6,9 +6,13 @@ services:
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python server.py"
     envVars:
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM
+        value: Mediterranea Bebidas <onboarding@resend.dev>
+      - key: MEDITERRANEA_ORDER_TO
+        value: mediterraneabebidas60@gmail.com
       - key: MEDITERRANEA_GMAIL_USER
         sync: false
       - key: MEDITERRANEA_GMAIL_APP_PASSWORD
         sync: false
-      - key: MEDITERRANEA_ORDER_TO
-        value: mediterraneabebidas60@gmail.com

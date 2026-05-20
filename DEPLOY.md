@@ -1,6 +1,6 @@
 # Subir Mediterranea Bebidas
 
-Esta web necesita backend porque los pedidos se envian por Gmail y el total se recalcula en servidor.
+Esta web necesita backend porque los pedidos se envian por email y el total se recalcula en servidor.
 
 ## Opcion recomendada: Render
 
@@ -12,13 +12,20 @@ Esta web necesita backend porque los pedidos se envian por Gmail y el total se r
    - Runtime: Python
    - Build command: `pip install -r requirements.txt`
    - Start command: `python server.py`
-6. Variables de entorno:
-   - `MEDITERRANEA_GMAIL_USER` = `mediterraneabebidas60@gmail.com`
-   - `MEDITERRANEA_GMAIL_APP_PASSWORD` = contraseña de aplicacion de Google
+6. Variables de entorno recomendadas:
+   - `RESEND_API_KEY` = API key de Resend
+   - `RESEND_FROM` = `Mediterranea Bebidas <onboarding@resend.dev>` al principio, o un remitente de dominio verificado
    - `MEDITERRANEA_ORDER_TO` = `mediterraneabebidas60@gmail.com`
 7. Deploy.
 
 Render asigna automaticamente la variable `PORT`; `server.py` ya esta preparado para usarla.
+
+## Email
+
+En Render Free se recomienda Resend porque usa HTTPS y no depende de SMTP. Gmail SMTP queda como fallback local con:
+
+- `MEDITERRANEA_GMAIL_USER`
+- `MEDITERRANEA_GMAIL_APP_PASSWORD`
 
 ## Dominio
 
@@ -26,7 +33,7 @@ Cuando Render te de una URL publica, podes conectar un dominio propio desde la c
 
 ## Seguridad
 
-- No subas la contraseña de aplicacion a GitHub.
-- Guardala solo como variable de entorno del hosting.
+- No subas API keys ni contrasenas a GitHub.
+- Guardalas solo como variables de entorno del hosting.
 - El HTML no tiene credenciales.
 - El total se recalcula en `server.py` con los precios de `index.html`.

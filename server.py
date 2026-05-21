@@ -270,10 +270,29 @@ def send_email_smtp(subject, plain, html, reply_to):
     raise RuntimeError("No se pudo conectar con Gmail SMTP. " + " | ".join(errors))
 
 
+def email_config_status():
+    if RESEND_API_KEY:
+        provider = "resend"
+    elif SMTP_USER and SMTP_PASSWORD:
+        provider = "smtp"
+    else:
+        provider = "missing"
+    return {
+        "ok": True,
+        "email_provider": provider,
+        "has_resend_api_key": bool(RESEND_API_KEY),
+        "has_smtp_credentials": bool(SMTP_USER and SMTP_PASSWORD),
+        "order_to": ORDER_TO,
+        "resend_from": RESEND_FROM,
+    }
+
+
 def send_email(payload):
     subject, plain, html, reply_to = build_email(payload)
     if RESEND_API_KEY:
         return send_email_resend(subject, plain, html, reply_to)
+    if os.environ.get("RENDER") or os.environ.get("RENDER_SERVICE_ID"):
+        raise RuntimeError("Falta RESEND_API_KEY en Render. SMTP/Gmail no se usa en Render Free porque esos puertos estan bloqueados.")
     return send_email_smtp(subject, plain, html, reply_to)
 
 
@@ -281,6 +300,12 @@ class Handler(SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header("X-Content-Type-Options", "nosniff")
         super().end_headers()
+
+    def do_GET(self):
+        if urlparse(self.path).path == "/api/health":
+            self.respond_json(200, email_config_status())
+            return
+        return super().do_GET()
 
     def do_POST(self):
         if urlparse(self.path).path != "/api/orders":

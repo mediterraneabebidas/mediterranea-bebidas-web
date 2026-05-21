@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import concurrent.futures
 import json
 import os
 import re
@@ -205,7 +206,7 @@ def build_email(payload):
     return subject, plain, html, buyer_email
 
 
-def send_email_resend(subject, plain, html, reply_to):
+def _send_email_resend_now(subject, plain, html, reply_to):
     body = {
         "from": RESEND_FROM,
         "to": [ORDER_TO],
@@ -228,14 +229,25 @@ def send_email_resend(subject, plain, html, reply_to):
         },
         method="POST",
     )
+    with urlopen(request, timeout=10) as response:
+        return json.loads(response.read().decode("utf-8") or "{}")
+
+
+def send_email_resend(subject, plain, html, reply_to):
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    future = executor.submit(_send_email_resend_now, subject, plain, html, reply_to)
     try:
-        with urlopen(request, timeout=15) as response:
-            return json.loads(response.read().decode("utf-8") or "{}")
+        return future.result(timeout=12)
+    except concurrent.futures.TimeoutError as exc:
+        future.cancel()
+        raise RuntimeError("Resend no respondio dentro de 12 segundos. Revisar API key, dominio remitente o estado de Resend.") from exc
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"Resend rechazo el envio: HTTP {exc.code}. {detail}") from exc
     except Exception as exc:
         raise RuntimeError(f"No se pudo conectar con Resend: {type(exc).__name__}: {exc}") from exc
+    finally:
+        executor.shutdown(wait=False, cancel_futures=True)
 
 
 def send_email_smtp(subject, plain, html, reply_to):

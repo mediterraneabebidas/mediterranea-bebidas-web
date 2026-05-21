@@ -255,6 +255,40 @@
     line-height: 1.8;
   }
   .hero-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .hero-proofbar {
+    width:min(760px, 100%);
+    margin:2rem auto 0;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0.65rem;
+  }
+  .hero-proofitem {
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:rgba(255,255,255,0.68);
+    padding:0.72rem 0.85rem;
+    text-align:left;
+    box-shadow:0 16px 34px rgba(38,24,54,0.07);
+  }
+  body.dark-theme .hero-proofitem {
+    background:rgba(17,17,21,0.70);
+  }
+  .hero-proofitem strong {
+    display:block;
+    color:var(--text);
+    font-size:0.78rem;
+    font-weight:800;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    line-height:1.25;
+  }
+  .hero-proofitem span {
+    display:block;
+    margin-top:0.18rem;
+    color:var(--text-muted);
+    font-size:0.72rem;
+    line-height:1.35;
+  }
   .btn-primary {
     background: var(--purple);
     color:#fff; text-decoration:none;
@@ -293,6 +327,54 @@
   @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
 
   /* ── STATS ── */
+  .sales-proof-strip {
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    background:var(--bg2);
+    padding:0.95rem 3rem;
+  }
+  .sales-proof-inner {
+    max-width:1280px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:0.8rem;
+  }
+  .sales-proof {
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    min-height:58px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:0.75rem 0.9rem;
+    background:rgba(123,47,190,0.035);
+  }
+  .sales-proof svg {
+    width:22px;
+    height:22px;
+    stroke:var(--accent);
+    fill:none;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    flex-shrink:0;
+  }
+  .sales-proof strong {
+    display:block;
+    color:var(--text);
+    font-size:0.78rem;
+    line-height:1.2;
+    font-weight:800;
+  }
+  .sales-proof span {
+    display:block;
+    color:var(--text-muted);
+    font-size:0.7rem;
+    line-height:1.35;
+    margin-top:0.1rem;
+  }
+
   .stats-bar {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
@@ -489,8 +571,8 @@
 
   .wine-grid {
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    gap:1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 370px), 1fr));
+    gap:1.55rem;
     background: transparent;
     border: 0;
     border-radius:0;
@@ -498,7 +580,7 @@
   }
   .wine-card {
     background: var(--bg2);
-    padding: 1.7rem 1.55rem;
+    padding: 1.9rem 1.75rem;
     transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     cursor:default;
     position:relative;
@@ -506,7 +588,7 @@
   }
   .wine-card:hover { background: var(--bg3); }
   .wine-image {
-    height:190px;
+    height:230px;
     display:flex;
     align-items:flex-end;
     justify-content:center;
@@ -516,7 +598,7 @@
   }
   .wine-image img {
     max-width:100%;
-    max-height:184px;
+    max-height:222px;
     object-fit:contain;
     filter:drop-shadow(0 14px 16px rgba(0,0,0,0.22));
   }
@@ -544,7 +626,7 @@
   .badge-bag-in-box { background:rgba(100,180,100,0.1); color: #7DC47D; border:1px solid rgba(100,180,100,0.2); }
   .badge-damajuana { background:rgba(180,130,60,0.1); color: #C9944A; border:1px solid rgba(180,130,60,0.2); }
   .wine-name {
-    font-size:1.1rem; font-weight:600; color:var(--text);
+    font-size:1.18rem; font-weight:700; color:var(--text);
     margin-bottom:0.25rem; line-height:1.25;
   }
   .wine-varietal { font-size:0.84rem; color:var(--text-muted); }
@@ -620,7 +702,7 @@
   }
   .wine-spec-list li {
     display:grid;
-    grid-template-columns:minmax(92px, 0.36fr) 1fr;
+    grid-template-columns:minmax(104px, 0.42fr) 1fr;
     gap:0.5rem;
     align-items:start;
     padding:0.42rem 0.54rem;
@@ -649,7 +731,7 @@
     .wine-spec-list li {
       display:block;
       min-width:0;
-      padding-inline:0.55rem;
+      padding-inline:0.65rem;
     }
     .wine-spec-label {
       display:block;
@@ -975,6 +1057,7 @@
     width:min(860px, calc(100vw - 2rem));
     max-height:min(760px, calc(100vh - 2rem));
     overflow:auto;
+    overflow-x:hidden;
     background:var(--bg2);
     color:var(--text);
     border:1px solid var(--border);
@@ -1168,6 +1251,32 @@
     text-transform:uppercase;
     cursor:pointer;
   }
+  .checkout-action-row {
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0.65rem;
+    margin-top:1rem;
+  }
+  .checkout-action-row .checkout-submit {
+    margin-top:0;
+  }
+  .checkout-whatsapp {
+    width:100%;
+    border:1px solid rgba(37,211,102,0.28);
+    border-radius:12px;
+    padding:0.95rem 1rem;
+    background:rgba(37,211,102,0.12);
+    color:#0f8f3f;
+    font-family:'DM Sans', sans-serif;
+    font-weight:800;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .checkout-whatsapp:hover {
+    background:#25D366;
+    color:#07140B;
+  }
 
   .checkout-modal {
     width:min(1120px, calc(100vw - 2rem));
@@ -1241,6 +1350,7 @@
     align-items:start;
   }
   .checkout-column { display:flex; flex-direction:column; gap:1rem; }
+  .checkout-column, .checkout-panel, .checkout-field-grid, .checkout-side { min-width:0; }
   .checkout-panel {
     border-radius:18px;
     padding:1.2rem;
@@ -1616,6 +1726,8 @@
     color:var(--text);
   }
   @media(max-width:900px) {
+    .hero-proofbar, .sales-proof-inner { grid-template-columns:1fr; }
+    .sales-proof-strip { padding:0.8rem 1rem; }
     .checkout-progress { padding:0.85rem 1rem 0; }
     .checkout-body { grid-template-columns:1fr; padding:1rem; }
     .checkout-side { position:static; }
@@ -1624,6 +1736,26 @@
   @media(max-width:720px) {
     .checkout-body { grid-template-columns:1fr; padding:1rem; }
     .checkout-field-grid, .payment-options { grid-template-columns:1fr; }
+  }
+  @media(max-width:520px) {
+    .checkout-modal { width:calc(100vw - 0.8rem); max-height:calc(100vh - 0.8rem); }
+    .checkout-head { padding:1.1rem 1rem; }
+    .checkout-title { font-size:1.85rem; }
+    .checkout-progress {
+      padding:0.85rem 0.75rem 0;
+      overflow:hidden;
+    }
+    .checkout-step { font-size:0.62rem; letter-spacing:0.06em; }
+    .checkout-step span { width:40px; height:40px; }
+    .checkout-step::before { top:20px; }
+    .checkout-body { padding:0.8rem; gap:0.8rem; }
+    .checkout-panel { padding:1rem; }
+  }
+  @media(max-height:760px) {
+    #inicio { min-height:92vh; }
+    .hero-title { font-size:clamp(3rem, 7vw, 5.8rem); margin-bottom:1rem; }
+    .hero-sub { margin-bottom:2rem; }
+    .hero-proofbar { display:none; }
   }
   .whatsapp-float {
     position:fixed;
@@ -1642,6 +1774,24 @@
     .sales-contact { grid-template-columns:1fr; gap:2rem; }
     .cart-toggle span { display:none; }
     .cart-actions { grid-template-columns:1fr; }
+  }
+  @media(max-width:520px) {
+    .cart-list { padding:1rem 0.8rem; overflow-x:hidden; }
+    .cart-item {
+      grid-template-columns:48px minmax(0, 1fr);
+      align-items:start;
+      gap:0.75rem;
+    }
+    .cart-item img { width:48px; height:62px; }
+    .cart-item > div:nth-child(2) { min-width:0; }
+    .cart-item-meta, .cart-item-name, .cart-item-price { overflow-wrap:anywhere; }
+    .mini-specs div { grid-template-columns:64px minmax(0, 1fr); }
+    .mini-specs dd { overflow-wrap:anywhere; }
+    .qty-control {
+      grid-column:1 / -1;
+      justify-content:flex-end;
+      padding-top:0.25rem;
+    }
   }
 
   /* ── FOOTER ── */
@@ -1708,12 +1858,7 @@
     --olive: #B58A45;
     --nav-bg: rgba(255,255,255,0.84);
     --shadow: 0 24px 70px rgba(38,24,54,0.12);
-    background:
-      linear-gradient(90deg, rgba(123,47,190,0.026) 1px, transparent 1px),
-      linear-gradient(180deg, rgba(37,24,53,0.026) 1px, transparent 1px),
-      radial-gradient(ellipse at 50% 0%, rgba(123,47,190,0.06), transparent 46%),
-      #FFFFFF;
-    background-size: 112px 112px, 112px 112px, auto, auto;
+    background:#FFFFFF;
   }
   body:not(.dark-theme)::before {
     content:'';
@@ -1722,9 +1867,9 @@
     z-index:-1;
     pointer-events:none;
     background:
-      repeating-linear-gradient(112deg, rgba(37,24,53,0.012) 0 1px, transparent 1px 9px),
-      linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0));
-    opacity:0.85;
+      radial-gradient(ellipse at 18% 14%, rgba(123,47,190,0.055), transparent 36%),
+      radial-gradient(ellipse at 88% 8%, rgba(181,138,69,0.045), transparent 34%);
+    opacity:1;
   }
   body:not(.dark-theme) nav {
     box-shadow:0 18px 50px rgba(38,24,54,0.08);
@@ -1749,10 +1894,13 @@
   }
   body:not(.dark-theme) .hero-bg {
     background:
-      radial-gradient(ellipse at 20% 18%, rgba(123,47,190,0.08), transparent 34%),
-      radial-gradient(ellipse at 78% 18%, rgba(176,106,255,0.07), transparent 32%),
-      radial-gradient(ellipse at 50% 43%, rgba(123,47,190,0.10), transparent 46%),
+      linear-gradient(90deg, rgba(37,24,53,0.022) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(37,24,53,0.018) 1px, transparent 1px),
+      radial-gradient(ellipse at 20% 18%, rgba(123,47,190,0.06), transparent 34%),
+      radial-gradient(ellipse at 78% 18%, rgba(181,138,69,0.045), transparent 32%),
+      radial-gradient(ellipse at 50% 43%, rgba(123,47,190,0.085), transparent 46%),
       #FFFFFF;
+    background-size:96px 96px, 96px 96px, auto, auto, auto, auto;
   }
   body:not(.dark-theme) .hero-bg::before,
   body:not(.dark-theme) .hero-bg::after {
@@ -1786,6 +1934,14 @@
     background:
       linear-gradient(90deg, rgba(255,255,255,0.96), rgba(247,245,252,0.86), rgba(255,255,255,0.96));
     box-shadow:inset 0 1px rgba(255,255,255,0.78), inset 0 -1px rgba(37,24,53,0.08);
+  }
+  body:not(.dark-theme) .sales-proof-strip {
+    background:rgba(255,255,255,0.94);
+    box-shadow:0 18px 50px rgba(38,24,54,0.05);
+  }
+  body:not(.dark-theme) .sales-proof {
+    background:#FFFFFF;
+    box-shadow:0 14px 34px rgba(38,24,54,0.06);
   }
   body:not(.dark-theme) #nosotros,
   body:not(.dark-theme) #bodegas {
@@ -1822,7 +1978,7 @@
     background:linear-gradient(90deg, rgba(123,47,190,0.28), transparent);
   }
   body:not(.dark-theme) .wine-grid {
-    gap:1.35rem;
+    gap:1.55rem;
     background:transparent;
     border:none;
     border-radius:0;
@@ -1833,7 +1989,7 @@
     border-radius:22px;
     background:
       linear-gradient(180deg, #FFFFFF, #FBFAFE);
-    box-shadow:0 18px 44px rgba(38,24,54,0.08);
+    box-shadow:0 22px 54px rgba(38,24,54,0.09);
   }
   body:not(.dark-theme) .wine-card::before {
     content:'';
@@ -1921,12 +2077,38 @@
       <a href="#catalogo" class="btn-primary">Ver catálogo</a>
       <a href="https://wa.me/5493512114069?text=Hola%20Mediterranea%20Bebidas%2C%20quiero%20hacer%20un%20pedido." target="_self" class="btn-outline" rel="noopener">Comprar por WhatsApp</a>
     </div>
+    <div class="hero-proofbar" aria-label="Beneficios de compra">
+      <div class="hero-proofitem"><strong>Pedido real</strong><span>Carrito con email y WhatsApp.</span></div>
+      <div class="hero-proofitem"><strong>Pago validado</strong><span>Monto corroborado antes de pagar.</span></div>
+      <div class="hero-proofitem"><strong>Zona norte</strong><span>Envios desde Valle Escondido.</span></div>
+    </div>
   </div>
   <div class="hero-scroll">
     <div class="hero-scroll-line"></div>
     <span>Scroll</span>
   </div>
 </section>
+
+<div class="sales-proof-strip" aria-label="Informacion de compra">
+  <div class="sales-proof-inner">
+    <div class="sales-proof">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18"></path><path d="M6 7v13h12V7"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>
+      <div><strong>Venta mayorista</strong><span>Vinotecas, restaurantes, hoteles y comercios.</span></div>
+    </div>
+    <div class="sales-proof">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3z"></path><path d="M14 10h3.5L21 14v2h-7z"></path><circle cx="7" cy="19" r="2"></circle><circle cx="18" cy="19" r="2"></circle></svg>
+      <div><strong>Envio calculado</strong><span>CP, zona norte y retiros acordados.</span></div>
+    </div>
+    <div class="sales-proof">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path></svg>
+      <div><strong>Compra protegida</strong><span>Sin ingresar datos bancarios en la web.</span></div>
+    </div>
+    <div class="sales-proof">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg>
+      <div><strong>Respuesta directa</strong><span>Confirmacion por Gmail o WhatsApp.</span></div>
+    </div>
+  </div>
+</div>
 
 <!-- STATS -->
 <div class="stats-bar">
@@ -2569,7 +2751,10 @@
         <label for="checkoutNotes">Notas del pedido</label>
         <textarea id="checkoutNotes" name="checkoutNotes" placeholder="Horario de entrega, CUIT, aclaraciones"></textarea>
       </div>
-      <button class="checkout-submit" id="checkoutSubmit" type="submit">Enviar pedido por email</button>
+      <div class="checkout-action-row">
+        <button class="checkout-submit" id="checkoutSubmit" type="submit">Enviar pedido por email</button>
+        <button class="checkout-whatsapp" type="button" onclick="sendCheckoutToWhatsApp()">Enviar tambien por WhatsApp</button>
+      </div>
       <div class="order-email-status" id="orderEmailStatus" role="status" aria-live="polite"></div>
       <div class="mercadopago-dev-note">El pedido se env&iacute;a a mediterraneabebidas60@gmail.com desde un servidor propio. El total se vuelve a calcular del lado servidor antes de enviar el email.</div>
     </aside>
@@ -3199,6 +3384,14 @@ function cartMessage() {
 
 function sendCartToWhatsApp() {
   window.location.href = whatsAppUrl(cartMessage());
+}
+
+function sendCheckoutToWhatsApp() {
+  if(!cart.length) {
+    openCart();
+    return;
+  }
+  window.location.href = whatsAppUrl(checkoutMessage());
 }
 
 setupSiteCursor();

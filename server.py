@@ -14,6 +14,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
+APP_VERSION = "resend-timeout-2026-05-21-01"
 BASE_DIR = Path(__file__).resolve().parent
 INDEX_FILE = BASE_DIR / "index.html"
 ORDER_TO = os.environ.get("MEDITERRANEA_ORDER_TO", "mediterraneabebidas60@gmail.com")
@@ -298,6 +299,7 @@ def email_config_status():
         provider = "missing"
     return {
         "ok": True,
+        "app_version": APP_VERSION,
         "email_provider": provider,
         "has_resend_api_key": bool(RESEND_API_KEY),
         "has_smtp_credentials": bool(SMTP_USER and SMTP_PASSWORD),

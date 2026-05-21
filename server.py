@@ -13,7 +13,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-APP_VERSION = "catalog-fast-2026-05-21-02"
+APP_VERSION = "checkout-mp-steps-2026-05-21-03"
 BASE_DIR = Path(__file__).resolve().parent
 INDEX_FILE = BASE_DIR / "index.html"
 ORDER_TO = os.environ.get("MEDITERRANEA_ORDER_TO", "mediterraneabebidas60@gmail.com")
@@ -146,6 +146,8 @@ def build_email(payload):
     zip_code = text_value(payload, "codigo_postal")
     shipping_cost = text_value(payload, "costo_envio_estimado")
     address = text_value(payload, "direccion_o_retiro")
+    payment_status = text_value(payload, "pago_confirmado_cliente", "No")
+    mp_alias = text_value(payload, "alias_mercado_pago", "bruno.laforte")
     notes = text_value(payload, "notas")
 
     subject = f"Nuevo pedido web - Mediterranea Bebidas - {name if name != '-' else phone}"
@@ -191,6 +193,8 @@ def build_email(payload):
         f"Codigo postal: {zip_code}",
         f"Costo envio estimado: {shipping_cost}",
         f"Direccion/retiro: {address}",
+        f"Pago confirmado por cliente: {payment_status}",
+        f"Alias Mercado Pago: {mp_alias}",
         f"Notas: {notes}",
         "",
         "El total fue recalculado por el servidor desde la lista cargada en la web. Confirmar stock, envio e impuestos antes del pago.",
@@ -213,6 +217,8 @@ def build_email(payload):
     <strong>Codigo postal:</strong> {escape(zip_code)}<br>
     <strong>Costo envio estimado:</strong> {escape(shipping_cost)}<br>
     <strong>Direccion/retiro:</strong> {escape(address)}<br>
+    <strong>Pago confirmado por cliente:</strong> {escape(payment_status)}<br>
+    <strong>Alias Mercado Pago:</strong> {escape(mp_alias)}<br>
     <strong>Notas:</strong> {escape(notes)}</p>
     <p>El total fue recalculado por el servidor desde la lista cargada en la web. Confirmar stock, envio e impuestos antes del pago.</p>
     """
@@ -342,6 +348,8 @@ class Handler(SimpleHTTPRequestHandler):
             if length <= 0 or length > 1_000_000:
                 raise ValueError("Pedido vacio o demasiado grande")
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
+            if str(payload.get("pago_confirmado_cliente", "")).strip().lower() not in {"si", "sí", "true", "1"}:
+                raise ValueError("El pedido por email solo se envia despues de confirmar el pago por Mercado Pago. Usa WhatsApp para pedidos sin pago.")
             send_email(payload)
             self.respond_json(200, {"ok": True, "message": "Pedido enviado por email."})
         except Exception as exc:

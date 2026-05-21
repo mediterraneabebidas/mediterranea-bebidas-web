@@ -255,39 +255,82 @@
     line-height: 1.8;
   }
   .hero-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
-  .hero-proofbar {
-    width:min(760px, 100%);
-    margin:2rem auto 0;
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:0.65rem;
+  .promo-rail {
+    position:relative;
+    z-index:2;
+    margin:-2.8rem auto 0;
+    max-width:1280px;
+    padding:0 3rem 2.8rem;
   }
-  .hero-proofitem {
-    border:1px solid var(--border);
-    border-radius:18px;
-    background:rgba(255,255,255,0.68);
-    padding:0.72rem 0.85rem;
-    text-align:left;
-    box-shadow:0 16px 34px rgba(38,24,54,0.07);
+  .promo-rail-inner {
+    border:1px solid rgba(123,47,190,0.18);
+    border-radius:24px;
+    background:linear-gradient(135deg, rgba(37,26,44,0.96), rgba(91,42,126,0.92));
+    box-shadow:0 30px 75px rgba(38,24,54,0.26);
+    padding:1rem;
+    overflow:hidden;
   }
-  body.dark-theme .hero-proofitem {
-    background:rgba(17,17,21,0.70);
+  .promo-rail-head {
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:1rem;
+    color:#fff;
+    padding:0.35rem 0.3rem 0.95rem;
   }
-  .hero-proofitem strong {
-    display:block;
-    color:var(--text);
-    font-size:0.78rem;
-    font-weight:800;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    line-height:1.25;
+  .promo-rail-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.75rem;
+    line-height:1;
   }
-  .hero-proofitem span {
-    display:block;
-    margin-top:0.18rem;
-    color:var(--text-muted);
+  .promo-rail-sub {
+    color:rgba(255,255,255,0.68);
     font-size:0.72rem;
-    line-height:1.35;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+  .promo-track {
+    display:flex;
+    gap:0.85rem;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    padding-bottom:0.2rem;
+  }
+  .promo-card {
+    min-width:260px;
+    scroll-snap-align:start;
+    border:1px solid rgba(255,255,255,0.13);
+    border-radius:18px;
+    background:rgba(255,255,255,0.92);
+    color:#251E1A;
+    padding:0.85rem;
+    display:grid;
+    grid-template-columns:74px 1fr;
+    gap:0.8rem;
+    align-items:center;
+    text-decoration:none;
+    box-shadow:0 18px 38px rgba(0,0,0,0.18);
+  }
+  body.dark-theme .promo-card { background:rgba(240,238,245,0.95); }
+  .promo-card img {
+    width:74px;
+    height:100px;
+    object-fit:contain;
+    filter:drop-shadow(0 14px 16px rgba(0,0,0,0.24));
+  }
+  .promo-card strong {
+    display:block;
+    font-size:0.95rem;
+    line-height:1.22;
+    margin-bottom:0.25rem;
+  }
+  .promo-card span {
+    display:block;
+    color:#7B2FBE;
+    font-size:0.66rem;
+    font-weight:800;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
   }
   .btn-primary {
     background: var(--purple);
@@ -327,54 +370,6 @@
   @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
 
   /* ── STATS ── */
-  .sales-proof-strip {
-    border-top:1px solid var(--border);
-    border-bottom:1px solid var(--border);
-    background:var(--bg2);
-    padding:0.95rem 3rem;
-  }
-  .sales-proof-inner {
-    max-width:1280px;
-    margin:0 auto;
-    display:grid;
-    grid-template-columns:repeat(4, minmax(0, 1fr));
-    gap:0.8rem;
-  }
-  .sales-proof {
-    display:flex;
-    align-items:center;
-    gap:0.7rem;
-    min-height:58px;
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:0.75rem 0.9rem;
-    background:rgba(123,47,190,0.035);
-  }
-  .sales-proof svg {
-    width:22px;
-    height:22px;
-    stroke:var(--accent);
-    fill:none;
-    stroke-width:2;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    flex-shrink:0;
-  }
-  .sales-proof strong {
-    display:block;
-    color:var(--text);
-    font-size:0.78rem;
-    line-height:1.2;
-    font-weight:800;
-  }
-  .sales-proof span {
-    display:block;
-    color:var(--text-muted);
-    font-size:0.7rem;
-    line-height:1.35;
-    margin-top:0.1rem;
-  }
-
   .stats-bar {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
@@ -1277,6 +1272,89 @@
     background:#25D366;
     color:#07140B;
   }
+  .checkout-nav {
+    display:flex;
+    justify-content:space-between;
+    gap:0.75rem;
+    margin-top:1.15rem;
+  }
+  .checkout-next,
+  .checkout-back,
+  .checkout-mp-link {
+    min-height:44px;
+    border-radius:12px;
+    padding:0.78rem 1rem;
+    font-family:'DM Sans', sans-serif;
+    font-weight:800;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    cursor:pointer;
+  }
+  .checkout-next {
+    border:none;
+    margin-left:auto;
+    background:var(--purple);
+    color:#fff;
+  }
+  .checkout-back {
+    border:1px solid var(--border);
+    background:var(--bg3);
+    color:var(--text-muted);
+  }
+  .checkout-mp-link {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:none;
+    background:#00A7E1;
+    color:#fff;
+  }
+  .mp-alias-box {
+    margin-top:0.9rem;
+    border:1px solid rgba(0,167,225,0.24);
+    border-radius:14px;
+    background:rgba(0,167,225,0.08);
+    padding:0.9rem;
+  }
+  .mp-alias-label {
+    color:var(--text-muted);
+    font-size:0.68rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+  .mp-alias-value {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:0.8rem;
+    margin-top:0.3rem;
+    color:var(--text);
+    font-size:1.25rem;
+    font-weight:800;
+  }
+  .mp-alias-value button {
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:var(--bg2);
+    color:var(--accent);
+    padding:0.35rem 0.7rem;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.68rem;
+    font-weight:800;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .payment-confirm {
+    display:flex;
+    align-items:flex-start;
+    gap:0.55rem;
+    margin-top:0.9rem;
+    color:var(--text-muted);
+    font-size:0.82rem;
+    line-height:1.45;
+  }
 
   .checkout-modal {
     width:min(1120px, calc(100vw - 2rem));
@@ -1345,12 +1423,19 @@
   }
   .checkout-step.active { color:var(--text); }
   .checkout-step.active span { background:var(--purple); color:#fff; border-color:var(--purple); }
+  .checkout-step.done span {
+    background:rgba(123,47,190,0.14);
+    color:var(--accent);
+    border-color:rgba(123,47,190,0.28);
+  }
   .checkout-body {
     grid-template-columns:minmax(0, 1.35fr) minmax(320px, 0.65fr);
     align-items:start;
   }
   .checkout-column { display:flex; flex-direction:column; gap:1rem; }
   .checkout-column, .checkout-panel, .checkout-field-grid, .checkout-side { min-width:0; }
+  .checkout-step-panel { display:none; }
+  .checkout-step-panel.active { display:block; }
   .checkout-panel {
     border-radius:18px;
     padding:1.2rem;
@@ -1726,8 +1811,9 @@
     color:var(--text);
   }
   @media(max-width:900px) {
-    .hero-proofbar, .sales-proof-inner { grid-template-columns:1fr; }
-    .sales-proof-strip { padding:0.8rem 1rem; }
+    .promo-rail { padding:0 1rem 1.8rem; margin-top:-1.8rem; }
+    .promo-rail-head { align-items:flex-start; flex-direction:column; }
+    .promo-card { min-width:235px; }
     .checkout-progress { padding:0.85rem 1rem 0; }
     .checkout-body { grid-template-columns:1fr; padding:1rem; }
     .checkout-side { position:static; }
@@ -1755,7 +1841,7 @@
     #inicio { min-height:92vh; }
     .hero-title { font-size:clamp(3rem, 7vw, 5.8rem); margin-bottom:1rem; }
     .hero-sub { margin-bottom:2rem; }
-    .hero-proofbar { display:none; }
+    .promo-rail { margin-top:-1.3rem; }
   }
   .whatsapp-float {
     position:fixed;
@@ -1935,14 +2021,6 @@
       linear-gradient(90deg, rgba(255,255,255,0.96), rgba(247,245,252,0.86), rgba(255,255,255,0.96));
     box-shadow:inset 0 1px rgba(255,255,255,0.78), inset 0 -1px rgba(37,24,53,0.08);
   }
-  body:not(.dark-theme) .sales-proof-strip {
-    background:rgba(255,255,255,0.94);
-    box-shadow:0 18px 50px rgba(38,24,54,0.05);
-  }
-  body:not(.dark-theme) .sales-proof {
-    background:#FFFFFF;
-    box-shadow:0 14px 34px rgba(38,24,54,0.06);
-  }
   body:not(.dark-theme) #nosotros,
   body:not(.dark-theme) #bodegas {
     background:
@@ -2077,11 +2155,6 @@
       <a href="#catalogo" class="btn-primary">Ver catálogo</a>
       <a href="https://wa.me/5493512114069?text=Hola%20Mediterranea%20Bebidas%2C%20quiero%20hacer%20un%20pedido." target="_self" class="btn-outline" rel="noopener">Comprar por WhatsApp</a>
     </div>
-    <div class="hero-proofbar" aria-label="Beneficios de compra">
-      <div class="hero-proofitem"><strong>Pedido real</strong><span>Carrito con email y WhatsApp.</span></div>
-      <div class="hero-proofitem"><strong>Pago validado</strong><span>Monto corroborado antes de pagar.</span></div>
-      <div class="hero-proofitem"><strong>Zona norte</strong><span>Envios desde Valle Escondido.</span></div>
-    </div>
   </div>
   <div class="hero-scroll">
     <div class="hero-scroll-line"></div>
@@ -2089,23 +2162,21 @@
   </div>
 </section>
 
-<div class="sales-proof-strip" aria-label="Informacion de compra">
-  <div class="sales-proof-inner">
-    <div class="sales-proof">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18"></path><path d="M6 7v13h12V7"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>
-      <div><strong>Venta mayorista</strong><span>Vinotecas, restaurantes, hoteles y comercios.</span></div>
+<div class="promo-rail" aria-label="Vinos en promocion">
+  <div class="promo-rail-inner">
+    <div class="promo-rail-head">
+      <div>
+        <div class="promo-rail-title">Vinos en promoci&oacute;n</div>
+        <div class="promo-rail-sub">Selecci&oacute;n destacada para pedidos de esta semana</div>
+      </div>
+      <a href="#catalogo" class="btn-outline">Ver cat&aacute;logo</a>
     </div>
-    <div class="sales-proof">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3z"></path><path d="M14 10h3.5L21 14v2h-7z"></path><circle cx="7" cy="19" r="2"></circle><circle cx="18" cy="19" r="2"></circle></svg>
-      <div><strong>Envio calculado</strong><span>CP, zona norte y retiros acordados.</span></div>
-    </div>
-    <div class="sales-proof">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path></svg>
-      <div><strong>Compra protegida</strong><span>Sin ingresar datos bancarios en la web.</span></div>
-    </div>
-    <div class="sales-proof">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg>
-      <div><strong>Respuesta directa</strong><span>Confirmacion por Gmail o WhatsApp.</span></div>
+    <div class="promo-track">
+      <a class="promo-card" href="#catalogo"><img src="PRODUCTOS/producto_001.png" alt="Los Haroldos Extra Brut"><div><strong>Los Haroldos Extra Brut</strong><span>Espumante · caja x6</span></div></a>
+      <a class="promo-card" href="#catalogo"><img src="PRODUCTOS/producto_007.png" alt="Los Haroldos Reserva Malbec"><div><strong>Los Haroldos Reserva Malbec</strong><span>Tinto · caja x6</span></div></a>
+      <a class="promo-card" href="#catalogo" onclick="showTab('magnum')"><img src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"><div><strong>Balbo Magnum Blanco</strong><span>Magnum · 1500 ml</span></div></a>
+      <a class="promo-card" href="#tab-otros"><img src="PRODUCTOS/producto_041.png" alt="Vi&ntilde;as Riojanas Tetra Tinto"><div><strong>Vi&ntilde;as Riojanas Tetra Tinto</strong><span>Formato 1000 ml</span></div></a>
+      <a class="promo-card" href="#catalogo" onclick="showTab('profugo')"><img src="PRODUCTOS/producto_077.png" alt="Pr&oacute;fugo Frutos Rojos"><div><strong>Pr&oacute;fugo Frutos Rojos</strong><span>Autor · Mendoza</span></div></a>
     </div>
   </div>
 </div>
@@ -2193,6 +2264,7 @@
       <button class="tab-btn" onclick="showTab('chacabuco', event)">Chacabuco</button>
       <button class="tab-btn" onclick="showTab('domingo', event)">Domingo</button>
       <button class="tab-btn" onclick="showTab('profugo', event)">Pr&#243;fugo</button>
+      <button class="tab-btn" onclick="showTab('magnum', event)">Magnum</button>
       <div class="other-brands-wrap">
         <button class="tab-btn" onclick="showTab('otros', event)">Otras marcas</button>
         <div class="other-brands-menu" aria-label="Listado de otras marcas">
@@ -2477,6 +2549,17 @@
       </div>
     </div>
 
+    <div class="catalog-panel" id="tab-magnum">
+      <div class="bodega-section">
+        <div class="bodega-name">Magnum</div>
+        <div class="bodega-desc">Formatos grandes del cat&aacute;logo para imprimir. Botellas de 1500 ml para pedidos especiales y mesas de alto volumen.</div>
+        <div class="wine-grid">
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Magnum</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; Valle de Uco y Norte Mendoza &#183; 1500 ml</div></div>
+          <div class="wine-card"><div class="wine-image"><img src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Magnum</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; Valle de Uco y Norte Mendoza &#183; 1500 ml</div></div>
+        </div>
+      </div>
+    </div>
+
     <div class="catalog-panel" id="tab-otros">
       <div class="bodega-section">
         <div class="bodega-name">Otras marcas</div>
@@ -2601,22 +2684,22 @@
     <button class="checkout-close" type="button" onclick="closeCheckout()" aria-label="Cerrar pago">x</button>
   </div>
   <div class="checkout-progress" aria-hidden="true">
-    <div class="checkout-step active">
+    <div class="checkout-step active" data-checkout-indicator="1">
       <span><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1.5"></circle><circle cx="19" cy="21" r="1.5"></circle><path d="M2 3h3l2.3 12.2a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.5L22 7H6"></path></svg></span>
-      Carrito
+      Contacto
     </div>
-    <div class="checkout-step active">
+    <div class="checkout-step" data-checkout-indicator="2">
       <span><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"></path><path d="M14 10h3.5L21 14v2h-7z"></path><circle cx="7" cy="19" r="2"></circle><circle cx="18" cy="19" r="2"></circle></svg></span>
       Entrega
     </div>
-    <div class="checkout-step active">
+    <div class="checkout-step" data-checkout-indicator="3">
       <span><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path><path d="M7 15h4"></path><path d="M15 15h2"></path></svg></span>
       Pago
     </div>
   </div>
   <form class="checkout-body" id="checkoutForm" onsubmit="submitCheckout(event)">
     <div class="checkout-column">
-      <div class="checkout-panel">
+      <div class="checkout-panel checkout-step-panel active" data-checkout-step="1">
         <div class="checkout-panel-title">Datos de contacto</div>
         <div class="checkout-panel-sub">Te contactamos para confirmar stock, precios finales y coordinar la entrega.</div>
         <div class="checkout-field-grid">
@@ -2641,9 +2724,12 @@
           <input type="checkbox" id="buyerOffers" checked>
           Quiero recibir ofertas y novedades por email.
         </label>
+        <div class="checkout-nav">
+          <button class="checkout-next" type="button" onclick="nextCheckoutStep()">Siguiente</button>
+        </div>
       </div>
 
-      <div class="checkout-panel">
+      <div class="checkout-panel checkout-step-panel" data-checkout-step="2">
         <div class="checkout-panel-title">Entrega</div>
         <div class="checkout-panel-sub">Calcul&aacute; cobertura con tu c&oacute;digo postal o eleg&iacute; retiro por punto acordado.</div>
         <div class="zip-row">
@@ -2695,9 +2781,13 @@
           <label for="buyerAddress" id="buyerAddressLabel">Direcci&oacute;n exacta de entrega</label>
           <input id="buyerAddress" name="buyerAddress" autocomplete="street-address" placeholder="Calle, altura, barrio, piso/depto">
         </div>
+        <div class="checkout-nav">
+          <button class="checkout-back" type="button" onclick="prevCheckoutStep()">Volver</button>
+          <button class="checkout-next" type="button" onclick="nextCheckoutStep()">Siguiente</button>
+        </div>
       </div>
 
-      <div class="checkout-panel">
+      <div class="checkout-panel checkout-step-panel" data-checkout-step="3">
         <div class="checkout-panel-title">Medio de pago</div>
         <div class="payment-logos" aria-label="Medio de pago disponible">
           <span class="pay-logo mercadopago" role="img" aria-label="Mercado Pago">
@@ -2712,7 +2802,19 @@
         </div>
         <div class="mp-box">
           <div class="mp-mark">MP</div>
-          <p class="section-body" style="font-size:0.88rem;line-height:1.65;">El pedido se env&iacute;a primero para confirmar stock, precios y env&iacute;o. Despu&eacute;s se comparte un link o alias de Mercado Pago con el monto validado.</p>
+          <p class="section-body" style="font-size:0.88rem;line-height:1.65;">Pag&aacute; por Mercado Pago con el alias indicado. El pedido por email se env&iacute;a solo cuando marques que el pago ya fue realizado.</p>
+          <div class="mp-alias-box">
+            <div class="mp-alias-label">Alias Mercado Pago</div>
+            <div class="mp-alias-value"><span id="mpAliasText">bruno.laforte</span><button type="button" onclick="copyMercadoPagoAlias()">Copiar</button></div>
+          </div>
+          <div class="checkout-nav">
+            <button class="checkout-back" type="button" onclick="prevCheckoutStep()">Volver</button>
+            <a class="checkout-mp-link" href="https://link.mercadopago.com.ar/bruno.laforte" target="_blank" rel="noopener">Abrir Mercado Pago</a>
+          </div>
+          <label class="payment-confirm">
+            <input type="checkbox" id="paymentConfirmed">
+            Ya realic&eacute; el pago por Mercado Pago y quiero enviar el pedido por email.
+          </label>
         </div>
         <div class="secure-note">
           <span class="trust-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg></span>
@@ -2720,7 +2822,7 @@
         </div>
       </div>
 
-      <div class="checkout-panel">
+      <div class="checkout-panel checkout-step-panel" data-checkout-step="3">
         <div class="checkout-panel-title">Cambios y devoluciones</div>
         <div class="trust-grid">
           <div class="trust-item">
@@ -2752,11 +2854,11 @@
         <textarea id="checkoutNotes" name="checkoutNotes" placeholder="Horario de entrega, CUIT, aclaraciones"></textarea>
       </div>
       <div class="checkout-action-row">
-        <button class="checkout-submit" id="checkoutSubmit" type="submit">Enviar pedido por email</button>
-        <button class="checkout-whatsapp" type="button" onclick="sendCheckoutToWhatsApp()">Enviar tambien por WhatsApp</button>
+        <button class="checkout-submit" id="checkoutSubmit" type="submit">Confirmar pago y enviar email</button>
+        <button class="checkout-whatsapp" type="button" onclick="sendCheckoutToWhatsApp()">Hacer pedido por WhatsApp</button>
       </div>
       <div class="order-email-status" id="orderEmailStatus" role="status" aria-live="polite"></div>
-      <div class="mercadopago-dev-note">El pedido se env&iacute;a a mediterraneabebidas60@gmail.com desde un servidor propio. El total se vuelve a calcular del lado servidor antes de enviar el email.</div>
+      <div class="mercadopago-dev-note">Si todav&iacute;a no pagaste, us&aacute; WhatsApp. El email se env&iacute;a solo luego de confirmar el pago por Mercado Pago.</div>
     </aside>
   </form>
 </section>
@@ -2799,6 +2901,10 @@ function showTab(id, evt) {
   const panel = document.getElementById('tab-' + id);
   if(panel) panel.classList.add('active');
   if(evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+  else {
+    const tabButton = Array.from(document.querySelectorAll('.tab-btn')).find(button => button.getAttribute('onclick')?.includes(`'${id}'`));
+    tabButton?.classList.add('active');
+  }
 }
 
 
@@ -2808,9 +2914,12 @@ const WHATSAPP_NUMBER = '5493512114069';
 const WHATSAPP_DEFAULT_TEXT = 'Hola Mediterranea Bebidas, quiero hacer un pedido.';
 const ORDER_EMAIL_TO = 'mediterraneabebidas60@gmail.com';
 const ORDER_EMAIL_ENDPOINT = '/api/orders';
+const MERCADOPAGO_ALIAS = 'bruno.laforte';
+const MERCADOPAGO_LINK = 'https://link.mercadopago.com.ar/bruno.laforte';
 let cart = [];
 let selectedPayment = 'mp';
 let selectedDelivery = 'delivery';
+let checkoutStep = 1;
 
 function whatsAppUrl(message = WHATSAPP_DEFAULT_TEXT) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -3151,6 +3260,7 @@ function openCheckout() {
   }
   closeCart();
   renderCheckoutSummary();
+  setCheckoutStep(1);
   document.getElementById('checkoutOverlay')?.classList.add('open');
   document.getElementById('checkoutModal')?.classList.add('open');
 }
@@ -3158,6 +3268,48 @@ function openCheckout() {
 function closeCheckout() {
   document.getElementById('checkoutOverlay')?.classList.remove('open');
   document.getElementById('checkoutModal')?.classList.remove('open');
+}
+
+function setCheckoutStep(step) {
+  checkoutStep = Math.max(1, Math.min(3, step));
+  document.querySelectorAll('[data-checkout-step]').forEach(panel => {
+    panel.classList.toggle('active', Number(panel.dataset.checkoutStep) === checkoutStep);
+  });
+  document.querySelectorAll('[data-checkout-indicator]').forEach(indicator => {
+    const indicatorStep = Number(indicator.dataset.checkoutIndicator);
+    indicator.classList.toggle('active', indicatorStep === checkoutStep);
+    indicator.classList.toggle('done', indicatorStep < checkoutStep);
+  });
+}
+
+function validateCheckoutStep(step) {
+  if(step === 1) {
+    const fields = ['buyerName', 'buyerPhone', 'buyerEmail'];
+    const invalid = fields.map(id => document.getElementById(id)).find(field => field && !field.checkValidity());
+    if(invalid) {
+      invalid.reportValidity();
+      return false;
+    }
+  }
+  if(step === 2 && selectedDelivery === 'delivery') {
+    const address = document.getElementById('buyerAddress');
+    if(address && !address.value.trim()) {
+      address.setCustomValidity('Ingresá una dirección o elegí un punto de retiro.');
+      address.reportValidity();
+      address.setCustomValidity('');
+      return false;
+    }
+  }
+  return true;
+}
+
+function nextCheckoutStep() {
+  if(!validateCheckoutStep(checkoutStep)) return;
+  setCheckoutStep(checkoutStep + 1);
+}
+
+function prevCheckoutStep() {
+  setCheckoutStep(checkoutStep - 1);
 }
 
 function selectDelivery(method, button) {
@@ -3266,7 +3418,7 @@ function checkoutMessage() {
   const address = document.getElementById('buyerAddress')?.value.trim() || '-';
   const zip = document.getElementById('deliveryZip')?.value.trim() || '-';
   const notes = document.getElementById('checkoutNotes')?.value.trim() || '-';
-  const paymentDetail = 'Mercado Pago a coordinar luego de validar stock, envio y total';
+  const paymentDetail = `Mercado Pago - alias ${MERCADOPAGO_ALIAS}`;
   return [
     'Hola Mediterranea Bebidas, quiero finalizar esta compra:',
     ...cart.map(item => `- ${orderLine(item)}`),
@@ -3284,7 +3436,7 @@ function checkoutMessage() {
     `Direccion/retiro: ${address}`,
     `Notas: ${notes}`,
     '',
-    'Solicito confirmacion de stock, total no editable, envio y medio de pago seguro.'
+    'Pedido realizado por WhatsApp. Si el pago aun no fue confirmado, coordinar antes de preparar entrega.'
   ].join('\n');
 }
 
@@ -3321,7 +3473,9 @@ function checkoutEmailPayload() {
     })),
     subtotal_estimado: totals.subtotal ? formatPrice(totals.subtotal) : 'A corroborar',
     precios: totals.missing ? 'Hay productos con precio a confirmar' : 'Precios cargados en la web, sujetos a validacion final',
-    medio_de_pago: 'Mercado Pago a coordinar luego de validar stock, envio y total',
+    medio_de_pago: `Mercado Pago - alias ${MERCADOPAGO_ALIAS}`,
+    pago_confirmado_cliente: document.getElementById('paymentConfirmed')?.checked ? 'Si' : 'No',
+    alias_mercado_pago: MERCADOPAGO_ALIAS,
     notas: notes,
     mensaje_completo: checkoutMessage()
   };
@@ -3357,12 +3511,21 @@ async function submitCheckout(event) {
     openCart();
     return;
   }
+  if(!validateCheckoutStep(1) || !validateCheckoutStep(2)) return;
+  if(checkoutStep !== 3) {
+    setCheckoutStep(3);
+    return;
+  }
+  if(!document.getElementById('paymentConfirmed')?.checked) {
+    setOrderEmailStatus('error', `Primero abrí Mercado Pago y marcá que pagaste con el alias ${MERCADOPAGO_ALIAS}. Si todavía no pagaste, usá "Hacer pedido por WhatsApp".`);
+    return;
+  }
   const submit = document.getElementById('checkoutSubmit');
   if(submit) {
     submit.disabled = true;
     submit.textContent = 'Enviando pedido...';
   }
-  setOrderEmailStatus('', `Enviando el pedido a ${ORDER_EMAIL_TO}...`);
+  setOrderEmailStatus('', `Enviando el pedido pagado a ${ORDER_EMAIL_TO}...`);
   try {
     await sendOrderEmail();
     setOrderEmailStatus('success', `Pedido enviado a ${ORDER_EMAIL_TO}. Revisá ese Gmail para confirmar stock, entrega y pago.`);
@@ -3371,8 +3534,17 @@ async function submitCheckout(event) {
   } finally {
     if(submit) {
       submit.disabled = false;
-      submit.textContent = 'Enviar pedido por email';
+      submit.textContent = 'Confirmar pago y enviar email';
     }
+  }
+}
+
+async function copyMercadoPagoAlias() {
+  try {
+    await navigator.clipboard.writeText(MERCADOPAGO_ALIAS);
+    setOrderEmailStatus('', `Alias copiado: ${MERCADOPAGO_ALIAS}`);
+  } catch(error) {
+    setOrderEmailStatus('', `Alias Mercado Pago: ${MERCADOPAGO_ALIAS}`);
   }
 }
 

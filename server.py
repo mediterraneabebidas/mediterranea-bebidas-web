@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import concurrent.futures
 import json
 import os
 import re
@@ -14,7 +13,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-APP_VERSION = "resend-timeout-2026-05-21-01"
+APP_VERSION = "catalog-fast-2026-05-21-02"
 BASE_DIR = Path(__file__).resolve().parent
 INDEX_FILE = BASE_DIR / "index.html"
 ORDER_TO = os.environ.get("MEDITERRANEA_ORDER_TO", "mediterraneabebidas60@gmail.com")
@@ -25,6 +24,7 @@ SMTP_PORT = int(os.environ.get("MEDITERRANEA_SMTP_PORT", "465"))
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 RESEND_FROM = os.environ.get("RESEND_FROM", "Mediterranea Bebidas <onboarding@resend.dev>")
 socket.setdefaulttimeout(12)
+CATALOG_CACHE = None
 
 
 def money(value):
@@ -34,23 +34,32 @@ def money(value):
 
 
 def load_catalog():
+    global CATALOG_CACHE
+    if CATALOG_CACHE is not None:
+        return CATALOG_CACHE
+
     html = INDEX_FILE.read_text(encoding="utf-8")
-    pattern = re.compile(
+    card_pattern = re.compile(
         r'<div class="wine-card">.*?'
         r'<div class="wine-type-badge[^"]*">(?P<type>.*?)</div>.*?'
         r'<div class="wine-name">(?P<name>.*?)</div>.*?'
-        r'<div class="wine-price" data-price="(?P<price>[^"]+)"[^>]*data-price-code="(?P<code>[^"]+)"',
-        re.S,
+        r'<div class="wine-price"[^>]*data-price="(?P<price>[^"]+)"[^>]*data-price-code="(?P<code>[^"]+)"'
     )
     catalog = {}
-    for match in pattern.finditer(html):
+    for line in html.splitlines():
+        if '<div class="wine-card">' not in line or "data-price-code" not in line:
+            continue
+        match = card_pattern.search(line)
+        if not match:
+            continue
         code = unescape(match.group("code")).strip()
         catalog[code] = {
             "name": unescape(re.sub(r"<.*?>", "", match.group("name"))).strip(),
             "type": unescape(re.sub(r"<.*?>", "", match.group("type"))).strip(),
             "price": Decimal(match.group("price")),
         }
-    return catalog
+    CATALOG_CACHE = catalog
+    return CATALOG_CACHE
 
 
 def is_unit_product(product_type):
@@ -67,8 +76,11 @@ def normalize_qty(value):
 
 
 def validated_items(payload):
-    catalog = load_catalog()
     items = payload.get("cart_items") or []
+    if not items:
+        return [], Decimal("0"), False
+
+    catalog = load_catalog()
     validated = []
     subtotal = Decimal("0")
     missing = False
@@ -235,20 +247,13 @@ def _send_email_resend_now(subject, plain, html, reply_to):
 
 
 def send_email_resend(subject, plain, html, reply_to):
-    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-    future = executor.submit(_send_email_resend_now, subject, plain, html, reply_to)
     try:
-        return future.result(timeout=12)
-    except concurrent.futures.TimeoutError as exc:
-        future.cancel()
-        raise RuntimeError("Resend no respondio dentro de 12 segundos. Revisar API key, dominio remitente o estado de Resend.") from exc
+        return _send_email_resend_now(subject, plain, html, reply_to)
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"Resend rechazo el envio: HTTP {exc.code}. {detail}") from exc
     except Exception as exc:
         raise RuntimeError(f"No se pudo conectar con Resend: {type(exc).__name__}: {exc}") from exc
-    finally:
-        executor.shutdown(wait=False, cancel_futures=True)
 
 
 def send_email_smtp(subject, plain, html, reply_to):

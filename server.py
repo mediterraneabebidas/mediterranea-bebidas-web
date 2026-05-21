@@ -3,6 +3,7 @@ import json
 import os
 import re
 import smtplib
+import socket
 from decimal import Decimal, ROUND_HALF_UP
 from email.message import EmailMessage
 from html import escape, unescape
@@ -21,6 +22,7 @@ SMTP_HOST = os.environ.get("MEDITERRANEA_SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.environ.get("MEDITERRANEA_SMTP_PORT", "465"))
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 RESEND_FROM = os.environ.get("RESEND_FROM", "Mediterranea Bebidas <onboarding@resend.dev>")
+socket.setdefaulttimeout(12)
 
 
 def money(value):
@@ -220,6 +222,9 @@ def send_email_resend(subject, plain, html, reply_to):
         headers={
             "Authorization": f"Bearer {RESEND_API_KEY}",
             "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "MediterraneaBebidas/1.0",
+            "Connection": "close",
         },
         method="POST",
     )
@@ -229,6 +234,8 @@ def send_email_resend(subject, plain, html, reply_to):
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"Resend rechazo el envio: HTTP {exc.code}. {detail}") from exc
+    except Exception as exc:
+        raise RuntimeError(f"No se pudo conectar con Resend: {type(exc).__name__}: {exc}") from exc
 
 
 def send_email_smtp(subject, plain, html, reply_to):

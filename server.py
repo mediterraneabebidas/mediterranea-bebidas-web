@@ -13,7 +13,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-APP_VERSION = "checkout-mp-steps-2026-05-21-03"
+APP_VERSION = "ui-catalog-polish-2026-05-22-01"
 BASE_DIR = Path(__file__).resolve().parent
 INDEX_FILE = BASE_DIR / "index.html"
 ORDER_TO = os.environ.get("MEDITERRANEA_ORDER_TO", "mediterraneabebidas60@gmail.com")

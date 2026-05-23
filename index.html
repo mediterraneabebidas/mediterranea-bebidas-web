@@ -575,6 +575,8 @@
     display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:3rem;
     border-bottom: 1px solid var(--border);
     padding-bottom: 0;
+    position:relative;
+    overflow:visible;
   }
   .tab-btn {
     background:none; border:none; cursor:pointer;
@@ -779,15 +781,16 @@
     }
   }
 
-  .other-brands-wrap { position:relative; display:inline-flex; }
+  .other-brands-wrap { position:static; display:inline-flex; }
   .other-brands-menu {
     position:absolute;
     top:calc(100% + 0.55rem);
+    left:0;
     right:0;
     z-index:20;
-    width:min(560px, calc(100vw - 2rem));
+    width:100%;
     display:grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
     gap:0.35rem;
     padding:0.8rem;
     background:var(--bg2);
@@ -819,8 +822,6 @@
   @media(max-width:640px) {
     .other-brands-menu {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      right:auto;
-      left:0;
     }
   }
 
@@ -2514,8 +2515,8 @@
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_046.png" alt="Santa Florentina Syrah Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Santa Florentina Syrah Malbec</div><div class="wine-varietal">Blend Malbec y Syrah &#183; Valle del Famatina, La Rioja &#183; 750 ml</div><div class="wine-price" data-price="23803.20" data-price-label="$23.803,20" data-price-code="447"><span>Caja x6</span><strong>$23.803,20</strong></div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_047.png" alt="Santa Florentina Torront&#233;s Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Santa Florentina Torront&#233;s Chardonnay</div><div class="wine-varietal">Blend Torront&#233;s y Chardonnay &#183; Valle del Famatina, La Rioja &#183; 750 ml</div><div class="wine-price" data-price="21898.50" data-price-label="$21.898,50" data-price-code="456"><span>Caja x6</span><strong>$21.898,50</strong></div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_048.png" alt="Club de Playa Ros&#233;"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">Club de Playa Ros&#233;</div><div class="wine-varietal">100% Malbec &#183; Valle del Famatina, La Rioja &#183; 750 ml</div></div>
-          <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="701"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
-          <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="BALBO-TINTO-1125"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Magnum</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="701"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Magnum</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="BALBO-TINTO-1125"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_051.png" alt="Corrales Negros Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Corrales Negros Malbec</div><div class="wine-varietal">Malbec &#183; 750 ml</div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_052.png" alt="Corrales Negros Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Corrales Negros Cabernet Sauvignon</div><div class="wine-varietal">Cabernet Sauvignon &#183; 750 ml</div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_053.png" alt="Corrales Negros Patero"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Corrales Negros Patero</div><div class="wine-varietal">Vino dulce tinto &#183; 750 ml</div><div class="wine-price" data-price="11619.40" data-price-label="$11.619,40" data-price-code="740"><span>Caja x6</span><strong>$11.619,40</strong></div></div>
@@ -2674,7 +2675,7 @@
     <div class="catalog-panel" id="tab-magnum">
       <div class="bodega-section">
         <div class="bodega-name">Magnum</div>
-        <div class="bodega-desc">Magnum del cat&aacute;logo. Botellas de 1125 ml y 1500 ml para pedidos especiales y mesas de alto volumen.</div>
+        <div class="bodega-desc">Formatos Magnum de 1125 ml y 1500 ml para pedidos especiales y mesas de alto volumen.</div>
         <div class="wine-grid" id="magnumGrid">
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Magnum</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; Valle de Uco y Norte Mendoza &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="701"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Magnum</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; Valle de Uco y Norte Mendoza &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="BALBO-TINTO-1125"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
@@ -2695,8 +2696,8 @@
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_046.png" alt="Santa Florentina Syrah Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Santa Florentina Syrah Malbec</div><div class="wine-varietal">Blend Malbec y Syrah &#183; Valle del Famatina, La Rioja &#183; 750 ml</div><div class="wine-price" data-price="23803.20" data-price-label="$23.803,20" data-price-code="447"><span>Caja x6</span><strong>$23.803,20</strong></div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_047.png" alt="Santa Florentina Torront&#233;s Chardonnay"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Santa Florentina Torront&#233;s Chardonnay</div><div class="wine-varietal">Blend Torront&#233;s y Chardonnay &#183; Valle del Famatina, La Rioja &#183; 750 ml</div><div class="wine-price" data-price="21898.50" data-price-label="$21.898,50" data-price-code="456"><span>Caja x6</span><strong>$21.898,50</strong></div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_048.png" alt="Club de Playa Ros&#233;"></div><div class="wine-type-badge badge-rose">Rosado</div><div class="wine-name">Club de Playa Ros&#233;</div><div class="wine-varietal">100% Malbec &#183; Valle del Famatina, La Rioja &#183; 750 ml</div></div>
-          <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Blanco</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="701"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
-          <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="BALBO-TINTO-1125"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Magnum</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="701"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
+          <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Magnum</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="BALBO-TINTO-1125"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_051.png" alt="Corrales Negros Malbec"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Corrales Negros Malbec</div><div class="wine-varietal">Malbec &#183; 750 ml</div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_052.png" alt="Corrales Negros Cabernet Sauvignon"></div><div class="wine-type-badge badge-tinto">Tinto</div><div class="wine-name">Corrales Negros Cabernet Sauvignon</div><div class="wine-varietal">Cabernet Sauvignon &#183; 750 ml</div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_053.png" alt="Corrales Negros Patero"></div><div class="wine-type-badge badge-dulce">Dulce</div><div class="wine-name">Corrales Negros Patero</div><div class="wine-varietal">Vino dulce tinto &#183; 750 ml</div><div class="wine-price" data-price="11619.40" data-price-label="$11.619,40" data-price-code="740"><span>Caja x6</span><strong>$11.619,40</strong></div></div>

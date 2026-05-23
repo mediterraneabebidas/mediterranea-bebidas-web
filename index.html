@@ -785,9 +785,9 @@
     top:calc(100% + 0.55rem);
     right:0;
     z-index:20;
-    width:min(330px, 82vw);
+    width:min(560px, calc(100vw - 2rem));
     display:grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap:0.35rem;
     padding:0.8rem;
     background:var(--bg2);
@@ -804,14 +804,25 @@
     visibility:visible;
     transform:translateY(0);
   }
-  .other-brands-menu a {
+  .other-brands-menu button {
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    text-align:left;
+    font-family:'DM Sans', sans-serif;
     color:var(--text-muted);
-    text-decoration:none;
     font-size:0.76rem;
     padding:0.35rem 0.45rem;
     border-radius:8px;
   }
-  .other-brands-menu a:hover { background:var(--bg3); color:var(--accent); }
+  .other-brands-menu button:hover { background:var(--bg3); color:var(--accent); }
+  @media(max-width:640px) {
+    .other-brands-menu {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      right:auto;
+      left:0;
+    }
+  }
 
   /* ── BODEGAS SHOWCASE ── */
   #bodegas { background:var(--bg2); }
@@ -2356,15 +2367,15 @@
       <div class="other-brands-wrap">
         <button class="tab-btn" onclick="showTab('otros', event)">Otras marcas</button>
         <div class="other-brands-menu" aria-label="Listado de otras marcas">
-          <a href="#tab-otros">Vi&ntilde;as Riojanas</a>
-          <a href="#tab-otros">Balbo</a>
-          <a href="#tab-otros">Santa Florentina</a>
-          <a href="#tab-otros">Club de Playa</a>
-          <a href="#tab-otros">Corrales Negros</a>
-          <a href="#tab-otros">Killari</a>
-          <a href="#tab-otros">Oveja Black</a>
-          <a href="#tab-otros">Safari</a>
-          <a href="#tab-otros">Sensei</a>
+          <button type="button" onclick="showOtherBrand('vinas-riojanas', event)">Vi&ntilde;as Riojanas</button>
+          <button type="button" onclick="showOtherBrand('balbo', event)">Balbo</button>
+          <button type="button" onclick="showOtherBrand('santa-florentina', event)">Santa Florentina</button>
+          <button type="button" onclick="showOtherBrand('club-de-playa', event)">Club de Playa</button>
+          <button type="button" onclick="showOtherBrand('corrales-negros', event)">Corrales Negros</button>
+          <button type="button" onclick="showOtherBrand('killari', event)">Killari</button>
+          <button type="button" onclick="showOtherBrand('oveja-black', event)">Oveja Black</button>
+          <button type="button" onclick="showOtherBrand('safari', event)">Safari</button>
+          <button type="button" onclick="showOtherBrand('sensei', event)">Sensei</button>
         </div>
       </div>
     </div>
@@ -2663,8 +2674,8 @@
     <div class="catalog-panel" id="tab-magnum">
       <div class="bodega-section">
         <div class="bodega-name">Magnum</div>
-        <div class="bodega-desc">Formatos grandes del cat&aacute;logo para imprimir. Botellas de 1125 ml para pedidos especiales y mesas de alto volumen.</div>
-        <div class="wine-grid">
+        <div class="bodega-desc">Magnum del cat&aacute;logo. Botellas de 1125 ml y 1500 ml para pedidos especiales y mesas de alto volumen.</div>
+        <div class="wine-grid" id="magnumGrid">
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_049.png" alt="Balbo Magnum Blanco"></div><div class="wine-type-badge badge-blanco">Magnum</div><div class="wine-name">Balbo Magnum Blanco</div><div class="wine-varietal">Blend blanco &#183; Valle de Uco y Norte Mendoza &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="701"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
           <div class="wine-card"><div class="wine-image"><img loading="lazy" decoding="async" src="PRODUCTOS/producto_050.png" alt="Balbo Magnum Tinto"></div><div class="wine-type-badge badge-tinto">Magnum</div><div class="wine-name">Balbo Magnum Tinto</div><div class="wine-varietal">Blend tinto &#183; Valle de Uco y Norte Mendoza &#183; 1125 ml</div><div class="wine-price" data-price="16548.00" data-price-label="$16.548,00" data-price-code="BALBO-TINTO-1125"><span>Caja x6</span><strong>$16.548,00</strong></div></div>
         </div>
@@ -3007,16 +3018,81 @@ function toggleTheme() {
   setThemeButtonLabel();
 }
 
-function showTab(id, evt) {
+const OTHER_BRAND_FILTERS = {
+  'vinas-riojanas': ['viñas riojanas', 'vinas riojanas'],
+  'balbo': ['balbo'],
+  'santa-florentina': ['santa florentina'],
+  'club-de-playa': ['club de playa'],
+  'corrales-negros': ['corrales negros'],
+  'killari': ['killari'],
+  'oveja-black': ['oveja black'],
+  'safari': ['safari'],
+  'sensei': ['sensei']
+};
+
+function normalizeText(value) {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+function resetOtherBrandFilter() {
+  document.querySelectorAll('#tab-otros .wine-card').forEach(card => {
+    card.hidden = false;
+  });
+}
+
+function filterOtherBrand(brandKey) {
+  const filters = (OTHER_BRAND_FILTERS[brandKey] || []).map(normalizeText);
+  if(!filters.length) {
+    resetOtherBrandFilter();
+    return;
+  }
+  document.querySelectorAll('#tab-otros .wine-card').forEach(card => {
+    const name = normalizeText(card.querySelector('.wine-name')?.textContent || '');
+    card.hidden = !filters.some(filter => name.includes(filter));
+  });
+}
+
+function showTab(id, evt, options = {}) {
   document.querySelectorAll('.catalog-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   const panel = document.getElementById('tab-' + id);
   if(panel) panel.classList.add('active');
-  if(evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+  if(id !== 'otros' || !options.keepOtherFilter) resetOtherBrandFilter();
+  if(evt && evt.currentTarget?.classList.contains('tab-btn')) evt.currentTarget.classList.add('active');
   else {
     const tabButton = Array.from(document.querySelectorAll('.tab-btn')).find(button => button.getAttribute('onclick')?.includes(`'${id}'`));
     tabButton?.classList.add('active');
   }
+}
+
+function showOtherBrand(brandKey, evt) {
+  evt?.preventDefault();
+  showTab('otros', null, { keepOtherFilter:true });
+  filterOtherBrand(brandKey);
+  evt?.currentTarget?.blur();
+  document.getElementById('catalogo')?.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function populateMagnumTab() {
+  const grid = document.getElementById('magnumGrid');
+  if(!grid) return;
+  const seen = new Set();
+  const cards = Array.from(document.querySelectorAll('#tab-todos .wine-card')).filter(card => {
+    const meta = normalizeText(card.querySelector('.wine-varietal')?.textContent || '');
+    const code = card.querySelector('.wine-price')?.dataset.priceCode || card.querySelector('.wine-name')?.textContent || '';
+    if(seen.has(code)) return false;
+    const isMagnum = /\b1125\s*ml\b|\b1500\s*ml\b/.test(meta);
+    if(isMagnum) seen.add(code);
+    return isMagnum;
+  });
+  if(!cards.length) return;
+  grid.innerHTML = '';
+  cards.forEach(card => {
+    const clone = card.cloneNode(true);
+    const badge = clone.querySelector('.wine-type-badge');
+    if(badge) badge.textContent = 'Magnum';
+    grid.appendChild(clone);
+  });
 }
 
 function scrollPromos(direction) {
@@ -3702,6 +3778,7 @@ function sendCheckoutToWhatsApp() {
 }
 
 setupSiteCursor();
+populateMagnumTab();
 setupProductSpecs();
 setupCartButtons();
 renderCart();

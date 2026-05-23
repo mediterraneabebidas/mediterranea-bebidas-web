@@ -472,14 +472,7 @@
     overflow:hidden;
   }
   #nosotros::before {
-    content:'';
-    position:absolute;
-    inset:8% auto auto -12%;
-    width:34rem;
-    height:34rem;
-    border-radius:999px;
-    background:radial-gradient(circle, rgba(123,47,190,0.13), transparent 68%);
-    pointer-events:none;
+    content:none;
   }
   .nosotros-grid {
     display:grid;
@@ -518,15 +511,7 @@
     background: var(--purple);
   }
   .nosotros-box::after {
-    content:'';
-    position:absolute;
-    right:-5rem;
-    bottom:-5rem;
-    width:16rem;
-    height:16rem;
-    border-radius:999px;
-    background:radial-gradient(circle, rgba(123,47,190,0.24), transparent 70%);
-    pointer-events:none;
+    content:none;
   }
   .nosotros-quote {
     font-family: 'Cormorant Garamond', serif;
@@ -566,9 +551,7 @@
   }
   .feature-icon {
     width:46px; height:46px; flex-shrink:0;
-    background:
-      radial-gradient(circle at 35% 28%, rgba(255,255,255,0.55), transparent 34%),
-      rgba(123,47,190,0.13);
+    background:rgba(123,47,190,0.12);
     color:var(--accent);
     border:1px solid rgba(123,47,190,0.22);
     border-radius:16px;

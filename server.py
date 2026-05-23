@@ -13,7 +13,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-APP_VERSION = "ui-catalog-polish-2026-05-22-01"
+APP_VERSION = "add-gran-corte-hermandad-2026-05-23-01"
 BASE_DIR = Path(__file__).resolve().parent
 INDEX_FILE = BASE_DIR / "index.html"
 ORDER_TO = os.environ.get("MEDITERRANEA_ORDER_TO", "mediterraneabebidas60@gmail.com")
@@ -53,10 +53,14 @@ def load_catalog():
         if not match:
             continue
         code = unescape(match.group("code")).strip()
+        box_match = re.search(r'data-box-size="(?P<size>\d+)"', line)
+        unit_match = re.search(r'data-unit-price="(?P<price>[^"]+)"', line)
         catalog[code] = {
             "name": unescape(re.sub(r"<.*?>", "", match.group("name"))).strip(),
             "type": unescape(re.sub(r"<.*?>", "", match.group("type"))).strip(),
             "price": Decimal(match.group("price")),
+            "box_size": Decimal(box_match.group("size")) if box_match else Decimal("6"),
+            "unit_price": Decimal(unit_match.group("price")) if unit_match else None,
         }
     CATALOG_CACHE = catalog
     return CATALOG_CACHE
@@ -96,10 +100,15 @@ def validated_items(payload):
             name = catalog_item["name"]
             if is_unit_product(product_type):
                 mode = "unit"
-            unit_price = catalog_item["price"] / Decimal("6") if mode == "unit" and not is_unit_product(product_type) else catalog_item["price"]
+            box_size = catalog_item.get("box_size") or Decimal("6")
+            explicit_unit_price = catalog_item.get("unit_price")
+            box_label = f"caja x{int(box_size)}"
+            unit_price = (
+                explicit_unit_price or (catalog_item["price"] / box_size)
+            ) if mode == "unit" and not is_unit_product(product_type) else catalog_item["price"]
             line_total = unit_price * qty
             subtotal += line_total
-            price_text = f"{money(unit_price)} por {'unidad' if mode == 'unit' else 'caja x6'}"
+            price_text = f"{money(unit_price)} por {'unidad' if mode == 'unit' else box_label}"
             total_text = money(line_total)
         else:
             missing = True
@@ -107,11 +116,12 @@ def validated_items(payload):
             name = str(raw.get("name") or "Producto sin nombre")
             price_text = "Precio a confirmar"
             total_text = "A confirmar"
+            box_label = f"caja x{normalize_qty(raw.get('boxSize') or 6)}"
 
         specs = raw.get("specs") if isinstance(raw.get("specs"), dict) else {}
-        label = "unidad" if mode == "unit" else "caja x6"
+        label = "unidad" if mode == "unit" else box_label
         if qty != 1:
-            label = "unidades" if mode == "unit" else "cajas x6"
+            label = "unidades" if mode == "unit" else box_label.replace("caja", "cajas", 1)
 
         validated.append({
             "name": name,

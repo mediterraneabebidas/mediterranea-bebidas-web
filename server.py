@@ -339,8 +339,20 @@ def send_email(payload):
 
 
 class Handler(SimpleHTTPRequestHandler):
+    server_version = "MediterraneaBebidas/1.0"
+
     def end_headers(self):
         self.send_header("X-Content-Type-Options", "nosniff")
+        request_path = urlparse(self.path).path
+        extension = Path(request_path).suffix.lower()
+        if request_path.startswith("/api/"):
+            self.send_header("Cache-Control", "no-store")
+        elif extension in {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg", ".ico", ".woff", ".woff2"}:
+            self.send_header("Cache-Control", "public, max-age=2592000, immutable")
+        elif extension in {".css", ".js"}:
+            self.send_header("Cache-Control", "public, max-age=86400")
+        else:
+            self.send_header("Cache-Control", "no-cache")
         super().end_headers()
 
     def do_GET(self):

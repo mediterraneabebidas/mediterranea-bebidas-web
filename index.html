@@ -3566,7 +3566,7 @@ function addChacabucoPromoToCart() {
   const variant = chacabucoPromoVariant(variantKey);
   const existing = cart.find(item => item.promoId === CHACABUCO_PROMO_ID);
   if(existing) {
-    existing.qty += 1;
+    existing.qty = normalizedQty(existing, 0) + 1;
   } else {
     cart.push({
       promoId: CHACABUCO_PROMO_ID,
@@ -3581,7 +3581,8 @@ function addChacabucoPromoToCart() {
       purchaseMode:'promo',
       purchaseLabel:'promo 3+1',
       priceLabel:formatPrice(CHACABUCO_PROMO_PRICE),
-      priceCode:`CHACABUCO-3MAS1-${variant.code}`
+      priceCode:`CHACABUCO-3MAS1-${variant.code}`,
+      qty:1
     });
   }
   renderCart();
@@ -3613,9 +3614,14 @@ function renderPromoVariantControl(item, index) {
   `;
 }
 
+function normalizedQty(item, fallback = 1) {
+  const parsed = Number(item?.qty);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
 function addToCart(product) {
   const existing = cart.find(item => item.name === product.name && item.meta === product.meta && item.purchaseMode === product.purchaseMode);
-  if(existing) existing.qty += 1;
+  if(existing) existing.qty = normalizedQty(existing, 0) + 1;
   else cart.push({ ...product, qty: 1 });
   renderCart();
   openCart();
@@ -3623,7 +3629,7 @@ function addToCart(product) {
 
 function changeQty(index, delta) {
   if(!cart[index]) return;
-  cart[index].qty += delta;
+  cart[index].qty = normalizedQty(cart[index], 1) + delta;
   if(cart[index].qty <= 0) cart.splice(index, 1);
   renderCart();
 }
@@ -3644,7 +3650,8 @@ function closeCart() {
 }
 
 function renderCart() {
-  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  cart.forEach(item => { item.qty = normalizedQty(item, 1); });
+  const count = cart.reduce((sum, item) => sum + normalizedQty(item, 1), 0);
   const countEl = document.getElementById('cartCount');
   if(countEl) countEl.textContent = count;
   const list = document.getElementById('cartList');
@@ -3998,6 +4005,13 @@ function sendCheckoutToWhatsApp() {
   window.location.href = whatsAppUrl(checkoutMessage());
 }
 
+function startAtTopOnInitialLoad() {
+  if(!window.location.hash) return;
+  history.replaceState(null, document.title, window.location.pathname + window.location.search);
+  requestAnimationFrame(() => window.scrollTo(0, 0));
+}
+
+startAtTopOnInitialLoad();
 setupSiteCursor();
 populateMagnumTab();
 setupProductSpecs();

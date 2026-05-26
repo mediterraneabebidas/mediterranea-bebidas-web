@@ -157,6 +157,7 @@ def build_email(payload):
     shipping_cost = text_value(payload, "costo_envio_estimado")
     address = text_value(payload, "direccion_o_retiro")
     payment_status = text_value(payload, "pago_confirmado_cliente", "No")
+    payment_method = text_value(payload, "medio_de_pago", "Mercado Pago")
     mp_alias = text_value(payload, "alias_mercado_pago", "bruno.laforte")
     notes = text_value(payload, "notas")
 
@@ -203,6 +204,7 @@ def build_email(payload):
         f"Codigo postal: {zip_code}",
         f"Costo envio estimado: {shipping_cost}",
         f"Direccion/retiro: {address}",
+        f"Medio de pago: {payment_method}",
         f"Pago confirmado por cliente: {payment_status}",
         f"Alias Mercado Pago: {mp_alias}",
         f"Notas: {notes}",
@@ -227,6 +229,7 @@ def build_email(payload):
     <strong>Codigo postal:</strong> {escape(zip_code)}<br>
     <strong>Costo envio estimado:</strong> {escape(shipping_cost)}<br>
     <strong>Direccion/retiro:</strong> {escape(address)}<br>
+    <strong>Medio de pago:</strong> {escape(payment_method)}<br>
     <strong>Pago confirmado por cliente:</strong> {escape(payment_status)}<br>
     <strong>Alias Mercado Pago:</strong> {escape(mp_alias)}<br>
     <strong>Notas:</strong> {escape(notes)}</p>
@@ -370,8 +373,11 @@ class Handler(SimpleHTTPRequestHandler):
             if length <= 0 or length > 1_000_000:
                 raise ValueError("Pedido vacio o demasiado grande")
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
-            if str(payload.get("pago_confirmado_cliente", "")).strip().lower() not in {"si", "sí", "true", "1"}:
-                raise ValueError("El pedido por email solo se envia despues de confirmar el pago por Mercado Pago. Usa WhatsApp para pedidos sin pago.")
+            payment_method = str(payload.get("medio_de_pago", "")).strip().lower()
+            is_cash = "efectivo" in payment_method
+            payment_confirmed = str(payload.get("pago_confirmado_cliente", "")).strip().lower() in {"si", "true", "1"}
+            if not is_cash and not payment_confirmed:
+                raise ValueError("El pedido por email solo se envia despues de confirmar el pago por Mercado Pago, o seleccionando pago en efectivo.")
             send_email(payload)
             self.respond_json(200, {"ok": True, "message": "Pedido enviado por email."})
         except Exception as exc:

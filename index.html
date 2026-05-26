@@ -1315,6 +1315,26 @@
     padding:1rem;
     color:var(--text);
   }
+  .cash-box {
+    border:1px solid rgba(37,211,102,0.30);
+    border-radius:14px;
+    background:rgba(37,211,102,0.08);
+    padding:1rem;
+    color:var(--text);
+  }
+  .cash-mark {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:42px;
+    height:28px;
+    padding:0 0.55rem;
+    border-radius:999px;
+    background:#25D366;
+    color:#07140B;
+    font-weight:800;
+    margin-bottom:0.7rem;
+  }
   .mp-mark {
     display:inline-flex;
     align-items:center;
@@ -1378,6 +1398,9 @@
     grid-template-columns:1fr;
     gap:0.65rem;
     margin-top:1rem;
+  }
+  .checkout-action-row.is-hidden {
+    display:none;
   }
   .checkout-action-row .checkout-submit {
     margin-top:0;
@@ -3051,22 +3074,43 @@
             </svg>
           </span>
         </div>
-        <div class="mp-box">
-          <div class="mp-mark">MP</div>
-          <p class="section-body" style="font-size:0.88rem;line-height:1.65;">Pag&aacute; por Mercado Pago desde el link de pago o usando el alias indicado. El pedido por email se env&iacute;a solo cuando marques que el pago ya fue realizado.</p>
-          <div class="mp-alias-box">
-            <div class="mp-alias-label">Alias Mercado Pago</div>
-            <div class="mp-alias-value"><span id="mpAliasText">bruno.laforte</span><button type="button" onclick="copyMercadoPagoAlias()">Copiar</button></div>
+        <div class="payment-options" role="group" aria-label="Elegir medio de pago">
+          <button class="payment-option active" type="button" data-payment="mercadopago" onclick="selectPayment('mercadopago', this)">
+            <strong>Mercado Pago</strong>
+            <span>Pag&aacute;s con link o alias y despu&eacute;s envi&aacute;s el pedido por email.</span>
+          </button>
+          <button class="payment-option" type="button" data-payment="efectivo" onclick="selectPayment('efectivo', this)">
+            <strong>Efectivo</strong>
+            <span>Pag&aacute;s al recibir o retirar. Te contactamos para confirmar el pedido.</span>
+          </button>
+        </div>
+        <div class="payment-pane active" data-payment-pane="mercadopago">
+          <div class="mp-box">
+            <div class="mp-mark">MP</div>
+            <p class="section-body" style="font-size:0.88rem;line-height:1.65;">Pag&aacute; por Mercado Pago desde el link de pago o usando el alias indicado. El pedido por email se env&iacute;a solo cuando marques que el pago ya fue realizado.</p>
+            <div class="mp-alias-box">
+              <div class="mp-alias-label">Alias Mercado Pago</div>
+              <div class="mp-alias-value"><span id="mpAliasText">bruno.laforte</span><button type="button" onclick="copyMercadoPagoAlias()">Copiar</button></div>
+            </div>
+            <div class="checkout-nav payment-actions">
+              <button class="checkout-back" type="button" onclick="prevCheckoutStep()">Volver</button>
+              <button class="checkout-mp-link secondary" type="button" onclick="copyMercadoPagoAlias()">Copiar alias</button>
+              <button class="checkout-mp-link" type="button" onclick="openMercadoPagoPayment()">Pagar con Mercado Pago</button>
+            </div>
+            <label class="payment-confirm">
+              <input type="checkbox" id="paymentConfirmed">
+              Ya realic&eacute; el pago por Mercado Pago y quiero enviar el pedido por email.
+            </label>
           </div>
-          <div class="checkout-nav payment-actions">
-            <button class="checkout-back" type="button" onclick="prevCheckoutStep()">Volver</button>
-            <button class="checkout-mp-link secondary" type="button" onclick="copyMercadoPagoAlias()">Copiar alias</button>
-            <button class="checkout-mp-link" type="button" onclick="openMercadoPagoPayment()">Pagar con Mercado Pago</button>
+        </div>
+        <div class="payment-pane" data-payment-pane="efectivo">
+          <div class="cash-box">
+            <div class="cash-mark">$</div>
+            <p class="section-body" style="font-size:0.88rem;line-height:1.65;">Eleg&iacute; efectivo si quer&eacute;s pagar al recibir el pedido o al retirarlo. Te enviamos el pedido por email y luego coordinamos stock, entrega y monto final.</p>
+            <div class="checkout-nav payment-actions">
+              <button class="checkout-back" type="button" onclick="prevCheckoutStep()">Volver</button>
+            </div>
           </div>
-          <label class="payment-confirm">
-            <input type="checkbox" id="paymentConfirmed">
-            Ya realic&eacute; el pago por Mercado Pago y quiero enviar el pedido por email.
-          </label>
         </div>
         <div class="secure-note">
           <span class="trust-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg></span>
@@ -3105,7 +3149,7 @@
         <label for="checkoutNotes">Notas del pedido</label>
         <textarea id="checkoutNotes" name="checkoutNotes" placeholder="Horario de entrega, CUIT, aclaraciones"></textarea>
       </div>
-      <div class="checkout-action-row">
+      <div class="checkout-action-row is-hidden" data-checkout-action-row>
         <button class="checkout-submit" id="checkoutSubmit" type="submit">Confirmar pago y enviar email</button>
         <button class="checkout-whatsapp" type="button" onclick="sendCheckoutToWhatsApp()">Hacer pedido por WhatsApp</button>
       </div>
@@ -3241,8 +3285,8 @@ const ORDER_EMAIL_ENDPOINT = '/api/orders';
 const MERCADOPAGO_ALIAS = 'bruno.laforte';
 const MERCADOPAGO_PAYMENT_LINK = ''; // Pegar aca el link real de Mercado Pago, por ejemplo: https://mpago.la/xxxxxxx
 let cart = [];
-let selectedPayment = 'mp';
 let selectedDelivery = 'delivery';
+let selectedPayment = 'mercadopago';
 let checkoutStep = 1;
 
 const CHACABUCO_PROMO_ID = 'chacabuco-3x1';
@@ -3686,9 +3730,10 @@ function openCheckout() {
   }
   closeCart();
   renderCheckoutSummary();
-  setCheckoutStep(1);
+  setCheckoutStep(1, { focus:false });
   document.getElementById('checkoutOverlay')?.classList.add('open');
   document.getElementById('checkoutModal')?.classList.add('open');
+  focusCheckoutStep();
 }
 
 function closeCheckout() {
@@ -3696,7 +3741,7 @@ function closeCheckout() {
   document.getElementById('checkoutModal')?.classList.remove('open');
 }
 
-function setCheckoutStep(step) {
+function setCheckoutStep(step, options = {}) {
   checkoutStep = Math.max(1, Math.min(3, step));
   document.querySelectorAll('[data-checkout-step]').forEach(panel => {
     panel.classList.toggle('active', Number(panel.dataset.checkoutStep) === checkoutStep);
@@ -3706,6 +3751,44 @@ function setCheckoutStep(step) {
     indicator.classList.toggle('active', indicatorStep === checkoutStep);
     indicator.classList.toggle('done', indicatorStep < checkoutStep);
   });
+  updateCheckoutActions();
+  if(options.focus !== false) focusCheckoutStep();
+}
+
+function focusCheckoutStep() {
+  const panel = document.querySelector(`[data-checkout-step="${checkoutStep}"].active`);
+  const modal = document.getElementById('checkoutModal');
+  const body = document.getElementById('checkoutForm');
+  const target = panel?.querySelector('input:not([type="hidden"]):not([readonly]), textarea:not([readonly]), select, button.payment-option, button.checkout-mp-link');
+  requestAnimationFrame(() => {
+    if(panel) panel.scrollIntoView({ behavior:'smooth', block:'start' });
+    if(body && window.matchMedia('(max-width: 900px)').matches) body.scrollTop = 0;
+    if(modal && window.matchMedia('(max-width: 900px)').matches) modal.scrollTop = 0;
+    target?.focus({ preventScroll:true });
+  });
+}
+
+function updateCheckoutActions() {
+  document.querySelectorAll('[data-checkout-action-row]').forEach(row => {
+    row.classList.toggle('is-hidden', checkoutStep !== 3);
+  });
+  const submit = document.getElementById('checkoutSubmit');
+  if(submit) submit.textContent = selectedPayment === 'efectivo' ? 'Confirmar pedido en efectivo y enviar email' : 'Confirmar pago y enviar email';
+  const note = document.querySelector('.mercadopago-dev-note');
+  if(note) {
+    note.textContent = selectedPayment === 'efectivo'
+      ? 'Con efectivo, el pedido se envÌa por email y luego coordinamos entrega, stock y monto final.'
+      : 'Si todavÌa no pagaste, us· WhatsApp. El email se envÌa solo luego de confirmar el pago por Mercado Pago.';
+  }
+}
+
+function selectPayment(method, button) {
+  selectedPayment = method === 'efectivo' ? 'efectivo' : 'mercadopago';
+  document.querySelectorAll('.payment-option').forEach(option => option.classList.toggle('active', option.dataset.payment === selectedPayment));
+  document.querySelectorAll('[data-payment-pane]').forEach(pane => pane.classList.toggle('active', pane.dataset.paymentPane === selectedPayment));
+  if(button) button.classList.add('active');
+  setOrderEmailStatus('', selectedPayment === 'efectivo' ? 'Seleccionaste pago en efectivo. Podes confirmar el pedido sin marcar Mercado Pago.' : 'Seleccionaste Mercado Pago. Paga y marca la confirmacion antes de enviar por email.');
+  updateCheckoutActions();
 }
 
 function validateCheckoutStep(step) {
@@ -3844,7 +3927,7 @@ function checkoutMessage() {
   const address = document.getElementById('buyerAddress')?.value.trim() || '-';
   const zip = document.getElementById('deliveryZip')?.value.trim() || '-';
   const notes = document.getElementById('checkoutNotes')?.value.trim() || '-';
-  const paymentDetail = `Mercado Pago - alias ${MERCADOPAGO_ALIAS}`;
+  const paymentDetail = selectedPayment === 'efectivo' ? 'Efectivo al recibir o retirar' : `Mercado Pago - alias ${MERCADOPAGO_ALIAS}`;
   return [
     'Hola Mediterranea Bebidas, quiero finalizar esta compra:',
     ...cart.map(item => `- ${orderLine(item)}`),
@@ -3902,8 +3985,8 @@ function checkoutEmailPayload() {
     })),
     subtotal_estimado: totals.subtotal ? formatPrice(totals.subtotal) : 'A corroborar',
     precios: totals.missing ? 'Hay productos con precio a confirmar' : 'Precios cargados en la web, sujetos a validacion final',
-    medio_de_pago: `Mercado Pago - alias ${MERCADOPAGO_ALIAS}`,
-    pago_confirmado_cliente: document.getElementById('paymentConfirmed')?.checked ? 'Si' : 'No',
+    medio_de_pago: selectedPayment === 'efectivo' ? 'Efectivo al recibir o retirar' : `Mercado Pago - alias ${MERCADOPAGO_ALIAS}`,
+    pago_confirmado_cliente: selectedPayment === 'efectivo' ? 'No aplica - efectivo' : (document.getElementById('paymentConfirmed')?.checked ? 'Si' : 'No'),
     alias_mercado_pago: MERCADOPAGO_ALIAS,
     notas: notes,
     mensaje_completo: checkoutMessage()
@@ -3945,8 +4028,8 @@ async function submitCheckout(event) {
     setCheckoutStep(3);
     return;
   }
-  if(!document.getElementById('paymentConfirmed')?.checked) {
-    setOrderEmailStatus('error', `Primero copia el alias ${MERCADOPAGO_ALIAS}, paga desde Mercado Pago y marca que ya lo hiciste. Si todavia no pagaste, usa "Hacer pedido por WhatsApp".`);
+  if(selectedPayment !== 'efectivo' && !document.getElementById('paymentConfirmed')?.checked) {
+    setOrderEmailStatus('error', `Primero copia el alias ${MERCADOPAGO_ALIAS}, paga desde Mercado Pago y marca que ya lo hiciste. Si todavia no pagaste, usa "Hacer pedido por WhatsApp" o elegi efectivo.`);
     return;
   }
   const submit = document.getElementById('checkoutSubmit');
@@ -3954,7 +4037,7 @@ async function submitCheckout(event) {
     submit.disabled = true;
     submit.textContent = 'Enviando pedido...';
   }
-  setOrderEmailStatus('', `Enviando el pedido pagado a ${ORDER_EMAIL_TO}...`);
+  setOrderEmailStatus('', selectedPayment === 'efectivo' ? `Enviando el pedido en efectivo a ${ORDER_EMAIL_TO}...` : `Enviando el pedido pagado a ${ORDER_EMAIL_TO}...`);
   try {
     await sendOrderEmail();
     setOrderEmailStatus('success', `Pedido enviado a ${ORDER_EMAIL_TO}. Revis√° ese Gmail para confirmar stock, entrega y pago.`);
@@ -3963,7 +4046,7 @@ async function submitCheckout(event) {
   } finally {
     if(submit) {
       submit.disabled = false;
-      submit.textContent = 'Confirmar pago y enviar email';
+      updateCheckoutActions();
     }
   }
 }

@@ -3283,7 +3283,7 @@ const WHATSAPP_DEFAULT_TEXT = 'Hola Mediterranea Bebidas, quiero hacer un pedido
 const ORDER_EMAIL_TO = 'mediterraneabebidas60@gmail.com';
 const ORDER_EMAIL_ENDPOINT = '/api/orders';
 const MERCADOPAGO_ALIAS = 'bruno.laforte';
-const MERCADOPAGO_PAYMENT_LINK = ''; // Pegar aca el link real de Mercado Pago, por ejemplo: https://mpago.la/xxxxxxx
+const MERCADOPAGO_PAYMENT_LINK = 'https://link.mercadopago.com.ar/mediterraneabebidas';
 let cart = [];
 let selectedDelivery = 'delivery';
 let selectedPayment = 'mercadopago';
@@ -4057,7 +4057,7 @@ function openMercadoPagoPayment() {
     copyMercadoPagoAlias();
     return;
   }
-  window.open(MERCADOPAGO_PAYMENT_LINK, '_blank', 'noopener');
+  window.location.href = MERCADOPAGO_PAYMENT_LINK;
   setOrderEmailStatus('', 'Se abrio Mercado Pago. Cuando termines, marca que ya realizaste el pago para enviar el pedido.');
 }
 

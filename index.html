@@ -1516,6 +1516,32 @@
     text-transform:uppercase;
     cursor:pointer;
   }
+  .mp-amount-box {
+    margin-top:0.75rem;
+    border:1px solid rgba(0,167,225,0.24);
+    border-radius:14px;
+    background:rgba(0,167,225,0.12);
+    padding:0.85rem 0.9rem;
+  }
+  .mp-amount-label {
+    color:var(--text-muted);
+    font-size:0.68rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+  .mp-amount-value {
+    display:block;
+    margin-top:0.25rem;
+    color:var(--text);
+    font-size:1.35rem;
+    font-weight:900;
+  }
+  .mp-amount-note {
+    margin-top:0.2rem;
+    color:var(--text-muted);
+    font-size:0.78rem;
+    line-height:1.45;
+  }
   .payment-confirm {
     display:flex;
     align-items:flex-start;
@@ -3092,10 +3118,15 @@
               <div class="mp-alias-label">Alias Mercado Pago</div>
               <div class="mp-alias-value"><span id="mpAliasText">bruno.laforte</span><button type="button" onclick="copyMercadoPagoAlias()">Copiar</button></div>
             </div>
+            <div class="mp-amount-box" aria-live="polite">
+              <div class="mp-amount-label">Monto del carrito</div>
+              <strong class="mp-amount-value" id="mpPaymentAmount">Total a corroborar</strong>
+              <div class="mp-amount-note" id="mpPaymentAmountNote">El importe se actualiza con los productos agregados.</div>
+            </div>
             <div class="checkout-nav payment-actions">
               <button class="checkout-back" type="button" onclick="prevCheckoutStep()">Volver</button>
               <button class="checkout-mp-link secondary" type="button" onclick="copyMercadoPagoAlias()">Copiar alias</button>
-              <button class="checkout-mp-link" type="button" onclick="openMercadoPagoPayment()">Pagar con Mercado Pago</button>
+              <button class="checkout-mp-link" id="mpPaymentButton" type="button" onclick="openMercadoPagoPayment()">Pagar con Mercado Pago</button>
             </div>
             <label class="payment-confirm">
               <input type="checkbox" id="paymentConfirmed">
@@ -3881,6 +3912,7 @@ function renderCheckoutSummary() {
     summary.innerHTML = '<div class="cart-empty">No hay productos en el carrito.</div>';
     if(totalEl) totalEl.textContent = 'Total a corroborar';
     if(totalNote) totalNote.textContent = 'Stock, precios, impuestos y envío se validan antes de generar el pago.';
+    updateMercadoPagoAmount();
     return;
   }
   const totals = cartTotals();
@@ -3888,6 +3920,7 @@ function renderCheckoutSummary() {
   if(totalNote) totalNote.textContent = totals.missing
     ? 'Hay productos sin precio en lista. El total final se confirma antes de generar el pago.'
     : 'Podés combinar unidades y cajas. BIB y damajuanas se manejan por unidad. Envío e impuestos se confirman antes de generar el pago.';
+  updateMercadoPagoAmount(totals);
   summary.innerHTML = cart.map(item => `
     <div class="checkout-summary-item">
       ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<div></div>'}
@@ -4051,14 +4084,33 @@ async function submitCheckout(event) {
   }
 }
 
+function mercadoPagoAmountText(totals = cartTotals()) {
+  if(!totals.subtotal) return 'Total a corroborar';
+  return `${totals.missing ? 'Subtotal' : 'Total'} ${formatPrice(totals.subtotal)}`;
+}
+
+function updateMercadoPagoAmount(totals = cartTotals()) {
+  const amountEl = document.getElementById('mpPaymentAmount');
+  const noteEl = document.getElementById('mpPaymentAmountNote');
+  const buttonEl = document.getElementById('mpPaymentButton');
+  const amountText = mercadoPagoAmountText(totals);
+  if(amountEl) amountEl.textContent = amountText;
+  if(noteEl) noteEl.textContent = totals.missing
+    ? 'Hay productos sin precio cargado; usa este subtotal como referencia y confirma el final antes de pagar.'
+    : 'Este es el importe del carrito para ingresar o corroborar en Mercado Pago.';
+  if(buttonEl) buttonEl.textContent = totals.subtotal ? `Pagar ${formatPrice(totals.subtotal)} con Mercado Pago` : 'Pagar con Mercado Pago';
+}
+
 function openMercadoPagoPayment() {
+  const amountText = mercadoPagoAmountText();
   if(!MERCADOPAGO_PAYMENT_LINK) {
     setOrderEmailStatus('', 'Pega el link real de Mercado Pago en MERCADOPAGO_PAYMENT_LINK para activar este boton. Mientras tanto podes pagar usando el alias.');
     copyMercadoPagoAlias();
     return;
   }
-  window.location.href = MERCADOPAGO_PAYMENT_LINK;
-  setOrderEmailStatus('', 'Se abrio Mercado Pago. Cuando termines, marca que ya realizaste el pago para enviar el pedido.');
+  const paymentWindow = window.open(MERCADOPAGO_PAYMENT_LINK, '_blank', 'noopener');
+  if(!paymentWindow) window.location.href = MERCADOPAGO_PAYMENT_LINK;
+  setOrderEmailStatus('', `Se abrio Mercado Pago en otra pestana. Monto del carrito: ${amountText}. Cuando termines, marca que ya realizaste el pago para enviar el pedido.`);
 }
 
 async function copyMercadoPagoAlias() {

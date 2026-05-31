@@ -38,7 +38,10 @@ def load_catalog():
     if CATALOG_CACHE is not None:
         return CATALOG_CACHE
 
-    html = INDEX_FILE.read_text(encoding="utf-8")
+    try:
+        html = INDEX_FILE.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        html = INDEX_FILE.read_text(encoding="latin-1")
     card_pattern = re.compile(
         r'<div class="wine-card">.*?'
         r'<div class="wine-type-badge[^"]*">(?P<type>.*?)</div>.*?'

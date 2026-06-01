@@ -344,6 +344,11 @@ def send_email(payload):
 class Handler(SimpleHTTPRequestHandler):
     server_version = "MediterraneaBebidas/1.0"
 
+    def guess_type(self, path):
+        if Path(urlparse(path).path).suffix.lower() in {".html", ".htm"}:
+            return "text/html; charset=utf-8"
+        return super().guess_type(path)
+
     def end_headers(self):
         self.send_header("X-Content-Type-Options", "nosniff")
         request_path = urlparse(self.path).path

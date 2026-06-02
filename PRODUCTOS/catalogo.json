@@ -1,0 +1,2911 @@
+{
+  "tabs": [
+    {
+      "id": "todos",
+      "label": "Todos",
+      "active": true,
+      "otherBrands": false
+    },
+    {
+      "id": "losharoldos",
+      "label": "Los Haroldos",
+      "active": false,
+      "otherBrands": false
+    },
+    {
+      "id": "nampe",
+      "label": "Nampe",
+      "active": false,
+      "otherBrands": false
+    },
+    {
+      "id": "lairide",
+      "label": "La Íride",
+      "active": false,
+      "otherBrands": false
+    },
+    {
+      "id": "chacabuco",
+      "label": "Chacabuco",
+      "active": false,
+      "otherBrands": false
+    },
+    {
+      "id": "domingo",
+      "label": "Domingo",
+      "active": false,
+      "otherBrands": false
+    },
+    {
+      "id": "profugo",
+      "label": "Prófugo",
+      "active": false,
+      "otherBrands": false
+    },
+    {
+      "id": "otros",
+      "label": "Otras marcas",
+      "active": false,
+      "otherBrands": true
+    }
+  ],
+  "otherBrands": [
+    "Viñas Riojanas",
+    "Balbo",
+    "Santa Florentina",
+    "Club de Playa",
+    "Corrales Negros",
+    "Killari",
+    "Oveja Black",
+    "Safari",
+    "Sensei"
+  ],
+  "panels": [
+    {
+      "id": "todos",
+      "active": true,
+      "sections": [
+        {
+          "name": "Los Haroldos",
+          "description": "Mendoza · espumantes, Estate y Reserva según catálogo para imprimir.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_001.png",
+              "alt": "Los Haroldos Extra Brut",
+              "type": "Espumante",
+              "badgeClass": "badge-espumante",
+              "name": "Los Haroldos Extra Brut",
+              "varietal": "70% Chardonnay · 30% Sauvignon Blanc · Valle de Uco y Valle Este · 750 ml",
+              "price": {
+                "value": "45335.51",
+                "label": "$45.335,51",
+                "code": "15",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$45.335,51"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_002.png",
+              "alt": "Los Haroldos Brut Rosé",
+              "type": "Espumante",
+              "badgeClass": "badge-espumante",
+              "name": "Los Haroldos Brut Rosé",
+              "varietal": "Pinot Noir, Chardonnay y Syrah · Mendoza · 750 ml",
+              "price": {
+                "value": "45301.20",
+                "label": "$45.301,20",
+                "code": "16",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$45.301,20"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_003.png",
+              "alt": "Los Haroldos Estate Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Estate Malbec",
+              "varietal": "100% Malbec · La Consulta, San Carlos · 750 ml",
+              "price": {
+                "value": "24886.92",
+                "label": "$24.886,92",
+                "code": "379",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.886,92"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_004.png",
+              "alt": "Los Haroldos Estate Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Estate Cabernet",
+              "varietal": "100% Cabernet · Valle de Uco · 750 ml",
+              "price": {
+                "value": "24886.92",
+                "label": "$24.886,92",
+                "code": "377",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.886,92"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_005.png",
+              "alt": "Los Haroldos Estate Blend",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Estate Blend",
+              "varietal": "60% Malbec, 25% Cabernet, 15% Petit Verdot · Valle de Uco · 750 ml",
+              "price": {
+                "value": "24886.92",
+                "label": "$24.886,92",
+                "code": "375",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.886,92"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_006.png",
+              "alt": "Los Haroldos Estate Bonarda",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Estate Bonarda",
+              "varietal": "100% Bonarda · Medrano, Valle de Uco · 750 ml",
+              "price": {
+                "value": "24886.92",
+                "label": "$24.886,92",
+                "code": "372",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.886,92"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_007.png",
+              "alt": "Los Haroldos Reserva Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Reserva Malbec",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "36960.00",
+                "label": "$36.960,00",
+                "code": "480",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.960,00"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Nampe",
+          "description": "Mendoza · tintos y blancos varietales de Zona Este, Maipú, Luján de Cuyo y Valle de Uco.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_008.png",
+              "alt": "Nampe Chardonnay",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Nampe Chardonnay",
+              "varietal": "100% Chardonnay · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "368",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_009.png",
+              "alt": "Nampe Torrontés",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Nampe Torrontés",
+              "varietal": "100% Torrontés · Valle de Uco · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "361",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_010.png",
+              "alt": "Nampe Sauvignon Blanc",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Nampe Sauvignon Blanc",
+              "varietal": "100% Sauvignon Blanc · Valle de Uco · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "362",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_011.png",
+              "alt": "Nampe Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Malbec",
+              "varietal": "100% Malbec · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "369",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_012.png",
+              "alt": "Nampe Merlot",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Merlot",
+              "varietal": "100% Merlot · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "364",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_013.png",
+              "alt": "Nampe Syrah",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Syrah",
+              "varietal": "100% Syrah · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "365",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_014.png",
+              "alt": "Nampe Tempranillo",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Tempranillo",
+              "varietal": "100% Tempranillo · Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "366",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_015.png",
+              "alt": "Nampe Cabernet Sauvignon",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Cabernet Sauvignon",
+              "varietal": "100% Cabernet Sauvignon · Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "367",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_016.png",
+              "alt": "Nampe Blanco Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Nampe Blanco Dulce",
+              "varietal": "Blanco dulce · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "22743.00",
+                "label": "$22.743,00",
+                "code": "363",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$22.743,00"
+              }
+            }
+          ]
+        },
+        {
+          "name": "La Íride · Bodegas & Viñedos",
+          "description": "Mendoza · etiquetas Dorada, Roja, Plata, Verde, Huelgas de Amor, damajuanas y Bag in Box.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_017.png",
+              "alt": "La Íride Etiqueta Dorada Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Dorada Malbec",
+              "varietal": "100% Malbec · Villa Seca, Maipú · 750 ml",
+              "price": {
+                "value": "34019.99",
+                "label": "$34.019,99",
+                "code": "329",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$34.019,99"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_018.png",
+              "alt": "La Íride Etiqueta Dorada Cabernet Franc",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Dorada Cabernet Franc",
+              "varietal": "100% Cabernet Franc · Villa Seca, Maipú · 750 ml",
+              "price": {
+                "value": "34019.99",
+                "label": "$34.019,99",
+                "code": "327",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$34.019,99"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_019.png",
+              "alt": "La Íride Etiqueta Dorada Pinot Noir",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Dorada Pinot Noir",
+              "varietal": "100% Pinot Noir · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "34019.99",
+                "label": "$34.019,99",
+                "code": "328",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$34.019,99"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_020.png",
+              "alt": "La Íride Coordenada Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Coordenada Malbec",
+              "varietal": "100% Malbec · Maipú · 750 ml",
+              "price": {
+                "value": "65840.59",
+                "label": "$65.840,59",
+                "code": "340",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$65.840,59"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_021.png",
+              "alt": "La Íride Trilogía",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "La Íride Trilogía",
+              "varietal": "Naranjo, Merlot y Petit · Valle de Uco · 750 ml",
+              "price": {
+                "value": "40976.80",
+                "label": "$40.976,80",
+                "code": "316",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$40.976,80"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_022.png",
+              "alt": "La Íride Etiqueta Roja Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Roja Cabernet",
+              "varietal": "100% Cabernet · Maipú · 750 ml",
+              "price": {
+                "value": "26582.81",
+                "label": "$26.582,81",
+                "code": "317",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$26.582,81"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_023.png",
+              "alt": "La Íride Etiqueta Roja Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Roja Malbec",
+              "varietal": "100% Malbec · Villa Seca, Maipú · 750 ml",
+              "price": {
+                "value": "26582.81",
+                "label": "$26.582,81",
+                "code": "319",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$26.582,81"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_024.png",
+              "alt": "La Íride Abducido Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Abducido Malbec",
+              "varietal": "100% Malbec · Maipú · 750 ml",
+              "price": {
+                "value": "36403.69",
+                "label": "$36.403,69",
+                "code": "336",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.403,69"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_057.png",
+              "alt": "Damajuana La Íride Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Malbec",
+              "varietal": "Vino tinto · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_058.png",
+              "alt": "Damajuana La Íride Cabernet",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Cabernet",
+              "varietal": "Vino tinto · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_059.png",
+              "alt": "Damajuana La Íride Mimbre Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Mimbre Malbec",
+              "varietal": "Malbec · damajuana mimbre",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_060.png",
+              "alt": "Damajuana La Íride Mimbre Cabernet",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Mimbre Cabernet",
+              "varietal": "Cabernet · damajuana mimbre",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_061.png",
+              "alt": "Damajuana La Íride Etiqueta Roja Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Etiqueta Roja Malbec",
+              "varietal": "Malbec · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_062.png",
+              "alt": "Damajuana La Íride Etiqueta Plata Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Etiqueta Plata Malbec",
+              "varietal": "Malbec · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_063.png",
+              "alt": "Damajuana La Íride Etiqueta Plata Cabernet",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Etiqueta Plata Cabernet",
+              "varietal": "Cabernet · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_064.png",
+              "alt": "La Íride Etiqueta Verde Chardonnay Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "La Íride Etiqueta Verde Chardonnay Dulce",
+              "varietal": "100% Chardonnay · Maipú · 750 ml",
+              "price": {
+                "value": "29416.52",
+                "label": "$29.416,52",
+                "code": "312",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$29.416,52"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_065.png",
+              "alt": "La Íride Huelgas de Amor Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Huelgas de Amor Cabernet",
+              "varietal": "100% Cabernet · Maipú · 750 ml",
+              "price": {
+                "value": "29416.52",
+                "label": "$29.416,52",
+                "code": "337",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$29.416,52"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_066.png",
+              "alt": "La Íride Huelgas de Amor Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Huelgas de Amor Malbec",
+              "varietal": "100% Malbec · Maipú · 750 ml",
+              "price": {
+                "value": "29416.52",
+                "label": "$29.416,52",
+                "code": "339",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$29.416,52"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_067.png",
+              "alt": "La Íride Rosé",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "La Íride Rosé",
+              "varietal": "Rosé · 750 ml",
+              "price": {
+                "value": "29416.52",
+                "label": "$29.416,52",
+                "code": "313",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$29.416,52"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_068.png",
+              "alt": "La Íride Etiqueta Plata Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Plata Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "23329.17",
+                "label": "$23.329,17",
+                "code": "309",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.329,17"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_069.png",
+              "alt": "La Íride Etiqueta Plata Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Plata Cabernet",
+              "varietal": "100% Cabernet · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "23329.17",
+                "label": "$23.329,17",
+                "code": "307",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.329,17"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_070.png",
+              "alt": "La Íride Etiqueta Verde Chardonnay",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "La Íride Etiqueta Verde Chardonnay",
+              "varietal": "100% Chardonnay · Maipú · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_071.png",
+              "alt": "La Íride Mimbre Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "La Íride Mimbre Malbec",
+              "varietal": "Malbec · damajuana mimbre",
+              "price": {
+                "value": "16044.90",
+                "label": "$16.044,90",
+                "code": "300",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$16.044,90"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_072.png",
+              "alt": "La Íride Mimbre Cabernet",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "La Íride Mimbre Cabernet",
+              "varietal": "Cabernet · damajuana mimbre",
+              "price": {
+                "value": "16044.38",
+                "label": "$16.044,38",
+                "code": "301",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$16.044,38"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_073.png",
+              "alt": "La Íride BIB Plata Cabernet",
+              "type": "Bag in Box",
+              "badgeClass": "badge-bag-in-box",
+              "name": "La Íride BIB Plata Cabernet",
+              "varietal": "100% Cabernet · Luján de Cuyo · 5000 ml",
+              "price": {
+                "value": "19906.59",
+                "label": "$19.906,59",
+                "code": "947",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$19.906,59"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_074.png",
+              "alt": "La Íride BIB Plata Corte de Autor",
+              "type": "Bag in Box",
+              "badgeClass": "badge-bag-in-box",
+              "name": "La Íride BIB Plata Corte de Autor",
+              "varietal": "Blend · Luján de Cuyo · 5000 ml",
+              "price": {
+                "value": "19906.59",
+                "label": "$19.906,59",
+                "code": "944",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$19.906,59"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_075.png",
+              "alt": "La Íride BIB Plata Malbec",
+              "type": "Bag in Box",
+              "badgeClass": "badge-bag-in-box",
+              "name": "La Íride BIB Plata Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 5000 ml",
+              "price": {
+                "value": "19906.59",
+                "label": "$19.906,59",
+                "code": "949",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$19.906,59"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_076.png",
+              "alt": "La Íride BIB Damajuana Malbec",
+              "type": "Bag in Box",
+              "badgeClass": "badge-bag-in-box",
+              "name": "La Íride BIB Damajuana Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 4750 ml",
+              "price": {
+                "value": "17469.72",
+                "label": "$17.469,72",
+                "code": "946",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$17.469,72"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Chacabuco · Conejo Verde",
+          "description": "Mendoza · Chacabuco y Conejo Verde según catálogo para imprimir.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_025.png",
+              "alt": "Chacabuco Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Chacabuco Malbec",
+              "varietal": "100% Malbec · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "24129.00",
+                "label": "$24.129,00",
+                "code": "399",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.129,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_026.png",
+              "alt": "Chacabuco Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Chacabuco Cabernet",
+              "varietal": "100% Cabernet · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "24129.00",
+                "label": "$24.129,00",
+                "code": "397",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.129,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_027.png",
+              "alt": "Chacabuco Viognier",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Chacabuco Viognier",
+              "varietal": "100% Viognier · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "24129.00",
+                "label": "$24.129,00",
+                "code": "392",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.129,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_028.png",
+              "alt": "Chacabuco Rosado",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "Chacabuco Rosado",
+              "varietal": "100% Malbec · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "24129.00",
+                "label": "$24.129,00",
+                "code": "393",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.129,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_029.png",
+              "alt": "Chacabuco Chenin Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Chacabuco Chenin Dulce",
+              "varietal": "100% Chenin Blanc · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "36887.20",
+                "label": "$36.887,20",
+                "code": "394",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.887,20"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_030.png",
+              "alt": "Chacabuco Botella Chenin Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Chacabuco Botella Chenin Dulce",
+              "varietal": "100% Chenin Blanc · Valle de Uco y Norte Mendoza · 500 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_031.png",
+              "alt": "Conejo Verde Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Conejo Verde Malbec",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "27790.00",
+                "label": "$27.790,00",
+                "code": "425",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$27.790,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_032.png",
+              "alt": "Conejo Verde Chenin",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Conejo Verde Chenin",
+              "varietal": "100% Chenin Blanc · Valle de Uco · 750 ml",
+              "price": {
+                "value": "36638.00",
+                "label": "$36.638,00",
+                "code": "426",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.638,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_033.png",
+              "alt": "Conejo Verde Rosé",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "Conejo Verde Rosé",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "36638.00",
+                "label": "$36.638,00",
+                "code": "423",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.638,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_034.png",
+              "alt": "Conejo Verde Blanc de Blancs",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Conejo Verde Blanc de Blancs",
+              "varietal": "Chardonnay y Chenin · Valle de Uco · 750 ml",
+              "price": {
+                "value": "27790.00",
+                "label": "$27.790,00",
+                "code": "424",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$27.790,00"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Domingo Hermanos · Domingo Molina",
+          "description": "Salta · Valles Calchaquíes, vinos de altura y damajuanas.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_035.png",
+              "alt": "Domingo Hermanos Origen Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Hermanos Origen Malbec",
+              "varietal": "100% Malbec · Valles Calchaquíes, Salta · 750 ml",
+              "price": {
+                "value": "35532.00",
+                "label": "$35.532,00",
+                "code": "389",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$35.532,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_036.png",
+              "alt": "Domingo Hermanos Origen Torrontés",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Domingo Hermanos Origen Torrontés",
+              "varietal": "100% Torrontés · Valles Calchaquíes, Salta · 750 ml",
+              "price": {
+                "value": "35532.00",
+                "label": "$35.532,00",
+                "code": "383",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$35.532,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_037.png",
+              "alt": "Domingo Hermanos Expresión",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Hermanos Expresión",
+              "varietal": "100% Malbec · Valles Calchaquíes, Salta · 750 ml",
+              "price": {
+                "value": "32300.00",
+                "label": "$32.300,00",
+                "code": "359",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$32.300,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_038.png",
+              "alt": "Domingo Molina Mortero",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Molina Mortero",
+              "varietal": "100% Malbec · Valles Calchaquíes, Salta · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_039.png",
+              "alt": "Domingo Molina Hermanos",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Molina Hermanos",
+              "varietal": "100% Malbec · Valles Calchaquíes, Salta · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_040.png",
+              "alt": "Domingo Molina Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Molina Cabernet",
+              "varietal": "100% Cabernet · Valles Calchaquíes, Salta · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_090.png",
+              "alt": "Damajuana Domingo Hermanos Tinto",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana Domingo Hermanos Tinto",
+              "varietal": "Vino tinto · presentación familiar",
+              "price": {
+                "value": "14829.32",
+                "label": "$14.829,32",
+                "code": "244",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$14.829,32"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_091.png",
+              "alt": "Damajuana Domingo Hermanos Torrontés",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana Domingo Hermanos Torrontés",
+              "varietal": "Torrontés · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_092.png",
+              "alt": "Damajuana Domingo Hermanos Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana Domingo Hermanos Malbec",
+              "varietal": "Malbec · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_093.png",
+              "alt": "Damajuana Domingo Hermanos Regional",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana Domingo Hermanos Regional",
+              "varietal": "Vino regional · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_094.png",
+              "alt": "Domingo Hermanos Regional Blanco",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Domingo Hermanos Regional Blanco",
+              "varietal": "Blend de blancas · Valle de Uco, Mendoza · 5000 ml",
+              "price": {
+                "value": "12240.03",
+                "label": "$12.240,03",
+                "code": "240",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$12.240,03"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Prófugo · Sin Palabras · Cuatro Monos Locos",
+          "description": "Mendoza · vinos de autor presentes en el catálogo para imprimir.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_054.png",
+              "alt": "Sin Palabras Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sin Palabras Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "489",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_056.png",
+              "alt": "Sin Palabras Cabernet Sauvignon",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sin Palabras Cabernet Sauvignon",
+              "varietal": "100% Cabernet Sauvignon · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "490",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_077.png",
+              "alt": "Prófugo Frutos Rojos",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Prófugo Frutos Rojos",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "492",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_078.png",
+              "alt": "Prófugo Especias",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Prófugo Especias",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "493",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_079.png",
+              "alt": "Prófugo Chenin D.",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Prófugo Chenin D.",
+              "varietal": "100% Chenin Blanc · Valle de Uco · 750 ml",
+              "price": {
+                "value": "19443.51",
+                "label": "$19.443,51",
+                "code": "494",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$19.443,51"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_080.png",
+              "alt": "Prófugo Mr. Franc",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Prófugo Mr. Franc",
+              "varietal": "100% Cabernet Franc · Valle de Uco · 750 ml",
+              "price": {
+                "value": "23929.61",
+                "label": "$23.929,61",
+                "code": "495",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.929,61"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_081.png",
+              "alt": "Sin Palabras Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sin Palabras Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "489",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_082.png",
+              "alt": "Sin Palabras Cabernet Sauvignon",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sin Palabras Cabernet Sauvignon",
+              "varietal": "100% Cabernet Sauvignon · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "490",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_083.png",
+              "alt": "Cuatro Monos Locos Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Cuatro Monos Locos Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "12603.82",
+                "label": "$12.603,82",
+                "code": "496",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$12.603,82"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Otras marcas",
+          "description": "Viñas Riojanas · Balbo · Santa Florentina · Club de Playa · Corrales Negros · Killari · Oveja Black · Safari · Sensei.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_041.png",
+              "alt": "Viñas Riojanas Tetra Tinto",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Viñas Riojanas Tetra Tinto",
+              "varietal": "Blend de tintos · Valle del Famatina, La Rioja · 1000 ml",
+              "price": {
+                "value": "23027.87",
+                "label": "$23.027,87",
+                "code": "906",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.027,87"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_042.png",
+              "alt": "Viñas Riojanas Tetra Blanco Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Viñas Riojanas Tetra Blanco Dulce",
+              "varietal": "Torrontés riojano · Valle del Famatina, La Rioja · 1000 ml",
+              "price": {
+                "value": "20760.35",
+                "label": "$20.760,35",
+                "code": "903",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$20.760,35"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_043.png",
+              "alt": "Viñas Riojanas Tetra Blanco",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Viñas Riojanas Tetra Blanco",
+              "varietal": "Blend de blancas · Valle del Famatina, La Rioja · 1000 ml",
+              "price": {
+                "value": "20760.35",
+                "label": "$20.760,35",
+                "code": "904",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$20.760,35"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_044.png",
+              "alt": "Balbo 3/4 Blanco",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Balbo 3/4 Blanco",
+              "varietal": "Blend, Chenin Blanc y Chardonnay · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "13896.18",
+                "label": "$13.896,18",
+                "code": "411",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$13.896,18"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_045.png",
+              "alt": "Balbo 3/4 Tinto",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Balbo 3/4 Tinto",
+              "varietal": "Bivarietal Malbec, Syrah y Cabernet Sauvignon · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "13896.18",
+                "label": "$13.896,18",
+                "code": "410",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$13.896,18"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_046.png",
+              "alt": "Santa Florentina Syrah Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Santa Florentina Syrah Malbec",
+              "varietal": "Blend Malbec y Syrah · Valle del Famatina, La Rioja · 750 ml",
+              "price": {
+                "value": "23803.20",
+                "label": "$23.803,20",
+                "code": "447",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.803,20"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_047.png",
+              "alt": "Santa Florentina Torrontés Chardonnay",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Santa Florentina Torrontés Chardonnay",
+              "varietal": "Blend Torrontés y Chardonnay · Valle del Famatina, La Rioja · 750 ml",
+              "price": {
+                "value": "21898.50",
+                "label": "$21.898,50",
+                "code": "456",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$21.898,50"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_048.png",
+              "alt": "Club de Playa Rosé",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "Club de Playa Rosé",
+              "varietal": "100% Malbec · Valle del Famatina, La Rioja · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_049.png",
+              "alt": "Balbo Magnum Blanco",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Balbo Magnum Blanco",
+              "varietal": "Blend blanco · 1500 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_050.png",
+              "alt": "Balbo Magnum Tinto",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Balbo Magnum Tinto",
+              "varietal": "Blend tinto · 1500 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_051.png",
+              "alt": "Corrales Negros Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Corrales Negros Malbec",
+              "varietal": "Malbec · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_052.png",
+              "alt": "Corrales Negros Cabernet Sauvignon",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Corrales Negros Cabernet Sauvignon",
+              "varietal": "Cabernet Sauvignon · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_053.png",
+              "alt": "Corrales Negros Patero",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Corrales Negros Patero",
+              "varietal": "Vino dulce tinto · 750 ml",
+              "price": {
+                "value": "11619.40",
+                "label": "$11.619,40",
+                "code": "740",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$11.619,40"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_055.png",
+              "alt": "Killari Patero",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Killari Patero",
+              "varietal": "Vino tinto patero · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_084.png",
+              "alt": "Oveja Black Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Oveja Black Cabernet",
+              "varietal": "100% Cabernet Sauvignon · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "486",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_085.png",
+              "alt": "Oveja Black Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Oveja Black Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "485",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_086.png",
+              "alt": "Oveja Black Chardonnay",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Oveja Black Chardonnay",
+              "varietal": "100% Chardonnay · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "487",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_087.png",
+              "alt": "Oveja Black Chenin Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Oveja Black Chenin Dulce",
+              "varietal": "100% Chenin Blanc · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "19443.51",
+                "label": "$19.443,51",
+                "code": "488",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$19.443,51"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_088.png",
+              "alt": "Safari Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Safari Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "12352.93",
+                "label": "$12.352,93",
+                "code": "497",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$12.352,93"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_089.png",
+              "alt": "Sensei Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sensei Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "19853.37",
+                "label": "$19.853,37",
+                "code": "491",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$19.853,37"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "losharoldos",
+      "active": false,
+      "sections": [
+        {
+          "name": "Los Haroldos",
+          "description": "Mendoza · espumantes, Estate y Reserva según catálogo para imprimir.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_001.png",
+              "alt": "Los Haroldos Extra Brut",
+              "type": "Espumante",
+              "badgeClass": "badge-espumante",
+              "name": "Los Haroldos Extra Brut",
+              "varietal": "70% Chardonnay · 30% Sauvignon Blanc · Valle de Uco y Valle Este · 750 ml",
+              "price": {
+                "value": "45335.51",
+                "label": "$45.335,51",
+                "code": "15",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$45.335,51"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_002.png",
+              "alt": "Los Haroldos Brut Rosé",
+              "type": "Espumante",
+              "badgeClass": "badge-espumante",
+              "name": "Los Haroldos Brut Rosé",
+              "varietal": "Pinot Noir, Chardonnay y Syrah · Mendoza · 750 ml",
+              "price": {
+                "value": "45301.20",
+                "label": "$45.301,20",
+                "code": "16",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$45.301,20"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_003.png",
+              "alt": "Los Haroldos Estate Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Estate Malbec",
+              "varietal": "100% Malbec · La Consulta, San Carlos · 750 ml",
+              "price": {
+                "value": "24886.92",
+                "label": "$24.886,92",
+                "code": "379",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.886,92"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_004.png",
+              "alt": "Los Haroldos Estate Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Estate Cabernet",
+              "varietal": "100% Cabernet · Valle de Uco · 750 ml",
+              "price": {
+                "value": "24886.92",
+                "label": "$24.886,92",
+                "code": "377",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.886,92"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_005.png",
+              "alt": "Los Haroldos Estate Blend",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Estate Blend",
+              "varietal": "60% Malbec, 25% Cabernet, 15% Petit Verdot · Valle de Uco · 750 ml",
+              "price": {
+                "value": "24886.92",
+                "label": "$24.886,92",
+                "code": "375",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.886,92"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_006.png",
+              "alt": "Los Haroldos Estate Bonarda",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Estate Bonarda",
+              "varietal": "100% Bonarda · Medrano, Valle de Uco · 750 ml",
+              "price": {
+                "value": "24886.92",
+                "label": "$24.886,92",
+                "code": "372",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.886,92"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_007.png",
+              "alt": "Los Haroldos Reserva Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Reserva Malbec",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "36960.00",
+                "label": "$36.960,00",
+                "code": "480",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.960,00"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nampe",
+      "active": false,
+      "sections": [
+        {
+          "name": "Nampe",
+          "description": "Mendoza · tintos y blancos varietales de Zona Este, Maipú, Luján de Cuyo y Valle de Uco.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_008.png",
+              "alt": "Nampe Chardonnay",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Nampe Chardonnay",
+              "varietal": "100% Chardonnay · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "368",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_009.png",
+              "alt": "Nampe Torrontés",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Nampe Torrontés",
+              "varietal": "100% Torrontés · Valle de Uco · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "361",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_010.png",
+              "alt": "Nampe Sauvignon Blanc",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Nampe Sauvignon Blanc",
+              "varietal": "100% Sauvignon Blanc · Valle de Uco · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "362",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_011.png",
+              "alt": "Nampe Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Malbec",
+              "varietal": "100% Malbec · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "369",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_012.png",
+              "alt": "Nampe Merlot",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Merlot",
+              "varietal": "100% Merlot · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "364",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_013.png",
+              "alt": "Nampe Syrah",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Syrah",
+              "varietal": "100% Syrah · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "365",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_014.png",
+              "alt": "Nampe Tempranillo",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Tempranillo",
+              "varietal": "100% Tempranillo · Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "366",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_015.png",
+              "alt": "Nampe Cabernet Sauvignon",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Nampe Cabernet Sauvignon",
+              "varietal": "100% Cabernet Sauvignon · Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18116.00",
+                "label": "$18.116,00",
+                "code": "367",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.116,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_016.png",
+              "alt": "Nampe Blanco Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Nampe Blanco Dulce",
+              "varietal": "Blanco dulce · Zona Este, Maipú y Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "22743.00",
+                "label": "$22.743,00",
+                "code": "363",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$22.743,00"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lairide",
+      "active": false,
+      "sections": [
+        {
+          "name": "La Íride · Bodegas & Viñedos",
+          "description": "Mendoza · etiquetas Dorada, Roja, Plata, Verde, Huelgas de Amor, damajuanas y Bag in Box.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_017.png",
+              "alt": "La Íride Etiqueta Dorada Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Dorada Malbec",
+              "varietal": "100% Malbec · Villa Seca, Maipú · 750 ml",
+              "price": {
+                "value": "34019.99",
+                "label": "$34.019,99",
+                "code": "329",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$34.019,99"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_018.png",
+              "alt": "La Íride Etiqueta Dorada Cabernet Franc",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Dorada Cabernet Franc",
+              "varietal": "100% Cabernet Franc · Villa Seca, Maipú · 750 ml",
+              "price": {
+                "value": "34019.99",
+                "label": "$34.019,99",
+                "code": "327",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$34.019,99"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_019.png",
+              "alt": "La Íride Etiqueta Dorada Pinot Noir",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Dorada Pinot Noir",
+              "varietal": "100% Pinot Noir · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "34019.99",
+                "label": "$34.019,99",
+                "code": "328",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$34.019,99"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_020.png",
+              "alt": "La Íride Coordenada Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Coordenada Malbec",
+              "varietal": "100% Malbec · Maipú · 750 ml",
+              "price": {
+                "value": "65840.59",
+                "label": "$65.840,59",
+                "code": "340",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$65.840,59"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_021.png",
+              "alt": "La Íride Trilogía",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "La Íride Trilogía",
+              "varietal": "Naranjo, Merlot y Petit · Valle de Uco · 750 ml",
+              "price": {
+                "value": "40976.80",
+                "label": "$40.976,80",
+                "code": "316",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$40.976,80"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_022.png",
+              "alt": "La Íride Etiqueta Roja Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Roja Cabernet",
+              "varietal": "100% Cabernet · Maipú · 750 ml",
+              "price": {
+                "value": "26582.81",
+                "label": "$26.582,81",
+                "code": "317",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$26.582,81"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_023.png",
+              "alt": "La Íride Etiqueta Roja Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Roja Malbec",
+              "varietal": "100% Malbec · Villa Seca, Maipú · 750 ml",
+              "price": {
+                "value": "26582.81",
+                "label": "$26.582,81",
+                "code": "319",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$26.582,81"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_024.png",
+              "alt": "La Íride Abducido Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Abducido Malbec",
+              "varietal": "100% Malbec · Maipú · 750 ml",
+              "price": {
+                "value": "36403.69",
+                "label": "$36.403,69",
+                "code": "336",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.403,69"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_057.png",
+              "alt": "Damajuana La Íride Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Malbec",
+              "varietal": "Vino tinto · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_058.png",
+              "alt": "Damajuana La Íride Cabernet",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Cabernet",
+              "varietal": "Vino tinto · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_059.png",
+              "alt": "Damajuana La Íride Mimbre Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Mimbre Malbec",
+              "varietal": "Malbec · damajuana mimbre",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_060.png",
+              "alt": "Damajuana La Íride Mimbre Cabernet",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Mimbre Cabernet",
+              "varietal": "Cabernet · damajuana mimbre",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_061.png",
+              "alt": "Damajuana La Íride Etiqueta Roja Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Etiqueta Roja Malbec",
+              "varietal": "Malbec · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_062.png",
+              "alt": "Damajuana La Íride Etiqueta Plata Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Etiqueta Plata Malbec",
+              "varietal": "Malbec · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_063.png",
+              "alt": "Damajuana La Íride Etiqueta Plata Cabernet",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana La Íride Etiqueta Plata Cabernet",
+              "varietal": "Cabernet · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_064.png",
+              "alt": "La Íride Etiqueta Verde Chardonnay Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "La Íride Etiqueta Verde Chardonnay Dulce",
+              "varietal": "100% Chardonnay · Maipú · 750 ml",
+              "price": {
+                "value": "29416.52",
+                "label": "$29.416,52",
+                "code": "312",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$29.416,52"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_065.png",
+              "alt": "La Íride Huelgas de Amor Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Huelgas de Amor Cabernet",
+              "varietal": "100% Cabernet · Maipú · 750 ml",
+              "price": {
+                "value": "29416.52",
+                "label": "$29.416,52",
+                "code": "337",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$29.416,52"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_066.png",
+              "alt": "La Íride Huelgas de Amor Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Huelgas de Amor Malbec",
+              "varietal": "100% Malbec · Maipú · 750 ml",
+              "price": {
+                "value": "29416.52",
+                "label": "$29.416,52",
+                "code": "339",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$29.416,52"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_067.png",
+              "alt": "La Íride Rosé",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "La Íride Rosé",
+              "varietal": "Rosé · 750 ml",
+              "price": {
+                "value": "29416.52",
+                "label": "$29.416,52",
+                "code": "313",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$29.416,52"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_068.png",
+              "alt": "La Íride Etiqueta Plata Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Plata Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "23329.17",
+                "label": "$23.329,17",
+                "code": "309",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.329,17"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_069.png",
+              "alt": "La Íride Etiqueta Plata Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "La Íride Etiqueta Plata Cabernet",
+              "varietal": "100% Cabernet · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "23329.17",
+                "label": "$23.329,17",
+                "code": "307",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.329,17"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_070.png",
+              "alt": "La Íride Etiqueta Verde Chardonnay",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "La Íride Etiqueta Verde Chardonnay",
+              "varietal": "100% Chardonnay · Maipú · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_071.png",
+              "alt": "La Íride Mimbre Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "La Íride Mimbre Malbec",
+              "varietal": "Malbec · damajuana mimbre",
+              "price": {
+                "value": "16044.90",
+                "label": "$16.044,90",
+                "code": "300",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$16.044,90"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_072.png",
+              "alt": "La Íride Mimbre Cabernet",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "La Íride Mimbre Cabernet",
+              "varietal": "Cabernet · damajuana mimbre",
+              "price": {
+                "value": "16044.38",
+                "label": "$16.044,38",
+                "code": "301",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$16.044,38"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_073.png",
+              "alt": "La Íride BIB Plata Cabernet",
+              "type": "Bag in Box",
+              "badgeClass": "badge-bag-in-box",
+              "name": "La Íride BIB Plata Cabernet",
+              "varietal": "100% Cabernet · Luján de Cuyo · 5000 ml",
+              "price": {
+                "value": "19906.59",
+                "label": "$19.906,59",
+                "code": "947",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$19.906,59"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_074.png",
+              "alt": "La Íride BIB Plata Corte de Autor",
+              "type": "Bag in Box",
+              "badgeClass": "badge-bag-in-box",
+              "name": "La Íride BIB Plata Corte de Autor",
+              "varietal": "Blend · Luján de Cuyo · 5000 ml",
+              "price": {
+                "value": "19906.59",
+                "label": "$19.906,59",
+                "code": "944",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$19.906,59"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_075.png",
+              "alt": "La Íride BIB Plata Malbec",
+              "type": "Bag in Box",
+              "badgeClass": "badge-bag-in-box",
+              "name": "La Íride BIB Plata Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 5000 ml",
+              "price": {
+                "value": "19906.59",
+                "label": "$19.906,59",
+                "code": "949",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$19.906,59"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_076.png",
+              "alt": "La Íride BIB Damajuana Malbec",
+              "type": "Bag in Box",
+              "badgeClass": "badge-bag-in-box",
+              "name": "La Íride BIB Damajuana Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 4750 ml",
+              "price": {
+                "value": "17469.72",
+                "label": "$17.469,72",
+                "code": "946",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$17.469,72"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chacabuco",
+      "active": false,
+      "sections": [
+        {
+          "name": "Chacabuco · Conejo Verde",
+          "description": "Mendoza · Chacabuco y Conejo Verde según catálogo para imprimir.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_025.png",
+              "alt": "Chacabuco Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Chacabuco Malbec",
+              "varietal": "100% Malbec · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "24129.00",
+                "label": "$24.129,00",
+                "code": "399",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.129,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_026.png",
+              "alt": "Chacabuco Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Chacabuco Cabernet",
+              "varietal": "100% Cabernet · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "24129.00",
+                "label": "$24.129,00",
+                "code": "397",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.129,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_027.png",
+              "alt": "Chacabuco Viognier",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Chacabuco Viognier",
+              "varietal": "100% Viognier · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "24129.00",
+                "label": "$24.129,00",
+                "code": "392",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.129,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_028.png",
+              "alt": "Chacabuco Rosado",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "Chacabuco Rosado",
+              "varietal": "100% Malbec · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "24129.00",
+                "label": "$24.129,00",
+                "code": "393",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$24.129,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_029.png",
+              "alt": "Chacabuco Chenin Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Chacabuco Chenin Dulce",
+              "varietal": "100% Chenin Blanc · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "36887.20",
+                "label": "$36.887,20",
+                "code": "394",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.887,20"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_030.png",
+              "alt": "Chacabuco Botella Chenin Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Chacabuco Botella Chenin Dulce",
+              "varietal": "100% Chenin Blanc · Valle de Uco y Norte Mendoza · 500 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_031.png",
+              "alt": "Conejo Verde Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Conejo Verde Malbec",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "27790.00",
+                "label": "$27.790,00",
+                "code": "425",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$27.790,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_032.png",
+              "alt": "Conejo Verde Chenin",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Conejo Verde Chenin",
+              "varietal": "100% Chenin Blanc · Valle de Uco · 750 ml",
+              "price": {
+                "value": "36638.00",
+                "label": "$36.638,00",
+                "code": "426",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.638,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_033.png",
+              "alt": "Conejo Verde Rosé",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "Conejo Verde Rosé",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "36638.00",
+                "label": "$36.638,00",
+                "code": "423",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$36.638,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_034.png",
+              "alt": "Conejo Verde Blanc de Blancs",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Conejo Verde Blanc de Blancs",
+              "varietal": "Chardonnay y Chenin · Valle de Uco · 750 ml",
+              "price": {
+                "value": "27790.00",
+                "label": "$27.790,00",
+                "code": "424",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$27.790,00"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "domingo",
+      "active": false,
+      "sections": [
+        {
+          "name": "Domingo Hermanos · Domingo Molina",
+          "description": "Salta · Valles Calchaquíes, vinos de altura y damajuanas.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_035.png",
+              "alt": "Domingo Hermanos Origen Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Hermanos Origen Malbec",
+              "varietal": "100% Malbec · Valles Calchaquíes, Salta · 750 ml",
+              "price": {
+                "value": "35532.00",
+                "label": "$35.532,00",
+                "code": "389",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$35.532,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_036.png",
+              "alt": "Domingo Hermanos Origen Torrontés",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Domingo Hermanos Origen Torrontés",
+              "varietal": "100% Torrontés · Valles Calchaquíes, Salta · 750 ml",
+              "price": {
+                "value": "35532.00",
+                "label": "$35.532,00",
+                "code": "383",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$35.532,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_037.png",
+              "alt": "Domingo Hermanos Expresión",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Hermanos Expresión",
+              "varietal": "100% Malbec · Valles Calchaquíes, Salta · 750 ml",
+              "price": {
+                "value": "32300.00",
+                "label": "$32.300,00",
+                "code": "359",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$32.300,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_038.png",
+              "alt": "Domingo Molina Mortero",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Molina Mortero",
+              "varietal": "100% Malbec · Valles Calchaquíes, Salta · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_039.png",
+              "alt": "Domingo Molina Hermanos",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Molina Hermanos",
+              "varietal": "100% Malbec · Valles Calchaquíes, Salta · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_040.png",
+              "alt": "Domingo Molina Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Domingo Molina Cabernet",
+              "varietal": "100% Cabernet · Valles Calchaquíes, Salta · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_090.png",
+              "alt": "Damajuana Domingo Hermanos Tinto",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana Domingo Hermanos Tinto",
+              "varietal": "Vino tinto · presentación familiar",
+              "price": {
+                "value": "14829.32",
+                "label": "$14.829,32",
+                "code": "244",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$14.829,32"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_091.png",
+              "alt": "Damajuana Domingo Hermanos Torrontés",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana Domingo Hermanos Torrontés",
+              "varietal": "Torrontés · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_092.png",
+              "alt": "Damajuana Domingo Hermanos Malbec",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana Domingo Hermanos Malbec",
+              "varietal": "Malbec · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_093.png",
+              "alt": "Damajuana Domingo Hermanos Regional",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Damajuana Domingo Hermanos Regional",
+              "varietal": "Vino regional · presentación familiar",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_094.png",
+              "alt": "Domingo Hermanos Regional Blanco",
+              "type": "Damajuana",
+              "badgeClass": "badge-damajuana",
+              "name": "Domingo Hermanos Regional Blanco",
+              "varietal": "Blend de blancas · Valle de Uco, Mendoza · 5000 ml",
+              "price": {
+                "value": "12240.03",
+                "label": "$12.240,03",
+                "code": "240",
+                "packSize": null,
+                "displayLabel": "Unidad",
+                "displayValue": "$12.240,03"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "profugo",
+      "active": false,
+      "sections": [
+        {
+          "name": "Prófugo · Sin Palabras · Cuatro Monos Locos",
+          "description": "Mendoza · vinos de autor presentes en el catálogo para imprimir.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_054.png",
+              "alt": "Sin Palabras Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sin Palabras Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "489",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_056.png",
+              "alt": "Sin Palabras Cabernet Sauvignon",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sin Palabras Cabernet Sauvignon",
+              "varietal": "100% Cabernet Sauvignon · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "490",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_077.png",
+              "alt": "Prófugo Frutos Rojos",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Prófugo Frutos Rojos",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "492",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_078.png",
+              "alt": "Prófugo Especias",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Prófugo Especias",
+              "varietal": "100% Malbec · Valle de Uco · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "493",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_079.png",
+              "alt": "Prófugo Chenin D.",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Prófugo Chenin D.",
+              "varietal": "100% Chenin Blanc · Valle de Uco · 750 ml",
+              "price": {
+                "value": "19443.51",
+                "label": "$19.443,51",
+                "code": "494",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$19.443,51"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_080.png",
+              "alt": "Prófugo Mr. Franc",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Prófugo Mr. Franc",
+              "varietal": "100% Cabernet Franc · Valle de Uco · 750 ml",
+              "price": {
+                "value": "23929.61",
+                "label": "$23.929,61",
+                "code": "495",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.929,61"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_081.png",
+              "alt": "Sin Palabras Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sin Palabras Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "489",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_082.png",
+              "alt": "Sin Palabras Cabernet Sauvignon",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sin Palabras Cabernet Sauvignon",
+              "varietal": "100% Cabernet Sauvignon · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "490",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_083.png",
+              "alt": "Cuatro Monos Locos Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Cuatro Monos Locos Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo · 750 ml",
+              "price": {
+                "value": "12603.82",
+                "label": "$12.603,82",
+                "code": "496",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$12.603,82"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "otros",
+      "active": false,
+      "sections": [
+        {
+          "name": "Otras marcas",
+          "description": "Viñas Riojanas · Balbo · Santa Florentina · Club de Playa · Corrales Negros · Killari · Oveja Black · Safari · Sensei.",
+          "products": [
+            {
+              "image": "PRODUCTOS/producto_041.png",
+              "alt": "Viñas Riojanas Tetra Tinto",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Viñas Riojanas Tetra Tinto",
+              "varietal": "Blend de tintos · Valle del Famatina, La Rioja · 1000 ml",
+              "price": {
+                "value": "23027.87",
+                "label": "$23.027,87",
+                "code": "906",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.027,87"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_042.png",
+              "alt": "Viñas Riojanas Tetra Blanco Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Viñas Riojanas Tetra Blanco Dulce",
+              "varietal": "Torrontés riojano · Valle del Famatina, La Rioja · 1000 ml",
+              "price": {
+                "value": "20760.35",
+                "label": "$20.760,35",
+                "code": "903",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$20.760,35"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_043.png",
+              "alt": "Viñas Riojanas Tetra Blanco",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Viñas Riojanas Tetra Blanco",
+              "varietal": "Blend de blancas · Valle del Famatina, La Rioja · 1000 ml",
+              "price": {
+                "value": "20760.35",
+                "label": "$20.760,35",
+                "code": "904",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$20.760,35"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_044.png",
+              "alt": "Balbo 3/4 Blanco",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Balbo 3/4 Blanco",
+              "varietal": "Blend, Chenin Blanc y Chardonnay · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "13896.18",
+                "label": "$13.896,18",
+                "code": "411",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$13.896,18"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_045.png",
+              "alt": "Balbo 3/4 Tinto",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Balbo 3/4 Tinto",
+              "varietal": "Bivarietal Malbec, Syrah y Cabernet Sauvignon · Valle de Uco y Norte Mendoza · 750 ml",
+              "price": {
+                "value": "13896.18",
+                "label": "$13.896,18",
+                "code": "410",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$13.896,18"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_046.png",
+              "alt": "Santa Florentina Syrah Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Santa Florentina Syrah Malbec",
+              "varietal": "Blend Malbec y Syrah · Valle del Famatina, La Rioja · 750 ml",
+              "price": {
+                "value": "23803.20",
+                "label": "$23.803,20",
+                "code": "447",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$23.803,20"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_047.png",
+              "alt": "Santa Florentina Torrontés Chardonnay",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Santa Florentina Torrontés Chardonnay",
+              "varietal": "Blend Torrontés y Chardonnay · Valle del Famatina, La Rioja · 750 ml",
+              "price": {
+                "value": "21898.50",
+                "label": "$21.898,50",
+                "code": "456",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$21.898,50"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_048.png",
+              "alt": "Club de Playa Rosé",
+              "type": "Rosado",
+              "badgeClass": "badge-rose",
+              "name": "Club de Playa Rosé",
+              "varietal": "100% Malbec · Valle del Famatina, La Rioja · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_049.png",
+              "alt": "Balbo Magnum Blanco",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Balbo Magnum Blanco",
+              "varietal": "Blend blanco · 1500 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_050.png",
+              "alt": "Balbo Magnum Tinto",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Balbo Magnum Tinto",
+              "varietal": "Blend tinto · 1500 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_051.png",
+              "alt": "Corrales Negros Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Corrales Negros Malbec",
+              "varietal": "Malbec · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_052.png",
+              "alt": "Corrales Negros Cabernet Sauvignon",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Corrales Negros Cabernet Sauvignon",
+              "varietal": "Cabernet Sauvignon · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_053.png",
+              "alt": "Corrales Negros Patero",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Corrales Negros Patero",
+              "varietal": "Vino dulce tinto · 750 ml",
+              "price": {
+                "value": "11619.40",
+                "label": "$11.619,40",
+                "code": "740",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$11.619,40"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_055.png",
+              "alt": "Killari Patero",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Killari Patero",
+              "varietal": "Vino tinto patero · 750 ml",
+              "price": null
+            },
+            {
+              "image": "PRODUCTOS/producto_084.png",
+              "alt": "Oveja Black Cabernet",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Oveja Black Cabernet",
+              "varietal": "100% Cabernet Sauvignon · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "486",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_085.png",
+              "alt": "Oveja Black Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Oveja Black Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "485",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_086.png",
+              "alt": "Oveja Black Chardonnay",
+              "type": "Blanco",
+              "badgeClass": "badge-blanco",
+              "name": "Oveja Black Chardonnay",
+              "varietal": "100% Chardonnay · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "18166.73",
+                "label": "$18.166,73",
+                "code": "487",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$18.166,73"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_087.png",
+              "alt": "Oveja Black Chenin Dulce",
+              "type": "Dulce",
+              "badgeClass": "badge-dulce",
+              "name": "Oveja Black Chenin Dulce",
+              "varietal": "100% Chenin Blanc · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "19443.51",
+                "label": "$19.443,51",
+                "code": "488",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$19.443,51"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_088.png",
+              "alt": "Safari Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Safari Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "12352.93",
+                "label": "$12.352,93",
+                "code": "497",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$12.352,93"
+              }
+            },
+            {
+              "image": "PRODUCTOS/producto_089.png",
+              "alt": "Sensei Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Sensei Malbec",
+              "varietal": "100% Malbec · Luján de Cuyo, Mendoza · 750 ml",
+              "price": {
+                "value": "19853.37",
+                "label": "$19.853,37",
+                "code": "491",
+                "packSize": null,
+                "displayLabel": "Caja x6",
+                "displayValue": "$19.853,37"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

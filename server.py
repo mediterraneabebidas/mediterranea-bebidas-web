@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
+import concurrent.futures
 import json
 import os
-import re
 import smtplib
 import socket
 from decimal import Decimal, ROUND_HALF_UP
 from email.message import EmailMessage
-from html import escape, unescape
+from html import escape
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-APP_VERSION = "catalog-magnum-labels-2026-05-23-01"
+APP_VERSION = "resend-timeout-2026-05-21-01"
 BASE_DIR = Path(__file__).resolve().parent
-INDEX_FILE = BASE_DIR / "index.html"
+CATALOG_FILE = BASE_DIR / "PRODUCTOS" / "catalogo.json"
 ORDER_TO = os.environ.get("MEDITERRANEA_ORDER_TO", "mediterraneabebidas60@gmail.com")
 SMTP_USER = os.environ.get("MEDITERRANEA_GMAIL_USER") or os.environ.get("GMAIL_USER")
 SMTP_PASSWORD = os.environ.get("MEDITERRANEA_GMAIL_APP_PASSWORD") or os.environ.get("GMAIL_APP_PASSWORD")
@@ -24,7 +24,21 @@ SMTP_PORT = int(os.environ.get("MEDITERRANEA_SMTP_PORT", "465"))
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 RESEND_FROM = os.environ.get("RESEND_FROM", "Mediterranea Bebidas <onboarding@resend.dev>")
 socket.setdefaulttimeout(12)
-CATALOG_CACHE = None
+
+PROMOTIONS = {
+    "chacabuco-3x1": {
+        "name": "Promo Chacabuco 3+1",
+        "detail": "3 cajas + 1 de regalo",
+        "type": "Promo",
+        "paid_boxes": 3,
+        "gift_boxes": 1,
+        "variants": {
+            "malbec": {"label": "Chacabuco Malbec", "price_code": "399"},
+            "cabernet": {"label": "Chacabuco Cabernet", "price_code": "397"},
+            "rosado": {"label": "Chacabuco Rosado", "price_code": "393"},
+        },
+    }
+}
 
 
 def money(value):
@@ -34,39 +48,24 @@ def money(value):
 
 
 def load_catalog():
-    global CATALOG_CACHE
-    if CATALOG_CACHE is not None:
-        return CATALOG_CACHE
-
-    try:
-        html = INDEX_FILE.read_text(encoding="utf-8")
-    except UnicodeDecodeError:
-        html = INDEX_FILE.read_text(encoding="latin-1")
-    card_pattern = re.compile(
-        r'<div class="wine-card">.*?'
-        r'<div class="wine-type-badge[^"]*">(?P<type>.*?)</div>.*?'
-        r'<div class="wine-name">(?P<name>.*?)</div>.*?'
-        r'<div class="wine-price"[^>]*data-price="(?P<price>[^"]+)"[^>]*data-price-code="(?P<code>[^"]+)"'
-    )
+    data = json.loads(CATALOG_FILE.read_text(encoding="utf-8"))
     catalog = {}
-    for line in html.splitlines():
-        if '<div class="wine-card">' not in line or "data-price-code" not in line:
-            continue
-        match = card_pattern.search(line)
-        if not match:
-            continue
-        code = unescape(match.group("code")).strip()
-        box_match = re.search(r'data-box-size="(?P<size>\d+)"', line)
-        unit_match = re.search(r'data-unit-price="(?P<price>[^"]+)"', line)
-        catalog[code] = {
-            "name": unescape(re.sub(r"<.*?>", "", match.group("name"))).strip(),
-            "type": unescape(re.sub(r"<.*?>", "", match.group("type"))).strip(),
-            "price": Decimal(match.group("price")),
-            "box_size": Decimal(box_match.group("size")) if box_match else Decimal("6"),
-            "unit_price": Decimal(unit_match.group("price")) if unit_match else None,
-        }
-    CATALOG_CACHE = catalog
-    return CATALOG_CACHE
+    for panel in data.get("panels", []):
+        for section in panel.get("sections", []):
+            for product in section.get("products", []):
+                price = product.get("price") or {}
+                code = str(price.get("code") or "").strip()
+                value = str(price.get("value") or "").strip()
+                if not code or not value:
+                    continue
+                pack_size = int(price.get("packSize") or 6)
+                catalog[code] = {
+                    "name": str(product.get("name") or "").strip(),
+                    "type": str(product.get("type") or "").strip(),
+                    "price": Decimal(value),
+                    "pack_size": pack_size,
+                }
+    return catalog
 
 
 def is_unit_product(product_type):
@@ -82,17 +81,70 @@ def normalize_qty(value):
     return max(1, min(qty, 999))
 
 
-def validated_items(payload):
-    items = payload.get("cart_items") or []
-    if not items:
-        return [], Decimal("0"), False
+def is_promo_item(raw):
+    return raw.get("purchaseMode") == "promo" or bool(raw.get("promoId"))
 
+
+def validate_promo_item(raw, catalog):
+    promo_id = str(raw.get("promoId") or "").strip()
+    variant_key = str(raw.get("variantKey") or "").strip()
+    if not promo_id or not variant_key:
+        raise ValueError("Promocion incompleta: faltan promoId o variantKey")
+
+    promo = PROMOTIONS.get(promo_id)
+    if not promo:
+        raise ValueError(f"Promocion desconocida: {promo_id}")
+
+    variant = promo["variants"].get(variant_key)
+    if not variant:
+        raise ValueError(f"Variante invalida para {promo['name']}: {variant_key}")
+
+    catalog_item = catalog.get(variant["price_code"])
+    if not catalog_item:
+        raise ValueError(f"No se encontro precio oficial para {promo['name']} ({variant['label']})")
+
+    qty = normalize_qty(raw.get("quantity"))
+    paid_boxes = Decimal(promo["paid_boxes"])
+    unit_price = catalog_item["price"] * paid_boxes
+    line_total = unit_price * qty
+    promo_qty_label = "promo 3+1" if qty == 1 else "promos 3+1"
+
+    return {
+        "name": promo["name"],
+        "type": promo["type"],
+        "qty": qty,
+        "label": promo_qty_label,
+        "mode": "promo",
+        "price": f"{money(unit_price)} por promo 3+1 ({promo['paid_boxes']} cajas pagas)",
+        "total": money(line_total),
+        "specs": {
+            "variety": variant["label"],
+            "provenance": "Mendoza",
+            "quantity": promo["detail"],
+        },
+        "code": promo_id,
+        "promo_id": promo_id,
+        "variant_key": variant_key,
+        "subtotal": line_total,
+    }
+
+
+def validated_items(payload):
     catalog = load_catalog()
+    items = payload.get("cart_items") or []
     validated = []
     subtotal = Decimal("0")
     missing = False
 
     for raw in items:
+        if not isinstance(raw, dict):
+            raise ValueError("Item de pedido invalido")
+        if is_promo_item(raw):
+            promo_item = validate_promo_item(raw, catalog)
+            subtotal += promo_item["subtotal"]
+            validated.append(promo_item)
+            continue
+
         code = str(raw.get("priceCode") or "").strip()
         qty = normalize_qty(raw.get("quantity"))
         mode = "unit" if raw.get("purchaseMode") == "unit" else "box"
@@ -101,14 +153,11 @@ def validated_items(payload):
         if catalog_item:
             product_type = catalog_item["type"]
             name = catalog_item["name"]
+            pack_size = catalog_item.get("pack_size") or 6
+            box_label = f"caja x{pack_size}"
             if is_unit_product(product_type):
                 mode = "unit"
-            box_size = catalog_item.get("box_size") or Decimal("6")
-            explicit_unit_price = catalog_item.get("unit_price")
-            box_label = f"caja x{int(box_size)}"
-            unit_price = (
-                explicit_unit_price or (catalog_item["price"] / box_size)
-            ) if mode == "unit" and not is_unit_product(product_type) else catalog_item["price"]
+            unit_price = catalog_item["price"] / Decimal(pack_size) if mode == "unit" and not is_unit_product(product_type) else catalog_item["price"]
             line_total = unit_price * qty
             subtotal += line_total
             price_text = f"{money(unit_price)} por {'unidad' if mode == 'unit' else box_label}"
@@ -119,9 +168,9 @@ def validated_items(payload):
             name = str(raw.get("name") or "Producto sin nombre")
             price_text = "Precio a confirmar"
             total_text = "A confirmar"
-            box_label = f"caja x{normalize_qty(raw.get('boxSize') or 6)}"
 
         specs = raw.get("specs") if isinstance(raw.get("specs"), dict) else {}
+        box_label = box_label if catalog_item else "caja"
         label = "unidad" if mode == "unit" else box_label
         if qty != 1:
             label = "unidades" if mode == "unit" else box_label.replace("caja", "cajas", 1)
@@ -159,9 +208,6 @@ def build_email(payload):
     zip_code = text_value(payload, "codigo_postal")
     shipping_cost = text_value(payload, "costo_envio_estimado")
     address = text_value(payload, "direccion_o_retiro")
-    payment_status = text_value(payload, "pago_confirmado_cliente", "No")
-    payment_method = text_value(payload, "medio_de_pago", "Mercado Pago")
-    mp_alias = text_value(payload, "alias_mercado_pago", "bruno.laforte")
     notes = text_value(payload, "notas")
 
     subject = f"Nuevo pedido web - Mediterranea Bebidas - {name if name != '-' else phone}"
@@ -207,9 +253,6 @@ def build_email(payload):
         f"Codigo postal: {zip_code}",
         f"Costo envio estimado: {shipping_cost}",
         f"Direccion/retiro: {address}",
-        f"Medio de pago: {payment_method}",
-        f"Pago confirmado por cliente: {payment_status}",
-        f"Alias Mercado Pago: {mp_alias}",
         f"Notas: {notes}",
         "",
         "El total fue recalculado por el servidor desde la lista cargada en la web. Confirmar stock, envio e impuestos antes del pago.",
@@ -232,9 +275,6 @@ def build_email(payload):
     <strong>Codigo postal:</strong> {escape(zip_code)}<br>
     <strong>Costo envio estimado:</strong> {escape(shipping_cost)}<br>
     <strong>Direccion/retiro:</strong> {escape(address)}<br>
-    <strong>Medio de pago:</strong> {escape(payment_method)}<br>
-    <strong>Pago confirmado por cliente:</strong> {escape(payment_status)}<br>
-    <strong>Alias Mercado Pago:</strong> {escape(mp_alias)}<br>
     <strong>Notas:</strong> {escape(notes)}</p>
     <p>El total fue recalculado por el servidor desde la lista cargada en la web. Confirmar stock, envio e impuestos antes del pago.</p>
     """
@@ -269,13 +309,20 @@ def _send_email_resend_now(subject, plain, html, reply_to):
 
 
 def send_email_resend(subject, plain, html, reply_to):
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    future = executor.submit(_send_email_resend_now, subject, plain, html, reply_to)
     try:
-        return _send_email_resend_now(subject, plain, html, reply_to)
+        return future.result(timeout=12)
+    except concurrent.futures.TimeoutError as exc:
+        future.cancel()
+        raise RuntimeError("Resend no respondio dentro de 12 segundos. Revisar API key, dominio remitente o estado de Resend.") from exc
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"Resend rechazo el envio: HTTP {exc.code}. {detail}") from exc
     except Exception as exc:
         raise RuntimeError(f"No se pudo conectar con Resend: {type(exc).__name__}: {exc}") from exc
+    finally:
+        executor.shutdown(wait=False, cancel_futures=True)
 
 
 def send_email_smtp(subject, plain, html, reply_to):
@@ -345,20 +392,8 @@ def send_email(payload):
 
 
 class Handler(SimpleHTTPRequestHandler):
-    server_version = "MediterraneaBebidas/1.0"
-
     def end_headers(self):
         self.send_header("X-Content-Type-Options", "nosniff")
-        request_path = urlparse(self.path).path
-        extension = Path(request_path).suffix.lower()
-        if request_path.startswith("/api/"):
-            self.send_header("Cache-Control", "no-store")
-        elif extension in {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg", ".ico", ".woff", ".woff2"}:
-            self.send_header("Cache-Control", "public, max-age=2592000, immutable")
-        elif extension in {".css", ".js"}:
-            self.send_header("Cache-Control", "public, max-age=86400")
-        else:
-            self.send_header("Cache-Control", "no-cache")
         super().end_headers()
 
     def do_GET(self):
@@ -376,11 +411,6 @@ class Handler(SimpleHTTPRequestHandler):
             if length <= 0 or length > 1_000_000:
                 raise ValueError("Pedido vacio o demasiado grande")
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
-            payment_method = str(payload.get("medio_de_pago", "")).strip().lower()
-            is_cash = "efectivo" in payment_method
-            payment_confirmed = str(payload.get("pago_confirmado_cliente", "")).strip().lower() in {"si", "true", "1"}
-            if not is_cash and not payment_confirmed:
-                raise ValueError("El pedido por email solo se envia despues de confirmar el pago por Mercado Pago, o seleccionando pago en efectivo.")
             send_email(payload)
             self.respond_json(200, {"ok": True, "message": "Pedido enviado por email."})
         except Exception as exc:

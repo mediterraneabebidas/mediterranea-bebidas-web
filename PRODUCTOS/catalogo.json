@@ -58,7 +58,8 @@
     "Killari",
     "Oveja Black",
     "Safari",
-    "Sensei"
+    "Sensei",
+    "Hermandad"
   ],
   "panels": [
     {
@@ -179,6 +180,22 @@
                 "packSize": null,
                 "displayLabel": "Caja x6",
                 "displayValue": "$36.960,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/los-haroldos-gran-corte.webp",
+              "alt": "Los Haroldos Gran Corte",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Gran Corte",
+              "varietal": "Blend de terroirs · Mendoza, Argentina · 750 ml",
+              "price": {
+                "value": "55995.17",
+                "label": "$55.995,17",
+                "code": "415",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$55.995,17"
               }
             }
           ]
@@ -1182,7 +1199,7 @@
         },
         {
           "name": "Otras marcas",
-          "description": "Viñas Riojanas · Balbo · Santa Florentina · Club de Playa · Corrales Negros · Killari · Oveja Black · Safari · Sensei.",
+          "description": "Viñas Riojanas · Balbo · Santa Florentina · Club de Playa · Corrales Negros · Killari · Oveja Black · Safari · Sensei · Hermandad.",
           "products": [
             {
               "image": "PRODUCTOS/producto_041.png",
@@ -1461,6 +1478,38 @@
                 "displayLabel": "Caja x6",
                 "displayValue": "$19.853,37"
               }
+            },
+            {
+              "image": "PRODUCTOS/hermandad-blend.webp",
+              "alt": "Hermandad Blend",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Hermandad Blend",
+              "varietal": "Blend · Valle de Uco, Mendoza · 750 ml",
+              "price": {
+                "value": "95407.77",
+                "label": "$95.407,77",
+                "code": "416",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$95.407,77"
+              }
+            },
+            {
+              "image": "PRODUCTOS/hermandad-malbec.webp",
+              "alt": "Hermandad Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Hermandad Malbec",
+              "varietal": "100% Malbec · Valle de Uco, Mendoza · 750 ml",
+              "price": {
+                "value": "78849.40",
+                "label": "$78.849,40",
+                "code": "419",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$78.849,40"
+              }
             }
           ]
         }
@@ -1584,6 +1633,22 @@
                 "packSize": null,
                 "displayLabel": "Caja x6",
                 "displayValue": "$36.960,00"
+              }
+            },
+            {
+              "image": "PRODUCTOS/los-haroldos-gran-corte.webp",
+              "alt": "Los Haroldos Gran Corte",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Los Haroldos Gran Corte",
+              "varietal": "Blend de terroirs · Mendoza, Argentina · 750 ml",
+              "price": {
+                "value": "55995.17",
+                "label": "$55.995,17",
+                "code": "415",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$55.995,17"
               }
             }
           ]
@@ -2623,7 +2688,7 @@
       "sections": [
         {
           "name": "Otras marcas",
-          "description": "Viñas Riojanas · Balbo · Santa Florentina · Club de Playa · Corrales Negros · Killari · Oveja Black · Safari · Sensei.",
+          "description": "Viñas Riojanas · Balbo · Santa Florentina · Club de Playa · Corrales Negros · Killari · Oveja Black · Safari · Sensei · Hermandad.",
           "products": [
             {
               "image": "PRODUCTOS/producto_041.png",
@@ -2901,6 +2966,38 @@
                 "packSize": null,
                 "displayLabel": "Caja x6",
                 "displayValue": "$19.853,37"
+              }
+            },
+            {
+              "image": "PRODUCTOS/hermandad-blend.webp",
+              "alt": "Hermandad Blend",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Hermandad Blend",
+              "varietal": "Blend · Valle de Uco, Mendoza · 750 ml",
+              "price": {
+                "value": "95407.77",
+                "label": "$95.407,77",
+                "code": "416",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$95.407,77"
+              }
+            },
+            {
+              "image": "PRODUCTOS/hermandad-malbec.webp",
+              "alt": "Hermandad Malbec",
+              "type": "Tinto",
+              "badgeClass": "badge-tinto",
+              "name": "Hermandad Malbec",
+              "varietal": "100% Malbec · Valle de Uco, Mendoza · 750 ml",
+              "price": {
+                "value": "78849.40",
+                "label": "$78.849,40",
+                "code": "419",
+                "packSize": "4",
+                "displayLabel": "Caja x4",
+                "displayValue": "$78.849,40"
               }
             }
           ]

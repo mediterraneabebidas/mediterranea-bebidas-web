@@ -41,16 +41,47 @@ async function loadCatalog() {
   renderCatalogPanels(catalog.panels);
 }
 
-function parseWineSpecs(meta) {
-  const parts = String(meta || '')
-    .split(/\s*Â·\s*/)
+function normalizeSpecText(value) {
+  return String(value || '')
+    .replace(/\u00C2\u00B7/g, '·')
+    .replace(/&middot;/gi, '·')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function splitSpecParts(meta) {
+  const normalized = normalizeSpecText(meta);
+  if(!normalized) return [];
+  return normalized
+    .split(/\s*(?:\u00C2\u00B7|·|&middot;|•|\|)\s*/i)
     .map(part => part.trim())
     .filter(Boolean);
-  const quantityPattern = /(\d+\s*(ml|l)\b|presentaci[oÃ³]n|familiar|damajuana|mimbre|bag\s*in\s*box)/i;
-  const provenancePattern = /(valle|mendoza|rioja|salta|calchaqu|maip|luj[aÃ¡]n|consulta|san carlos|villa seca|zona este|norte|famatina|patagonia|argentina)/i;
-  let quantity = 'A confirmar';
-  if(parts.length && quantityPattern.test(parts[parts.length - 1])) {
+}
+
+function isQuantityPart(part) {
+  const text = normalizeSpecText(part).toLowerCase();
+  return /^(?:\d+(?:[.,]\d+)?\s*(?:ml|l|cc)\b|caja\s*x\s*\d+|presentaci[oó]n\b|presentaci[oó]n\s+familiar|familiar|damajuana|damajuana\s+mimbre|mimbre|bag\s*in\s*box)/i.test(text);
+}
+
+function quantityFallback(label) {
+  const text = normalizeSpecText(label);
+  return text && !/^\$/.test(text) ? text : 'A confirmar';
+}
+
+function parseWineSpecs(meta, fallbackQuantity = '') {
+  const parts = splitSpecParts(meta);
+  const provenancePattern = /\b(valle|mendoza|la\s+rioja|rioja|salta|calchaqu|maip|luj[aá]n|consulta|san carlos|villa seca|zona este|norte|famatina|patagonia|argentina)\b/i;
+  let quantity = quantityFallback(fallbackQuantity);
+  if(parts.length > 1 && isQuantityPart(parts[parts.length - 1])) {
     quantity = parts.pop();
+  } else if(parts.length === 1) {
+    const trailingQuantity = parts[0].match(/^(.*?)(\d+(?:[.,]\d+)?\s*(?:ml|l|cc)\b)$/i);
+    if(trailingQuantity && trailingQuantity[1].trim()) {
+      parts[0] = trailingQuantity[1].trim();
+      quantity = trailingQuantity[2].trim();
+    } else if(isQuantityPart(parts[0])) {
+      quantity = parts.pop();
+    }
   }
   const provenanceIndex = parts.findIndex(part => provenancePattern.test(part));
   let varietyParts = parts;
@@ -59,14 +90,14 @@ function parseWineSpecs(meta) {
     varietyParts = parts.slice(0, provenanceIndex);
     provenanceParts = parts.slice(provenanceIndex);
   }
-  const variety = varietyParts.length ? varietyParts.join(' Â· ') : 'A confirmar';
-  const provenance = provenanceParts.length ? provenanceParts.join(' Â· ') : 'A confirmar';
+  const variety = varietyParts.length ? varietyParts.join(' · ') : 'A confirmar';
+  const provenance = provenanceParts.length ? provenanceParts.join(' · ') : 'A confirmar';
   return { variety, provenance, quantity };
 }
 
 function specSummary(specs) {
   if(!specs) return '';
-  return `Variedad: ${specs.variety} Â· Procedencia: ${specs.provenance} Â· Cantidad: ${specs.quantity}`;
+  return `Variedad: ${specs.variety} · Procedencia: ${specs.provenance} · Cantidad: ${specs.quantity}`;
 }
 
 function specMessage(specs) {
@@ -89,7 +120,8 @@ function setupProductSpecs() {
   document.querySelectorAll('.wine-varietal').forEach(metaEl => {
     if(metaEl.dataset.structured === 'true') return;
     const rawMeta = metaEl.dataset.rawMeta || metaEl.textContent.trim();
-    const specs = parseWineSpecs(rawMeta);
+    const fallbackQuantity = metaEl.closest('.wine-card')?.querySelector('.wine-price span')?.textContent.trim() || '';
+    const specs = parseWineSpecs(rawMeta, fallbackQuantity);
     metaEl.dataset.rawMeta = rawMeta;
     metaEl.dataset.variety = specs.variety;
     metaEl.dataset.provenance = specs.provenance;

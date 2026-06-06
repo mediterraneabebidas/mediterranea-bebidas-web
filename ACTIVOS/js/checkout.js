@@ -120,7 +120,7 @@ function renderCheckoutSummary() {
   if(totalEl) totalEl.textContent = totals.subtotal ? `${totals.missing ? 'Subtotal' : 'Total'} ${cartUnitSummary()} ${formatPrice(totals.subtotal)}` : 'Total a corroborar';
   if(totalNote) totalNote.textContent = totals.missing
     ? 'Hay productos sin precio en lista. El total final se confirma antes de generar el pago.'
-    : 'PodÃ©s combinar unidades y cajas x6. BIB y damajuanas se manejan por unidad. EnvÃ­o e impuestos se confirman antes de generar el pago.';
+    : 'Vinos y tetras se piden por caja. BIB y damajuanas se manejan como presentacion unica. Envio e impuestos se confirman antes de generar el pago.';
   summary.innerHTML = cart.map(item => `
     <div class="checkout-summary-item">
       ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<div></div>'}
@@ -191,7 +191,7 @@ function checkoutPayloadItem(item) {
     name: item.name,
     type: item.type,
     quantity: item.qty,
-    purchaseMode: isCheckoutPromo(item) ? 'promo' : item.purchaseMode,
+    purchaseMode: isCheckoutPromo(item) ? 'promo' : (item.purchaseMode === 'presentation' ? 'presentation' : 'box'),
     priceCode: item.priceCode,
     packSize: item.packSize,
     clientPrice: item.price,

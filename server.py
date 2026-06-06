@@ -58,19 +58,38 @@ def load_catalog():
                 value = str(price.get("value") or "").strip()
                 if not code or not value:
                     continue
-                pack_size = int(price.get("packSize") or 6)
+                name = str(product.get("name") or "").strip()
+                product_type = str(product.get("type") or "").strip()
+                pack_size = 12 if is_tetra_product(name, product_type) else int(price.get("packSize") or 6)
                 catalog[code] = {
-                    "name": str(product.get("name") or "").strip(),
-                    "type": str(product.get("type") or "").strip(),
+                    "name": name,
+                    "type": product_type,
                     "price": Decimal(value),
                     "pack_size": pack_size,
                 }
     return catalog
 
 
-def is_unit_product(product_type):
-    text = str(product_type or "").lower()
-    return "bag in box" in text or "damajuana" in text
+def product_text(*values):
+    return " ".join(str(value or "") for value in values).lower()
+
+
+def is_presentation_product(product_type, name=""):
+    text = product_text(product_type, name)
+    return "bag in box" in text or " bib " in f" {text} " or "damajuana" in text
+
+
+def is_tetra_product(name, product_type="", specs=None):
+    specs = specs if isinstance(specs, dict) else {}
+    text = product_text(name, product_type, specs.get("quantity"))
+    return "tetrabrik" in text or "tetra brik" in text or "tetra brick" in text or "tetra" in text
+
+
+def purchase_label(mode, pack_size, qty=1):
+    if mode == "presentation":
+        return "presentacion" if qty == 1 else "presentaciones"
+    label = f"caja x{pack_size}"
+    return label if qty == 1 else label.replace("caja", "cajas", 1)
 
 
 def normalize_qty(value):
@@ -147,33 +166,45 @@ def validated_items(payload):
 
         code = str(raw.get("priceCode") or "").strip()
         qty = normalize_qty(raw.get("quantity"))
-        mode = "unit" if raw.get("purchaseMode") == "unit" else "box"
+        raw_mode = str(raw.get("purchaseMode") or "box").strip().lower()
+        if raw_mode not in ("box", "presentation", "unit"):
+            raise ValueError(f"Modo de compra invalido: {raw_mode}")
         catalog_item = catalog.get(code)
 
         if catalog_item:
             product_type = catalog_item["type"]
             name = catalog_item["name"]
             pack_size = catalog_item.get("pack_size") or 6
-            box_label = f"caja x{pack_size}"
-            if is_unit_product(product_type):
-                mode = "unit"
-            unit_price = catalog_item["price"] / Decimal(pack_size) if mode == "unit" and not is_unit_product(product_type) else catalog_item["price"]
+            is_presentation = is_presentation_product(product_type, name)
+            if raw_mode == "unit" and not is_presentation:
+                raise ValueError(f"No se aceptan pedidos por unidad para {name}. Selecciona caja.")
+            if raw_mode == "presentation" and not is_presentation:
+                raise ValueError(f"Presentacion unica no corresponde para {name}. Selecciona caja.")
+            mode = "presentation" if is_presentation else "box"
+            box_label = purchase_label(mode, pack_size)
+            unit_price = catalog_item["price"]
             line_total = unit_price * qty
             subtotal += line_total
-            price_text = f"{money(unit_price)} por {'unidad' if mode == 'unit' else box_label}"
+            price_text = f"{money(unit_price)} por {box_label}"
             total_text = money(line_total)
         else:
             missing = True
             product_type = str(raw.get("type") or "Producto")
             name = str(raw.get("name") or "Producto sin nombre")
+            specs = raw.get("specs") if isinstance(raw.get("specs"), dict) else {}
+            is_presentation = is_presentation_product(product_type, name)
+            if raw_mode == "unit" and not is_presentation:
+                raise ValueError(f"No se aceptan pedidos por unidad para {name}. Selecciona caja.")
+            if raw_mode == "presentation" and not is_presentation:
+                raise ValueError(f"Presentacion unica no corresponde para {name}. Selecciona caja.")
+            mode = "presentation" if is_presentation else "box"
+            pack_size = 12 if is_tetra_product(name, product_type, specs) else normalize_qty(raw.get("packSize") or 6)
+            box_label = purchase_label(mode, pack_size)
             price_text = "Precio a confirmar"
             total_text = "A confirmar"
 
         specs = raw.get("specs") if isinstance(raw.get("specs"), dict) else {}
-        box_label = box_label if catalog_item else "caja"
-        label = "unidad" if mode == "unit" else box_label
-        if qty != 1:
-            label = "unidades" if mode == "unit" else box_label.replace("caja", "cajas", 1)
+        label = purchase_label(mode, pack_size, qty)
 
         validated.append({
             "name": name,

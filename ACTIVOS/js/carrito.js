@@ -17,13 +17,14 @@ function cartItemKey(product) {
 function cartUnitSummary() {
   const nonPromoItems = cart.filter(item => !isPromoPurchase(item));
   const hasPromos = cart.some(isPromoPurchase);
-  const hasUnits = nonPromoItems.some(isSingleUnitPurchase);
-  const boxItems = nonPromoItems.filter(item => !isSingleUnitPurchase(item));
+  const presentationItems = nonPromoItems.filter(item => item.purchaseMode === 'presentation' || isPresentationProduct(item));
+  const boxItems = nonPromoItems.filter(item => !presentationItems.includes(item));
   const hasBoxes = boxItems.length > 0;
-  if(hasPromos && !hasUnits && !hasBoxes) return 'promos 3+1';
+  const hasPresentations = presentationItems.length > 0;
+  if(hasPromos && !hasBoxes && !hasPresentations) return 'promos 3+1';
   if(hasPromos) return 'pedido';
-  if(hasUnits && hasBoxes) return 'pedido';
-  if(hasUnits) return 'unidades';
+  if(hasPresentations && hasBoxes) return 'pedido';
+  if(hasPresentations) return 'presentaciones';
   const packSizes = [...new Set(boxItems.map(item => item.packSize || 6))];
   return packSizes.length === 1 ? `cajas x${packSizes[0]}` : 'cajas';
 }

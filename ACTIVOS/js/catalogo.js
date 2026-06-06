@@ -137,6 +137,16 @@ function setupProductSpecs() {
   });
 }
 
+function productFromCardMeta(card) {
+  const metaEl = card.querySelector('.wine-varietal');
+  return {
+    name: card.querySelector('.wine-name')?.textContent.trim() || '',
+    type: card.querySelector('.wine-type-badge')?.textContent.trim() || '',
+    meta: metaEl?.dataset.rawMeta || metaEl?.textContent.trim() || '',
+    specs: metaEl?.dataset.quantity ? { quantity: metaEl.dataset.quantity } : null
+  };
+}
+
 function getProductFromCard(card) {
   const metaEl = card.querySelector('.wine-varietal');
   const priceEl = card.querySelector('.wine-price');
@@ -149,12 +159,11 @@ function getProductFromCard(card) {
       }
     : parseWineSpecs(rawMeta);
   const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
+  const productMeta = productFromCardMeta(card);
   const basePrice = priceEl ? Number(priceEl.dataset.price) : null;
-  const packSize = getPackSize(priceEl);
-  const purchaseMode = isUnitProduct({ type: productType }) ? 'unit' : getSelectedPurchaseMode(card);
-  const price = purchaseMode === 'unit' && !isUnitProduct({ type: productType })
-    ? unitPriceFromBox(basePrice, packSize)
-    : basePrice;
+  const packSize = productPackSize({ ...productMeta, specs }, priceEl);
+  const purchaseMode = purchaseModeForProduct({ ...productMeta, specs });
+  const price = basePrice;
   return {
     name: card.querySelector('.wine-name')?.textContent.trim() || 'Producto',
     meta: rawMeta,
@@ -173,67 +182,39 @@ function getProductFromCard(card) {
 
 
 function getSelectedPurchaseMode(card) {
-  const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
-  if(isUnitProduct({ type: productType })) return 'unit';
-  return card.querySelector('.purchase-mode-option.active')?.dataset.purchaseMode || 'box';
+  return purchaseModeForProduct(productFromCardMeta(card));
 }
 
 function updateProductPriceMode(card, mode = getSelectedPurchaseMode(card)) {
-  const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
-  const unitOnly = isUnitProduct({ type: productType });
   const priceEl = card.querySelector('.wine-price');
   const addBtn = card.querySelector('.add-to-cart');
-  const packSize = getPackSize(priceEl);
-  const normalizedMode = unitOnly ? 'unit' : mode;
+  const productMeta = productFromCardMeta(card);
+  const packSize = productPackSize(productMeta, priceEl);
+  const normalizedMode = purchaseModeForProduct(productMeta);
   card.dataset.purchaseMode = normalizedMode;
-  card.querySelectorAll('.purchase-mode-option').forEach(option => {
-    option.classList.toggle('active', option.dataset.purchaseMode === normalizedMode);
-  });
   if(priceEl) {
     const basePrice = Number(priceEl.dataset.price);
-    const price = normalizedMode === 'unit' && !unitOnly ? unitPriceFromBox(basePrice, packSize) : basePrice;
     const label = priceEl.querySelector('span');
     const value = priceEl.querySelector('strong');
     if(label) label.textContent = purchaseModeLabel(normalizedMode, packSize);
-    if(value && Number.isFinite(price)) value.textContent = formatPrice(price);
+    if(value && Number.isFinite(basePrice)) value.textContent = formatPrice(basePrice);
   }
   if(addBtn) addBtn.textContent = `Agregar ${purchaseModeLabel(normalizedMode, packSize)}`;
 }
 
 function setupPurchaseMode(card) {
-  const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
-  if(isUnitProduct({ type: productType }) || card.querySelector('.purchase-mode')) return;
-  const priceEl = card.querySelector('.wine-price');
-  const packSize = getPackSize(priceEl);
-  const control = document.createElement('div');
-  control.className = 'purchase-mode';
-  control.setAttribute('aria-label', 'Elegir precio');
-  control.innerHTML = `
-    <button type="button" class="purchase-mode-option" data-purchase-mode="unit">Unidad</button>
-    <button type="button" class="purchase-mode-option active" data-purchase-mode="box">Caja x${packSize}</button>
-  `;
-  control.querySelectorAll('.purchase-mode-option').forEach(option => {
-    option.addEventListener('click', () => updateProductPriceMode(card, option.dataset.purchaseMode));
-  });
-  if(priceEl) priceEl.insertAdjacentElement('afterend', control);
-  else card.appendChild(control);
-  const note = document.createElement('div');
-  note.className = 'purchase-mode-note';
-  note.textContent = `Precio unitario calculado desde la caja x${packSize}.`;
-  control.insertAdjacentElement('afterend', note);
-  updateProductPriceMode(card, 'box');
+  updateProductPriceMode(card, getSelectedPurchaseMode(card));
 }
 
 function setupCartButtons() {
   document.querySelectorAll('.wine-card').forEach(card => {
     if(card.querySelector('.add-to-cart')) return;
     const btn = document.createElement('button');
-    const productType = card.querySelector('.wine-type-badge')?.textContent.trim() || '';
     btn.type = 'button';
     btn.className = 'add-to-cart';
     setupPurchaseMode(card);
     card.appendChild(btn);
-    updateProductPriceMode(card, isUnitProduct({ type: productType }) ? 'unit' : getSelectedPurchaseMode(card));
+    updateProductPriceMode(card, getSelectedPurchaseMode(card));
     btn.addEventListener('click', () => addToCart(getProductFromCard(card)));
   });
 }

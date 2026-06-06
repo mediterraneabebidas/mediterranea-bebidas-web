@@ -893,41 +893,6 @@
     font-weight:800;
     white-space:nowrap;
   }
-  .purchase-mode {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:0.45rem;
-    margin-top:0.85rem;
-    padding:0.28rem;
-    border:1px solid var(--border);
-    border-radius:14px;
-    background:rgba(123,47,190,0.045);
-  }
-  .purchase-mode-option {
-    min-height:36px;
-    border:0;
-    border-radius:10px;
-    background:transparent;
-    color:var(--text-muted);
-    font-family:'DM Sans', sans-serif;
-    font-size:0.66rem;
-    font-weight:800;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    cursor:pointer;
-    transition:background 0.18s, color 0.18s, box-shadow 0.18s;
-  }
-  .purchase-mode-option.active {
-    background:var(--purple);
-    color:#fff;
-    box-shadow:0 10px 24px rgba(123,47,190,0.22);
-  }
-  .purchase-mode-note {
-    margin-top:0.45rem;
-    color:var(--text-dim);
-    font-size:0.68rem;
-    line-height:1.35;
-  }
   .cart-item-price,
   .checkout-summary-price {
     margin-top:0.35rem;

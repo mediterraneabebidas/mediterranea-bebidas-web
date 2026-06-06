@@ -1,4 +1,25 @@
-document.body.classList.remove('dark-theme');
+const THEME_STORAGE_KEY = 'mediterranea-theme';
+
+function getSavedTheme() {
+  try {
+    return localStorage.getItem(THEME_STORAGE_KEY);
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveTheme(theme) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (error) {}
+}
+
+function applyInitialTheme() {
+  const savedTheme = getSavedTheme();
+  document.body.classList.toggle('dark-theme', savedTheme !== 'light');
+}
+
+applyInitialTheme();
 
 function setThemeButtonLabel() {
   const btn = document.querySelector('.theme-toggle');
@@ -8,7 +29,8 @@ function setThemeButtonLabel() {
 }
 
 function toggleTheme() {
-  document.body.classList.toggle('dark-theme');
+  const isDark = document.body.classList.toggle('dark-theme');
+  saveTheme(isDark ? 'dark' : 'light');
   setThemeButtonLabel();
 }
 

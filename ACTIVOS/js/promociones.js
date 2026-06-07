@@ -3,6 +3,7 @@
   const PROMO_BOX_PRICE = 24129;
   const PROMO_PRICE = PROMO_BOX_PRICE * 3;
   const PROMO_GIFT_LABEL = 'Chacabuco Cabernet Franc sin cargo';
+  const PROMO_GIFT_DETAIL = '1 caja Chacabuco Cabernet Franc sin cargo';
   const PROMO_VARIANTS = {
     malbec: {
       label: 'Chacabuco Malbec',
@@ -44,11 +45,10 @@
       button.setAttribute('aria-pressed', button.dataset.promoVariant === selectedPromoVariant ? 'true' : 'false');
     });
 
-    const mainBottle = document.querySelector('[data-promo-main-bottle]');
-    if(mainBottle) {
-      mainBottle.src = variant.image;
-      mainBottle.alt = variant.label;
-    }
+    document.querySelectorAll('[data-promo-buy-bottle]').forEach(bottle => {
+      bottle.src = variant.image;
+      bottle.alt = variant.label;
+    });
 
     const featured = document.querySelector('.promo-card.promo-featured');
     if(featured) featured.dataset.activeVariant = selectedPromoVariant;
@@ -61,7 +61,7 @@
 
   function chacabucoPromoMeta(key = selectedPromoVariant) {
     const variant = promoVariant(key);
-    return `3 cajas ${variant.label} + 1 caja ${PROMO_GIFT_LABEL}`;
+    return `3 cajas ${variant.label} + ${PROMO_GIFT_DETAIL}`;
   }
 
   function chacabucoPromoSpecs(key = selectedPromoVariant) {
@@ -69,7 +69,7 @@
     return {
       variety: `${variant.variety} + Cabernet Franc bonificado`,
       provenance: 'Mendoza',
-      quantity: '4 cajas x6 (3 pagas + 1 sin cargo)'
+      quantity: '4 cajas x6 (3 pagas + 1 Cabernet Franc sin cargo)'
     };
   }
 

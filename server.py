@@ -28,10 +28,11 @@ socket.setdefaulttimeout(12)
 PROMOTIONS = {
     "chacabuco-3x1": {
         "name": "Promo Chacabuco 3+1",
-        "detail": "3 cajas + 1 de regalo",
+        "detail": "3 cajas pagas + 1 caja Chacabuco Cabernet Franc sin cargo",
         "type": "Promo",
         "paid_boxes": 3,
         "gift_boxes": 1,
+        "gift_label": "Chacabuco Cabernet Franc",
         "variants": {
             "malbec": {"label": "Chacabuco Malbec", "price_code": "399"},
             "cabernet": {"label": "Chacabuco Cabernet", "price_code": "397"},

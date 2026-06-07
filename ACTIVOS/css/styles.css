@@ -460,7 +460,7 @@
     letter-spacing:0.14em;
     text-transform:uppercase;
   }
-  .promo-card.promo-featured strong {
+  .promo-featured-copy > strong {
     max-width:18rem;
     margin:0;
     font-family:'Cormorant Garamond', serif;
@@ -469,13 +469,13 @@
     color:#fff;
     text-wrap:balance;
   }
-  .promo-card.promo-featured span {
+  .promo-featured-copy > span {
     margin-top:0.7rem;
     color:#F4D89C;
     font-size:0.74rem;
   }
-  .promo-card.promo-featured small {
-    max-width:20rem;
+  .promo-featured-copy > small {
+    max-width:21rem;
     margin-top:0.65rem;
     color:rgba(255,255,255,0.72);
     font-size:0.86rem;
@@ -513,14 +513,15 @@
   }
   .promo-featured-price {
     display:flex;
-    align-items:flex-end;
-    gap:0.65rem;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:0.42rem;
     margin-top:1rem;
   }
   .promo-featured-price .promo-price {
     margin:0;
     color:#fff;
-    font-size:2.15rem;
+    font-size:1.85rem;
     font-variant-numeric:tabular-nums;
   }
   .promo-featured-price em {
@@ -539,8 +540,8 @@
   .promo-bottle-row {
     position:relative;
     display:grid;
-    grid-template-columns:minmax(0, 1fr) auto minmax(64px, 0.34fr);
-    gap:0.38rem;
+    grid-template-columns:minmax(0, 1fr) auto minmax(108px, 0.44fr);
+    gap:0.5rem;
     align-items:end;
     min-height:190px;
   }
@@ -560,8 +561,7 @@
     gap:0;
     align-items:end;
   }
-  .promo-buy-bottles img,
-  .promo-gift-bottle img {
+  .promo-buy-bottles img {
     position:relative;
     width:108%;
     height:190px;
@@ -579,12 +579,47 @@
   }
   .promo-gift-bottle {
     position:relative;
-    display:grid;
-    align-items:end;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-self:stretch;
+    min-height:150px;
+    border:1px solid rgba(244,216,156,0.36);
+    border-radius:18px;
+    background:linear-gradient(180deg, rgba(244,216,156,0.16), rgba(255,255,255,0.08));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.12);
+    padding:0.72rem;
+    color:#fff;
+    text-align:left;
   }
-  .promo-gift-bottle img {
-    opacity:0.82;
-    width:122%;
+  .promo-gift-bottle strong {
+    margin:0;
+    color:#F4D89C;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.56rem;
+    font-weight:900;
+    letter-spacing:0.13em;
+    line-height:1.15;
+    text-transform:uppercase;
+  }
+  .promo-gift-bottle span {
+    margin-top:0.48rem;
+    color:#fff;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.28rem;
+    font-weight:700;
+    letter-spacing:0;
+    line-height:0.95;
+    text-transform:none;
+  }
+  .promo-gift-bottle small {
+    margin-top:0.62rem;
+    color:rgba(255,255,255,0.72);
+    font-size:0.62rem;
+    font-weight:800;
+    letter-spacing:0.11em;
+    line-height:1.2;
+    text-transform:uppercase;
   }
   .promo-gift-note {
     width:100%;
@@ -2666,18 +2701,21 @@
     .promo-card img { width:92px; height:145px; }
     .promo-card.promo-featured { flex:0 0 calc(100vw - 2rem); min-width:0; padding:0.9rem; }
     .promo-featured-grid { grid-template-columns:1fr; }
-    .promo-card.promo-featured strong { font-size:2.2rem; }
+    .promo-featured-copy > strong { font-size:2.2rem; }
     .promo-bottle-row {
-      grid-template-columns:minmax(0, 1fr) auto minmax(54px, 0.42fr);
+      grid-template-columns:minmax(0, 1fr) auto minmax(98px, 0.48fr);
       gap:0.28rem;
       min-height:clamp(126px, 35vw, 150px);
     }
-    .promo-buy-bottles img,
-    .promo-gift-bottle img {
+    .promo-buy-bottles img {
       width:100%;
       height:clamp(126px, 35vw, 150px);
     }
-    .promo-gift-bottle img { width:110%; }
+    .promo-gift-bottle {
+      min-height:clamp(126px, 35vw, 150px);
+      padding:0.62rem;
+    }
+    .promo-gift-bottle span { font-size:1.05rem; }
     .promo-plus-sign { font-size:2.35rem; }
     .nosotros-grid, .contact-grid { grid-template-columns:1fr; gap:2.5rem; }
     .stats-bar { flex-wrap:wrap; gap:2rem; }
@@ -2692,10 +2730,14 @@
     .promo-track { gap:0.85rem; }
     .promo-card { min-width:158px; }
     .promo-card.promo-featured { flex-basis:calc(100vw - 2rem); }
-    .promo-card.promo-featured strong { font-size:2rem; }
-    .promo-featured-price { align-items:flex-start; flex-direction:column; gap:0.35rem; }
+    .promo-featured-copy > strong { font-size:2rem; }
+    .promo-featured-price { gap:0.35rem; }
+    .promo-featured-price .promo-price { font-size:1.58rem; }
     .promo-variant-options { gap:0.35rem; margin-top:0.72rem; }
     .promo-variant { min-height:32px; padding:0.3rem 0.58rem; font-size:0.56rem; }
+    .promo-bottle-row { grid-template-columns:1fr; justify-items:stretch; }
+    .promo-plus-sign { display:none; }
+    .promo-gift-bottle { min-height:auto; }
     .promo-bottle-stack { gap:0.55rem; }
     .promo-gift-note { padding:0.66rem 0.7rem; font-size:0.6rem; }
   }

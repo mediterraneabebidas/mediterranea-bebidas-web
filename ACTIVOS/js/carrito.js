@@ -1,7 +1,65 @@
 let cart = [];
 
+const CHACABUCO_PROMO_ID = 'chacabuco-3x1';
+const CHACABUCO_PROMO_GIFT_DETAIL = '1 caja Chacabuco Cabernet Franc sin cargo';
+const CHACABUCO_PROMO_VARIANTS = {
+  malbec: {
+    label: 'Chacabuco Malbec',
+    shortLabel: 'Malbec',
+    image: 'PRODUCTOS/producto_025.png',
+    variety: 'Malbec'
+  },
+  cabernet: {
+    label: 'Chacabuco Cabernet',
+    shortLabel: 'Cabernet',
+    image: 'PRODUCTOS/producto_026.png',
+    variety: 'Cabernet'
+  },
+  rosado: {
+    label: 'Chacabuco Rosado',
+    shortLabel: 'Rosado',
+    image: 'PRODUCTOS/producto_028.png',
+    variety: 'Rosado'
+  }
+};
+
 function isPromoPurchase(product) {
   return product?.purchaseMode === 'promo' || Boolean(product?.promoId);
+}
+
+function isChacabucoPromo(item) {
+  return isPromoPurchase(item) && item?.promoId === CHACABUCO_PROMO_ID;
+}
+
+function chacabucoCartVariant(key) {
+  return CHACABUCO_PROMO_VARIANTS[key] || CHACABUCO_PROMO_VARIANTS.malbec;
+}
+
+function chacabucoPromoMetaForVariant(key) {
+  const variant = chacabucoCartVariant(key);
+  return `3 cajas ${variant.label} + ${CHACABUCO_PROMO_GIFT_DETAIL}`;
+}
+
+function chacabucoPromoSpecsForVariant(key) {
+  const variant = chacabucoCartVariant(key);
+  return {
+    variety: `${variant.variety} + Cabernet Franc bonificado`,
+    provenance: 'Mendoza',
+    quantity: '4 cajas x6 (3 pagas + 1 Cabernet Franc sin cargo)'
+  };
+}
+
+function applyChacabucoPromoVariant(item, variantKey) {
+  const normalizedKey = CHACABUCO_PROMO_VARIANTS[variantKey] ? variantKey : 'malbec';
+  const variant = chacabucoCartVariant(normalizedKey);
+  item.variantKey = normalizedKey;
+  item.meta = chacabucoPromoMetaForVariant(normalizedKey);
+  item.specs = chacabucoPromoSpecsForVariant(normalizedKey);
+  item.image = variant.image;
+  item.priceCode = CHACABUCO_PROMO_ID;
+  item.purchaseMode = 'promo';
+  item.purchaseLabel = 'promo 3+1';
+  return item;
 }
 
 function promoCartKey(product) {
@@ -57,14 +115,29 @@ function renderCheckoutPriceLine(item) {
   return `<div class="checkout-summary-price">${formatPrice(item.price * item.qty)} &middot; ${item.qty} ${quantityLabel(item)}</div>`;
 }
 
-function renderCartMeta(item) {
+function renderPromoVariantSelector(item, index) {
+  if(!isChacabucoPromo(item)) return '';
+  const activeKey = CHACABUCO_PROMO_VARIANTS[item.variantKey] ? item.variantKey : 'malbec';
+  const buttons = Object.entries(CHACABUCO_PROMO_VARIANTS).map(([key, variant]) => `
+    <button
+      class="promo-cart-variant${key === activeKey ? ' active' : ''}"
+      type="button"
+      aria-pressed="${key === activeKey ? 'true' : 'false'}"
+      onclick="changePromoVariant(${index}, '${escapeHtml(key)}')"
+    >${escapeHtml(variant.shortLabel)}</button>
+  `).join('');
+  return `<div class="promo-cart-variants" role="group" aria-label="Cambiar varietal de la promo Chacabuco">${buttons}</div>`;
+}
+
+function renderCartMeta(item, index) {
   if(isPromoPurchase(item)) {
     const detail = item.promoDetail || item.meta || '3 cajas + 1 de regalo';
     return `
       <div class="cart-item-meta promo-cart-meta">
         <span class="promo-cart-pill">Promo</span>
         <span>${escapeHtml(detail)}</span>
-        <span class="promo-cart-gift">3 cajas + 1 de regalo</span>
+        <span class="promo-cart-gift">${isChacabucoPromo(item) ? 'Regalo fijo: Chacabuco Cabernet Franc sin cargo' : '3 cajas + 1 de regalo'}</span>
+        ${renderPromoVariantSelector(item, index)}
       </div>
     `;
   }
@@ -72,6 +145,7 @@ function renderCartMeta(item) {
 }
 
 function addToCart(product) {
+  if(isChacabucoPromo(product)) applyChacabucoPromoVariant(product, product.variantKey);
   const key = cartItemKey(product);
   const existing = cart.find(item => cartItemKey(item) === key);
   if(existing) existing.qty += 1;
@@ -84,6 +158,24 @@ function changeQty(index, delta) {
   if(!cart[index]) return;
   cart[index].qty += delta;
   if(cart[index].qty <= 0) cart.splice(index, 1);
+  renderCart();
+}
+
+function changePromoVariant(index, variantKey) {
+  const item = cart[index];
+  if(!isChacabucoPromo(item) || !CHACABUCO_PROMO_VARIANTS[variantKey]) return;
+
+  const targetKey = [item.promoId || item.name, variantKey].join('::');
+  const existingIndex = cart.findIndex((candidate, candidateIndex) => (
+    candidateIndex !== index && isChacabucoPromo(candidate) && promoCartKey(candidate) === targetKey
+  ));
+
+  if(existingIndex >= 0) {
+    cart[existingIndex].qty += item.qty;
+    cart.splice(index, 1);
+  } else {
+    applyChacabucoPromoVariant(item, variantKey);
+  }
   renderCart();
 }
 
@@ -118,7 +210,7 @@ function renderCart() {
       ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<div></div>'}
       <div>
         <div class="cart-item-name">${item.name}</div>
-        ${renderCartMeta(item)}${renderPriceLine(item)}
+        ${renderCartMeta(item, index)}${renderPriceLine(item)}
       </div>
       <div class="qty-control">
         <button type="button" onclick="changeQty(${index}, -1)">-</button>

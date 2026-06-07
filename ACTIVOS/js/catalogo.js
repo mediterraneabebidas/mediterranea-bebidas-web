@@ -1,44 +1,82 @@
-﻿function renderCatalogTabs(tabs = [], otherBrands = []) {
+﻿let catalogOtherBrands = [];
+
+function normalizeCatalogLabel(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+function inferOtherBrand(product, otherBrands = catalogOtherBrands) {
+  const text = normalizeCatalogLabel([product.name, product.alt].filter(Boolean).join(' '));
+  return otherBrands.find(brand => text.includes(normalizeCatalogLabel(brand))) || '';
+}
+
+function renderCatalogTabs(tabs = [], otherBrands = []) {
   const container = document.getElementById('catalogTabs');
   if(!container) return;
   container.innerHTML = tabs.map(tab => {
-    const button = `<button class="tab-btn${tab.active ? ' active' : ''}" onclick="showTab('${escapeHtml(tab.id)}', event)">${escapeHtml(tab.label)}</button>`;
+    const buttonClass = `tab-btn${tab.active ? ' active' : ''}${tab.otherBrands ? ' other-brands-toggle' : ''}`;
+    const toggleAttrs = tab.otherBrands ? ' data-other-brands-toggle="true" aria-haspopup="true" aria-expanded="false"' : '';
+    const clickAttr = tab.otherBrands ? '' : ` onclick="showTab('${escapeHtml(tab.id)}', event)"`;
+    const button = `<button type="button" class="${buttonClass}" data-tab-id="${escapeHtml(tab.id)}"${clickAttr}${toggleAttrs}>${escapeHtml(tab.label)}</button>`;
     if(!tab.otherBrands) return button;
-    const menu = otherBrands.map(brand => `<a href="#tab-otros">${escapeHtml(brand)}</a>`).join('');
-    return `<div class="other-brands-wrap">${button}<div class="other-brands-menu" aria-label="Listado de otras marcas">${menu}</div></div>`;
+    const menu = [
+      '<button type="button" class="other-brand-option other-brand-all" data-other-brand-option="true" data-other-brand="">Ver todas las marcas</button>',
+      ...otherBrands.map(brand => `<button type="button" class="other-brand-option" data-other-brand-option="true" data-other-brand="${escapeHtml(brand)}">${escapeHtml(brand)}</button>`)
+    ].join('');
+    return `<div class="other-brands-wrap" data-other-brands-wrap="true">${button}<div class="other-brands-menu" aria-label="Listado de otras marcas">${menu}</div></div>`;
   }).join('');
+  if(typeof setupOtherBrandsMenu === 'function') setupOtherBrandsMenu();
 }
 
-function renderProductCard(product) {
+function renderProductCard(product, otherBrands = catalogOtherBrands) {
   const price = product.price;
   const priceHtml = price ? `
     <div class="wine-price" data-price="${escapeHtml(price.value)}" data-price-label="${escapeHtml(price.label)}" data-price-code="${escapeHtml(price.code)}"${price.packSize ? ` data-pack-size="${escapeHtml(price.packSize)}"` : ''}><span>${escapeHtml(price.displayLabel)}</span><strong>${escapeHtml(price.displayValue)}</strong></div>` : '';
+  const otherBrand = inferOtherBrand(product, otherBrands);
+  const otherBrandAttr = otherBrand ? ` data-other-brand="${escapeHtml(otherBrand)}"` : '';
   return `
-    <div class="wine-card"><div class="wine-image"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.alt || product.name)}"></div><div class="wine-type-badge ${escapeHtml(product.badgeClass)}">${escapeHtml(product.type)}</div><div class="wine-name">${escapeHtml(product.name)}</div><div class="wine-varietal">${escapeHtml(product.varietal)}</div>${priceHtml}</div>`;
+    <div class="wine-card"${otherBrandAttr}><div class="wine-image"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.alt || product.name)}"></div><div class="wine-type-badge ${escapeHtml(product.badgeClass)}">${escapeHtml(product.type)}</div><div class="wine-name">${escapeHtml(product.name)}</div><div class="wine-varietal">${escapeHtml(product.varietal)}</div>${priceHtml}</div>`;
 }
 
-function renderCatalogPanels(panels = []) {
+function renderCatalogPanels(panels = [], otherBrands = catalogOtherBrands) {
   const container = document.getElementById('catalogPanels');
   if(!container) return;
   container.innerHTML = panels.map(panel => `
     <div class="catalog-panel${panel.active ? ' active' : ''}" id="tab-${escapeHtml(panel.id)}">
+      ${panel.id === 'otros' ? `
+        <div class="other-brand-filter-bar" hidden>
+          <div>
+            <span class="other-brand-filter-kicker">Filtro activo</span>
+            <strong data-other-brand-label></strong>
+            <small data-other-brand-count></small>
+          </div>
+          <div class="other-brand-filter-actions">
+            <button type="button" data-other-brand-option="true" data-other-brand="">Ver todas las marcas</button>
+            <button type="button" onclick="showTab('todos')">Todos</button>
+          </div>
+        </div>` : ''}
       ${panel.sections.map(section => `
         <div class="bodega-section">
           <div class="bodega-name">${escapeHtml(section.name)}</div>
           <div class="bodega-desc">${escapeHtml(section.description)}</div>
           <div class="wine-grid">
-            ${section.products.map(renderProductCard).join('')}
+            ${section.products.map(product => renderProductCard(product, otherBrands)).join('')}
           </div>
         </div>`).join('')}
     </div>`).join('');
+  if(typeof setupOtherBrandsMenu === 'function') setupOtherBrandsMenu();
 }
 
 async function loadCatalog() {
   const response = await fetch(CATALOG_URL, { cache: 'no-store' });
   if(!response.ok) throw new Error(`No se pudo cargar ${CATALOG_URL}`);
   const catalog = await response.json();
+  catalogOtherBrands = catalog.otherBrands || [];
   renderCatalogTabs(catalog.tabs, catalog.otherBrands);
-  renderCatalogPanels(catalog.panels);
+  renderCatalogPanels(catalog.panels, catalog.otherBrands);
 }
 
 function normalizeSpecText(value) {

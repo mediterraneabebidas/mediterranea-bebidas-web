@@ -34,13 +34,153 @@ function toggleTheme() {
   setThemeButtonLabel();
 }
 
+function normalizeOtherBrand(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+function activateCatalogTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(button => {
+    button.classList.toggle('active', button.dataset.tabId === id);
+  });
+}
+
+function activateOtherBrandOption(brand = '') {
+  const normalizedBrand = normalizeOtherBrand(brand);
+  document.querySelectorAll('.other-brand-option').forEach(button => {
+    const buttonBrand = normalizeOtherBrand(button.dataset.otherBrand);
+    button.classList.toggle('active', normalizedBrand ? buttonBrand === normalizedBrand : !buttonBrand);
+  });
+}
+
+function updateOtherBrandFilterBar(brand = '', count = 0) {
+  const panel = document.getElementById('tab-otros');
+  const bar = panel?.querySelector('.other-brand-filter-bar');
+  if(!bar) return;
+  bar.hidden = !brand;
+  if(!brand) return;
+  const label = bar.querySelector('[data-other-brand-label]');
+  const total = bar.querySelector('[data-other-brand-count]');
+  if(label) label.textContent = brand;
+  if(total) total.textContent = `${count} producto${count === 1 ? '' : 's'}`;
+}
+
+function resetOtherBrandFilter() {
+  const panel = document.getElementById('tab-otros');
+  if(!panel) return;
+  panel.dataset.activeOtherBrand = '';
+  panel.querySelectorAll('.wine-card, .bodega-section').forEach(element => {
+    element.hidden = false;
+  });
+  updateOtherBrandFilterBar('', 0);
+  activateOtherBrandOption('');
+}
+
 function showTab(id, evt) {
   document.querySelectorAll('.catalog-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   const panel = document.getElementById('tab-' + id);
   if(panel) panel.classList.add('active');
-  if(evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+  activateCatalogTab(id);
+  resetOtherBrandFilter();
+  if(id !== 'otros') activateOtherBrandOption('');
+  closeOtherBrandsMenu();
 }
+
+function showOtherBrand(brand) {
+  const panel = document.getElementById('tab-otros');
+  if(!panel) return;
+  showTab('otros');
+  const normalizedBrand = normalizeOtherBrand(brand);
+  let visibleCount = 0;
+  panel.querySelectorAll('.wine-card').forEach(card => {
+    const matches = normalizeOtherBrand(card.dataset.otherBrand) === normalizedBrand;
+    card.hidden = !matches;
+    if(matches) visibleCount += 1;
+  });
+  panel.querySelectorAll('.bodega-section').forEach(section => {
+    section.hidden = !section.querySelector('.wine-card:not([hidden])');
+  });
+  panel.dataset.activeOtherBrand = brand;
+  updateOtherBrandFilterBar(brand, visibleCount);
+  activateCatalogTab('otros');
+  activateOtherBrandOption(brand);
+  closeOtherBrandsMenu(true);
+}
+
+function setOtherBrandsMenuOpen(wrap, isOpen) {
+  if(!wrap) return;
+  wrap.classList.toggle('open', isOpen);
+  wrap.querySelector('[data-other-brands-toggle]')?.setAttribute('aria-expanded', String(isOpen));
+}
+
+function closeOtherBrandsMenu(lockClosed = false) {
+  document.querySelectorAll('[data-other-brands-wrap]').forEach(wrap => {
+    setOtherBrandsMenuOpen(wrap, false);
+    wrap.classList.toggle('is-locked-closed', lockClosed);
+  });
+  if(lockClosed && document.activeElement instanceof HTMLElement) document.activeElement.blur();
+}
+
+function setupOtherBrandsMenu() {
+  const tabs = document.getElementById('catalogTabs');
+  const panels = document.getElementById('catalogPanels');
+  if(tabs && tabs.dataset.otherBrandsBound !== 'true') {
+    tabs.dataset.otherBrandsBound = 'true';
+    tabs.addEventListener('click', event => {
+      const option = event.target.closest('[data-other-brand-option]');
+      if(option) {
+        event.preventDefault();
+        const brand = option.dataset.otherBrand || '';
+        if(brand) showOtherBrand(brand);
+        else showTab('otros');
+        closeOtherBrandsMenu(true);
+        return;
+      }
+
+      const toggle = event.target.closest('[data-other-brands-toggle]');
+      if(toggle) {
+        const wrap = toggle.closest('[data-other-brands-wrap]');
+        const wasOpen = wrap?.classList.contains('open');
+        showTab('otros');
+        wrap?.classList.toggle('is-locked-closed', Boolean(wasOpen));
+        setOtherBrandsMenuOpen(wrap, !wasOpen);
+      }
+    });
+  }
+
+  if(panels && panels.dataset.otherBrandsBound !== 'true') {
+    panels.dataset.otherBrandsBound = 'true';
+    panels.addEventListener('click', event => {
+      const option = event.target.closest('[data-other-brand-option]');
+      if(!option) return;
+      event.preventDefault();
+      const brand = option.dataset.otherBrand || '';
+      if(brand) showOtherBrand(brand);
+      else showTab('otros');
+    });
+  }
+
+  document.querySelectorAll('[data-other-brands-wrap]').forEach(wrap => {
+    if(wrap.dataset.pointerBound === 'true') return;
+    wrap.dataset.pointerBound = 'true';
+    wrap.addEventListener('pointerleave', () => {
+      wrap.classList.remove('is-locked-closed');
+      setOtherBrandsMenuOpen(wrap, false);
+    });
+  });
+}
+
+document.addEventListener('click', event => {
+  if(event.target.closest('[data-other-brands-wrap]')) return;
+  closeOtherBrandsMenu();
+});
+
+document.addEventListener('keydown', event => {
+  if(event.key === 'Escape') closeOtherBrandsMenu();
+});
 
 function setupSiteCursor() {
   if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;

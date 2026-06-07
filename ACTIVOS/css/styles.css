@@ -953,39 +953,146 @@
     }
   }
 
-  .other-brands-wrap { position:relative; display:inline-flex; }
+  .other-brands-wrap { position:relative; display:inline-flex; align-items:flex-start; }
+  .other-brands-toggle {
+    display:inline-flex;
+    align-items:center;
+    gap:0.45rem;
+  }
+  .other-brands-toggle::after {
+    content:'';
+    width:0.42rem;
+    height:0.42rem;
+    border-right:1px solid currentColor;
+    border-bottom:1px solid currentColor;
+    transform:rotate(45deg) translateY(-2px);
+    transition:transform 0.18s ease;
+  }
+  .other-brands-wrap.open .other-brands-toggle::after {
+    transform:rotate(225deg) translate(-2px, -1px);
+  }
   .other-brands-menu {
     position:absolute;
     top:calc(100% + 0.55rem);
     right:0;
     z-index:20;
-    width:min(330px, 82vw);
+    width:min(380px, 86vw);
     display:grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap:0.35rem;
-    padding:0.8rem;
-    background:var(--bg2);
+    gap:0.45rem;
+    padding:0.75rem;
+    background:linear-gradient(145deg, var(--bg2), var(--bg3));
     border:1px solid var(--border);
+    border-radius:18px;
     box-shadow:var(--shadow);
     opacity:0;
     visibility:hidden;
-    transform:translateY(-6px);
+    transform:translateY(-8px);
     transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
   }
-  .other-brands-wrap:hover .other-brands-menu,
-  .other-brands-wrap:focus-within .other-brands-menu {
+  .other-brands-wrap.open .other-brands-menu,
+  .other-brands-wrap:not(.is-locked-closed):hover .other-brands-menu,
+  .other-brands-wrap:not(.is-locked-closed):focus-within .other-brands-menu {
     opacity:1;
     visibility:visible;
     transform:translateY(0);
   }
-  .other-brands-menu a {
-    color:var(--text-muted);
-    text-decoration:none;
-    font-size:0.76rem;
-    padding:0.35rem 0.45rem;
-    border-radius:8px;
+  .other-brands-wrap.is-locked-closed .other-brands-menu {
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-8px);
   }
-  .other-brands-menu a:hover { background:var(--bg3); color:var(--accent); }
+  .other-brand-option {
+    appearance:none;
+    border:1px solid transparent;
+    background:rgba(176,106,255,0.055);
+    color:var(--text-muted);
+    cursor:pointer;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.72rem;
+    font-weight:700;
+    letter-spacing:0.035em;
+    line-height:1.2;
+    text-align:left;
+    padding:0.58rem 0.65rem;
+    border-radius:12px;
+    transition:background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  }
+  .other-brand-option:hover,
+  .other-brand-option:focus-visible {
+    background:var(--bg4);
+    color:var(--accent);
+    border-color:rgba(176,106,255,0.25);
+    outline:none;
+  }
+  .other-brand-option.active {
+    background:rgba(176,106,255,0.16);
+    color:var(--accent);
+    border-color:rgba(176,106,255,0.42);
+  }
+  .other-brand-all {
+    grid-column:1 / -1;
+    text-align:center;
+    color:var(--text);
+    background:rgba(201,169,110,0.08);
+    border-color:rgba(201,169,110,0.16);
+  }
+  .other-brand-filter-bar {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    margin:-1rem 0 1.6rem;
+    padding:0.85rem 0.95rem;
+    border:1px solid rgba(176,106,255,0.22);
+    border-radius:16px;
+    background:linear-gradient(135deg, rgba(176,106,255,0.10), rgba(201,169,110,0.055));
+  }
+  .other-brand-filter-bar[hidden] { display:none; }
+  .other-brand-filter-kicker {
+    display:block;
+    color:var(--text-dim);
+    font-size:0.58rem;
+    font-weight:800;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-bottom:0.12rem;
+  }
+  .other-brand-filter-bar strong {
+    display:inline-block;
+    color:var(--text);
+    font-size:1rem;
+    margin-right:0.55rem;
+  }
+  .other-brand-filter-bar small {
+    color:var(--text-muted);
+    font-size:0.74rem;
+  }
+  .other-brand-filter-actions {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    gap:0.5rem;
+  }
+  .other-brand-filter-actions button {
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:var(--bg3);
+    color:var(--text-muted);
+    cursor:pointer;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.68rem;
+    font-weight:800;
+    letter-spacing:0.055em;
+    text-transform:uppercase;
+    padding:0.52rem 0.78rem;
+  }
+  .other-brand-filter-actions button:hover,
+  .other-brand-filter-actions button:focus-visible {
+    color:var(--accent);
+    border-color:rgba(176,106,255,0.32);
+    outline:none;
+  }
 
   /* ── BODEGAS SHOWCASE ── */
   #bodegas { background:var(--bg2); }
@@ -2468,6 +2575,64 @@
 
   /* ── RESPONSIVE ── */
   @media(max-width:760px) {
+    .catalog-tabs {
+      gap:0.48rem;
+      margin-bottom:2rem;
+      border-bottom:none;
+    }
+    .tab-btn {
+      padding:0.68rem 0.95rem;
+      font-size:0.72rem;
+      letter-spacing:0.055em;
+    }
+    .other-brands-wrap {
+      display:flex;
+      flex-basis:100%;
+      width:100%;
+      flex-direction:column;
+      align-items:stretch;
+    }
+    .other-brands-toggle {
+      width:max-content;
+      max-width:100%;
+    }
+    .other-brands-menu {
+      position:static;
+      width:100%;
+      margin-top:0.5rem;
+      display:none;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      box-shadow:none;
+      opacity:1;
+      visibility:visible;
+      transform:none;
+      background:rgba(176,106,255,0.07);
+      border-radius:16px;
+    }
+    .other-brands-wrap.open .other-brands-menu,
+    .other-brands-wrap:not(.is-locked-closed):focus-within .other-brands-menu {
+      display:grid;
+      transform:none;
+    }
+    .other-brands-wrap.is-locked-closed .other-brands-menu {
+      display:none;
+      transform:none;
+    }
+    .other-brand-option {
+      min-height:42px;
+      padding:0.6rem 0.62rem;
+      font-size:0.68rem;
+    }
+    .other-brand-filter-bar {
+      align-items:flex-start;
+      flex-direction:column;
+      margin:-0.45rem 0 1.25rem;
+      padding:0.85rem;
+    }
+    .other-brand-filter-actions {
+      width:100%;
+      justify-content:flex-start;
+    }
     .wine-grid { grid-template-columns:1fr; }
     .wine-card { padding:1.35rem 1.1rem; }
     .wine-image { height:174px; }
@@ -2658,6 +2823,22 @@
     background:#231A2C;
     color:#fff;
     border-color:#231A2C;
+  }
+  body:not(.dark-theme) .other-brands-menu {
+    background:linear-gradient(145deg, #FFFFFF, #F7F5FA);
+    border-color:rgba(37,24,53,0.12);
+  }
+  body:not(.dark-theme) .other-brand-option {
+    background:rgba(123,47,190,0.055);
+  }
+  body:not(.dark-theme) .other-brand-option.active {
+    background:rgba(123,47,190,0.13);
+    color:#7A2CC0;
+    border-color:rgba(123,47,190,0.28);
+  }
+  body:not(.dark-theme) .other-brand-filter-bar {
+    background:linear-gradient(135deg, rgba(123,47,190,0.08), rgba(181,138,69,0.06));
+    border-color:rgba(123,47,190,0.16);
   }
   body:not(.dark-theme) .bodega-name {
     font-weight:400;

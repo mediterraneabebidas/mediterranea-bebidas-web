@@ -74,6 +74,12 @@ function isCheckoutPromo(item) {
     : item?.purchaseMode === 'promo' || Boolean(item?.promoId);
 }
 
+function isCheckoutAddon(item) {
+  return typeof isPromoAddon === 'function'
+    ? isPromoAddon(item)
+    : item?.purchaseMode === 'promo-addon' || Boolean(item?.addonId);
+}
+
 function checkoutPromoDetail(item) {
   return item?.promoDetail || '3 cajas + 1 de regalo';
 }
@@ -99,6 +105,15 @@ function renderCheckoutMeta(item) {
         <span class="promo-cart-pill">Promo</span>
         <span>${escapeHtml(checkoutPromoSelection(item))}</span>
         <span class="promo-cart-gift">${escapeHtml(checkoutPromoDetail(item))}</span>
+      </div>
+    `;
+  }
+  if(isCheckoutAddon(item)) {
+    return `
+      <div class="checkout-summary-meta promo-cart-meta">
+        <span class="promo-cart-pill">Complemento pago</span>
+        <span>${escapeHtml(item?.meta || 'Asociado a Promo Chacabuco 3+1')}</span>
+        <span class="promo-cart-gift">No es regalo. Cabernet Franc sigue sin cargo.</span>
       </div>
     `;
   }
@@ -147,6 +162,10 @@ function orderLine(item) {
     const price = Number.isFinite(item.price) ? checkoutLinePriceVisual(item) : 'precio a confirmar';
     return `${item.qty} ${checkoutPromoQuantityLabel(item)} de ${item.name} (${checkoutPromoDetail(item)}; ${checkoutPromoSelection(item)}) - ${price}`;
   }
+  if(isCheckoutAddon(item)) {
+    const price = Number.isFinite(item.price) ? checkoutLinePriceVisual(item) : 'precio a confirmar';
+    return `${item.qty} cajas x6 de ${item.name} (complemento pago Promo Chacabuco 3+1) - ${price}`;
+  }
   return `${item.qty} ${quantityLabel(item)} de ${item.name}${item.specs ? ' (' + specMessage(item.specs) + ')' : (item.meta ? ' (' + item.meta + ')' : '')}${Number.isFinite(item.price) ? ' - ' + formatPrice(item.price * item.qty) : ' - precio a confirmar'}`;
 }
 
@@ -191,12 +210,23 @@ function checkoutPayloadItem(item) {
     name: item.name,
     type: item.type,
     quantity: item.qty,
-    purchaseMode: isCheckoutPromo(item) ? 'promo' : (item.purchaseMode === 'presentation' ? 'presentation' : 'box'),
+    purchaseMode: isCheckoutPromo(item) ? 'promo' : (isCheckoutAddon(item) ? 'promo-addon' : (item.purchaseMode === 'presentation' ? 'presentation' : 'box')),
     priceCode: item.priceCode,
     packSize: item.packSize,
     clientPrice: item.price,
     specs: item.specs
   };
+
+  if(isCheckoutAddon(item)) {
+    return {
+      ...base,
+      addonId: item.addonId || '',
+      addonFor: item.addonFor || 'chacabuco-3x1',
+      displayName: item.name,
+      priceVisual: Number.isFinite(item.price) ? formatPrice(item.price) : 'A confirmar',
+      lineTotalVisual: checkoutLinePriceVisual(item)
+    };
+  }
 
   if(!isCheckoutPromo(item)) return base;
 

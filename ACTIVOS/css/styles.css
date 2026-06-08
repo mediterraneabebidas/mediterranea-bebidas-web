@@ -1348,6 +1348,86 @@
     border-color:rgba(123,47,190,0.32);
     background:linear-gradient(135deg, var(--bg3), rgba(123,47,190,0.08));
   }
+  .cart-upsell {
+    display:grid;
+    grid-template-columns:52px 1fr;
+    gap:0.85rem;
+    align-items:center;
+    border:1px solid rgba(244,216,156,0.28);
+    background:linear-gradient(135deg, rgba(244,216,156,0.10), rgba(123,47,190,0.08));
+    border-radius:14px;
+    padding:0.78rem;
+  }
+  .cart-upsell-media {
+    width:52px;
+    height:66px;
+    display:grid;
+    place-items:center;
+  }
+  .cart-upsell-media img {
+    width:52px;
+    height:66px;
+    object-fit:contain;
+    filter:drop-shadow(0 14px 16px rgba(0,0,0,0.22));
+  }
+  .cart-upsell-body {
+    display:grid;
+    gap:0.18rem;
+    min-width:0;
+  }
+  .cart-upsell-kicker {
+    color:var(--gold);
+    font-size:0.56rem;
+    font-weight:900;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .cart-upsell-title {
+    color:var(--text);
+    font-weight:800;
+    line-height:1.22;
+  }
+  .cart-upsell p {
+    margin:0;
+    color:var(--text-muted);
+    font-size:0.75rem;
+    line-height:1.36;
+  }
+  .cart-upsell strong {
+    color:var(--text);
+    font-size:0.76rem;
+  }
+  .cart-upsell small {
+    color:var(--gold);
+    font-size:0.68rem;
+    line-height:1.25;
+  }
+  .cart-upsell-actions {
+    grid-column:1 / -1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:0.65rem;
+  }
+  .cart-upsell-add {
+    min-height:34px;
+    border:1px solid rgba(244,216,156,0.48);
+    border-radius:12px;
+    background:rgba(244,216,156,0.92);
+    color:#251E1A;
+    padding:0.48rem 0.72rem;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.62rem;
+    font-weight:900;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .cart-upsell-add:disabled,
+  .chenin-addon-control button:disabled {
+    cursor:not-allowed;
+    opacity:0.5;
+  }
   .promo-cart-meta {
     display:flex;
     flex-wrap:wrap;

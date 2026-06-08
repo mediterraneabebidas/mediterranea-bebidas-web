@@ -41,6 +41,17 @@ PROMOTIONS = {
     }
 }
 
+PROMO_ADDONS = {
+    "chacabuco-chenin": {
+        "name": "Chacabuco Chenin Dulce",
+        "detail": "Complemento pago de Promo Chacabuco 3+1",
+        "type": "Complemento pago",
+        "price_code": "394",
+        "promo_id": "chacabuco-3x1",
+        "boxes_per_promo": 3,
+    }
+}
+
 
 def money(value):
     value = Decimal(value).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
@@ -105,6 +116,10 @@ def is_promo_item(raw):
     return raw.get("purchaseMode") == "promo" or bool(raw.get("promoId"))
 
 
+def is_promo_addon_item(raw):
+    return raw.get("purchaseMode") == "promo-addon" or bool(raw.get("addonId"))
+
+
 def validate_promo_item(raw, catalog):
     promo_id = str(raw.get("promoId") or "").strip()
     variant_key = str(raw.get("variantKey") or "").strip()
@@ -149,6 +164,66 @@ def validate_promo_item(raw, catalog):
     }
 
 
+def max_addon_qty(items, addon):
+    promo_id = addon["promo_id"]
+    promo_qty = 0
+    for raw in items:
+        if not isinstance(raw, dict):
+            continue
+        if str(raw.get("promoId") or "").strip() == promo_id and str(raw.get("purchaseMode") or "").strip() == "promo":
+            promo_qty += normalize_qty(raw.get("quantity"))
+    return promo_qty * int(addon["boxes_per_promo"])
+
+
+def addon_qty_total(items, addon_id):
+    total = 0
+    for raw in items:
+        if not isinstance(raw, dict):
+            continue
+        if str(raw.get("addonId") or "").strip() == addon_id:
+            total += normalize_qty(raw.get("quantity"))
+    return total
+
+
+def validate_promo_addon_item(raw, catalog, items):
+    addon_id = str(raw.get("addonId") or "").strip()
+    addon = PROMO_ADDONS.get(addon_id)
+    if not addon:
+        raise ValueError(f"Complemento de promocion desconocido: {addon_id}")
+
+    catalog_item = catalog.get(addon["price_code"])
+    if not catalog_item:
+        raise ValueError(f"No se encontro precio oficial para {addon['name']}")
+
+    qty = normalize_qty(raw.get("quantity"))
+    max_qty = max_addon_qty(items, addon)
+    if max_qty <= 0:
+        raise ValueError(f"{addon['name']} solo se puede pedir junto a Promo Chacabuco 3+1")
+    if addon_qty_total(items, addon_id) > max_qty:
+        raise ValueError(f"{addon['name']} supera el maximo permitido: {max_qty} cajas")
+
+    unit_price = catalog_item["price"]
+    line_total = unit_price * qty
+    return {
+        "name": addon["name"],
+        "type": addon["type"],
+        "qty": qty,
+        "label": purchase_label("box", catalog_item.get("pack_size") or 6, qty),
+        "mode": "promo-addon",
+        "price": f"{money(unit_price)} por caja x6",
+        "total": money(line_total),
+        "specs": {
+            "variety": "Chenin Dulce",
+            "provenance": "Mendoza",
+            "quantity": addon["detail"],
+        },
+        "code": addon["price_code"],
+        "addon_id": addon_id,
+        "addon_for": addon["promo_id"],
+        "subtotal": line_total,
+    }
+
+
 def validated_items(payload):
     catalog = load_catalog()
     items = payload.get("cart_items") or []
@@ -163,6 +238,11 @@ def validated_items(payload):
             promo_item = validate_promo_item(raw, catalog)
             subtotal += promo_item["subtotal"]
             validated.append(promo_item)
+            continue
+        if is_promo_addon_item(raw):
+            addon_item = validate_promo_addon_item(raw, catalog, items)
+            subtotal += addon_item["subtotal"]
+            validated.append(addon_item)
             continue
 
         code = str(raw.get("priceCode") or "").strip()

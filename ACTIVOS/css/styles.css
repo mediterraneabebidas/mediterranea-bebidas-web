@@ -439,6 +439,119 @@
   .promo-card.promo-featured.promo-added {
     box-shadow:0 26px 78px rgba(123,47,190,0.34);
   }
+  .promo-pair {
+    flex:0 0 min(1010px, calc(100vw - 6rem));
+    scroll-snap-align:start;
+    display:grid;
+    grid-template-columns:minmax(580px, 1.7fr) minmax(320px, 0.95fr);
+    gap:1.25rem;
+    align-items:stretch;
+  }
+  .promo-pair .promo-card {
+    min-width:0;
+    scroll-snap-align:none;
+  }
+  .promo-chenin-card {
+    align-items:stretch;
+    text-align:left;
+    padding:0.9rem;
+    border:1px solid rgba(244,216,156,0.24);
+    border-radius:20px;
+    background:linear-gradient(145deg, rgba(30,25,24,0.96), rgba(67,39,84,0.86));
+    box-shadow:0 22px 54px rgba(37,24,53,0.18);
+    transform:none;
+  }
+  .promo-chenin-card:hover { transform:translateY(-0.35rem); }
+  .promo-chenin-media {
+    min-height:122px;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    background:linear-gradient(180deg, rgba(244,216,156,0.12), rgba(255,255,255,0.06));
+    margin-bottom:0.78rem;
+  }
+  .promo-chenin-media img {
+    width:86px;
+    height:128px;
+    object-fit:contain;
+    filter:drop-shadow(0 22px 22px rgba(0,0,0,0.34));
+  }
+  .promo-chenin-copy {
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  .promo-chenin-copy .promo-featured-kicker {
+    margin-bottom:0.58rem;
+  }
+  .promo-chenin-copy strong {
+    margin:0;
+    max-width:18rem;
+    color:#fff;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.75rem;
+    line-height:0.95;
+  }
+  .promo-chenin-copy span {
+    margin-top:0.56rem;
+    color:#F4D89C;
+    font-size:0.66rem;
+  }
+  .promo-chenin-copy small {
+    margin-top:0.48rem;
+    color:rgba(255,255,255,0.70);
+    font-size:0.78rem;
+    line-height:1.35;
+  }
+  .promo-chenin-price {
+    margin-top:0.72rem;
+    color:#fff;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.48rem;
+    line-height:1;
+  }
+  .promo-chenin-copy em {
+    margin-top:0.48rem;
+    color:rgba(244,216,156,0.82);
+    font-size:0.62rem;
+    font-style:normal;
+    font-weight:800;
+    letter-spacing:0.08em;
+    line-height:1.28;
+    text-transform:uppercase;
+  }
+  .promo-chenin-cta {
+    width:100%;
+    margin-top:0.8rem;
+    border:1px solid rgba(244,216,156,0.55);
+    border-radius:14px;
+    background:rgba(244,216,156,0.94);
+    color:#251E1A;
+    padding:0.72rem 0.78rem;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.62rem;
+    font-weight:900;
+    letter-spacing:0.08em;
+    line-height:1.16;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+  }
+  .promo-chenin-cta:hover {
+    transform:translateY(-1px);
+    background:#F8DE9F;
+    box-shadow:0 16px 34px rgba(0,0,0,0.18);
+  }
+  .promo-chenin-status {
+    display:none;
+    margin-top:0.58rem;
+    color:rgba(255,255,255,0.72);
+    font-size:0.68rem;
+    line-height:1.35;
+  }
+  .promo-chenin-status.visible { display:block; }
+  .promo-chenin-status.warning { color:#F4D89C; }
+  .promo-chenin-status.success { color:#D8F4C8; }
   .promo-featured-grid {
     display:grid;
     grid-template-columns:1.05fr 1fr;
@@ -2811,9 +2924,21 @@
     .promo-card:nth-child(even),
     .promo-card:nth-child(even):hover { transform:none; }
     .promo-card img { width:92px; height:145px; }
-    .promo-card.promo-featured { flex:0 0 calc(100vw - 2rem); min-width:0; padding:0.9rem; }
+    .promo-pair {
+      flex:0 0 calc(100vw - 2rem);
+      grid-template-columns:minmax(0, 1.1fr) minmax(236px, 0.72fr);
+      gap:0.85rem;
+    }
+    .promo-card.promo-featured { flex:0 0 auto; min-width:0; padding:0.9rem; }
     .promo-featured-grid { grid-template-columns:1fr; }
     .promo-featured-copy > strong { font-size:2.2rem; }
+    .promo-chenin-card { padding:0.78rem; }
+    .promo-chenin-media { min-height:104px; margin-bottom:0.62rem; }
+    .promo-chenin-media img { width:74px; height:108px; }
+    .promo-chenin-copy strong { font-size:1.44rem; }
+    .promo-chenin-copy small { font-size:0.72rem; }
+    .promo-chenin-price { font-size:1.26rem; }
+    .promo-chenin-cta { padding:0.64rem 0.66rem; font-size:0.58rem; }
     .promo-bottle-row {
       grid-template-columns:minmax(0, 1fr) auto minmax(98px, 0.48fr);
       gap:0.28rem;
@@ -2841,6 +2966,7 @@
     .promo-rail-sub { font-size:0.66rem; line-height:1.45; }
     .promo-track { gap:0.85rem; }
     .promo-card { min-width:158px; }
+    .promo-pair { grid-template-columns:1fr; gap:0.85rem; }
     .promo-card.promo-featured { flex-basis:calc(100vw - 2rem); }
     .promo-featured-copy > strong { font-size:2rem; }
     .promo-featured-price { gap:0.35rem; }
@@ -2852,6 +2978,9 @@
     .promo-gift-bottle { min-height:auto; }
     .promo-bottle-stack { gap:0.55rem; }
     .promo-gift-note { padding:0.66rem 0.7rem; font-size:0.6rem; }
+    .promo-chenin-card { border-radius:18px; }
+    .promo-chenin-media { display:none; }
+    .promo-chenin-copy strong { font-size:1.55rem; }
   }
 
   /* ── DIVIDERS ── */

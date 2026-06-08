@@ -112,6 +112,10 @@ function cheninAddonQty() {
   return cart.reduce((sum, item) => sum + (isChacabucoCheninAddon(item) ? item.qty : 0), 0);
 }
 
+function canAddCheninAddon() {
+  return maxCheninAddonQty() > cheninAddonQty();
+}
+
 function cheninAddonProduct() {
   return {
     addonId: CHACABUCO_CHENIN_ADDON_ID,

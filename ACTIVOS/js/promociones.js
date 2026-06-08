@@ -112,10 +112,49 @@
     }
   }
 
+  function setCheninPromoStatus(message, type = '') {
+    const status = document.querySelector('[data-chenin-promo-status]');
+    if(!status) return;
+    status.textContent = message;
+    status.className = `promo-chenin-status visible ${type}`.trim();
+  }
+
+  function pulseChacabucoPromoCard() {
+    const featured = document.querySelector('.promo-card.promo-featured');
+    if(!featured) return;
+    featured.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    featured.classList.add('promo-added');
+    window.setTimeout(() => featured.classList.remove('promo-added'), 1100);
+  }
+
+  function addCheninPromoAddonFromRail() {
+    if(typeof window.addCheninAddon !== 'function' || typeof window.maxCheninAddonQty !== 'function') {
+      setCheninPromoStatus('El complemento Chenin se suma desde el carrito.', 'warning');
+      return;
+    }
+
+    if(window.maxCheninAddonQty() <= 0) {
+      setCheninPromoStatus('Primero agregá la Promo Chacabuco 3+1 para sumar Chenin como complemento.', 'warning');
+      pulseChacabucoPromoCard();
+      return;
+    }
+
+    if(typeof window.canAddCheninAddon === 'function' && !window.canAddCheninAddon()) {
+      setCheninPromoStatus('Ya alcanzaste el máximo de Chenin para las promos cargadas.', 'warning');
+      if(typeof window.openCart === 'function') window.openCart();
+      return;
+    }
+
+    window.addCheninAddon();
+    if(typeof window.openCart === 'function') window.openCart();
+    setCheninPromoStatus('Chenin agregado como complemento pago en el carrito.', 'success');
+  }
+
   window.scrollPromos = scrollPromos;
   window.selectChacabucoPromoVariant = selectChacabucoPromoVariant;
   window.updateChacabucoPromoVisual = updateChacabucoPromoVisual;
   window.addChacabucoPromoToCart = addChacabucoPromoToCart;
+  window.addCheninPromoAddonFromRail = addCheninPromoAddonFromRail;
 
   updateChacabucoPromoVisual();
 })();

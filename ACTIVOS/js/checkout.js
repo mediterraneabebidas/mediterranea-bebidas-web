@@ -1,5 +1,124 @@
 ﻿let selectedPayment = 'mp';
 let selectedDelivery = 'delivery';
+let checkoutStep = 1;
+
+const CHECKOUT_MIN_STEP = 1;
+const CHECKOUT_MAX_STEP = 3;
+
+function checkoutStepTitle(step) {
+  const titles = {
+    1: 'Datos de contacto',
+    2: 'Entrega o retiro',
+    3: 'Resumen y confirmacion'
+  };
+  return titles[step] || titles[1];
+}
+
+function setCheckoutStepError(message = '') {
+  const error = document.getElementById('checkoutStepError');
+  if(!error) return;
+  error.textContent = message;
+  error.classList.toggle('visible', Boolean(message));
+}
+
+function checkoutField(id) {
+  return document.getElementById(id);
+}
+
+function reportCheckoutField(field, message) {
+  if(!field) return false;
+  field.setCustomValidity(message);
+  field.reportValidity();
+  field.focus();
+  setCheckoutStepError(message);
+  return false;
+}
+
+function validateRequiredCheckoutField(id, message) {
+  const field = checkoutField(id);
+  if(!field) return true;
+  field.setCustomValidity('');
+  if(!field.value.trim()) return reportCheckoutField(field, message);
+  if(!field.checkValidity()) return reportCheckoutField(field, message);
+  return true;
+}
+
+function validateCheckoutStep(step = checkoutStep) {
+  setCheckoutStepError('');
+  if(step === 1) {
+    if(!validateRequiredCheckoutField('buyerName', 'Completá tu nombre para continuar.')) return false;
+    if(!validateRequiredCheckoutField('buyerPhone', 'Completá tu teléfono o WhatsApp para continuar.')) return false;
+    if(!validateRequiredCheckoutField('buyerEmail', 'Ingresá un email válido para continuar.')) return false;
+    return true;
+  }
+  if(step === 2) {
+    const address = checkoutField('buyerAddress');
+    if(address) address.setCustomValidity('');
+    if(selectedDelivery === 'delivery') {
+      if(!validateRequiredCheckoutField('deliveryZip', 'Ingresá el código postal para calcular la entrega.')) return false;
+      if(!address?.value.trim() || address.value.trim().length < 5) {
+        return reportCheckoutField(address, 'Ingresá una dirección de entrega más completa.');
+      }
+    } else if(!address?.value.trim()) {
+      return reportCheckoutField(address, 'Seleccioná un punto de retiro para continuar.');
+    }
+    return true;
+  }
+  if(step === 3) {
+    const summary = document.getElementById('checkoutSummary');
+    if(!cart.length || !summary?.children.length) {
+      setCheckoutStepError('El carrito está vacío. Agregá productos antes de confirmar.');
+      closeCheckout();
+      openCart();
+      return false;
+    }
+  }
+  return true;
+}
+
+function goCheckoutStep(step) {
+  const nextStep = Math.max(CHECKOUT_MIN_STEP, Math.min(CHECKOUT_MAX_STEP, Number(step) || 1));
+  checkoutStep = nextStep;
+  renderCheckoutSummary();
+  setCheckoutStepError('');
+
+  const form = document.getElementById('checkoutForm');
+  if(form) form.dataset.currentStep = String(checkoutStep);
+
+  document.querySelectorAll('[data-checkout-step]').forEach(panel => {
+    panel.hidden = Number(panel.dataset.checkoutStep) !== checkoutStep;
+  });
+
+  document.querySelectorAll('[data-checkout-progress-step]').forEach(stepEl => {
+    const stepNumber = Number(stepEl.dataset.checkoutProgressStep);
+    stepEl.classList.toggle('active', stepNumber === checkoutStep);
+    stepEl.classList.toggle('completed', stepNumber < checkoutStep);
+    stepEl.classList.toggle('pending', stepNumber > checkoutStep);
+    stepEl.setAttribute('aria-current', stepNumber === checkoutStep ? 'step' : 'false');
+  });
+
+  const back = document.getElementById('checkoutBackButton');
+  const next = document.getElementById('checkoutNextButton');
+  const submit = document.getElementById('checkoutSubmit');
+  if(back) back.hidden = checkoutStep === CHECKOUT_MIN_STEP;
+  if(next) next.hidden = checkoutStep === CHECKOUT_MAX_STEP;
+  if(submit) submit.hidden = checkoutStep !== CHECKOUT_MAX_STEP;
+
+  const modal = document.getElementById('checkoutModal');
+  if(modal) modal.scrollTop = 0;
+
+  const kicker = document.querySelector('.checkout-kicker');
+  if(kicker) kicker.textContent = checkoutStepTitle(checkoutStep);
+}
+
+function nextCheckoutStep() {
+  if(!validateCheckoutStep(checkoutStep)) return;
+  goCheckoutStep(checkoutStep + 1);
+}
+
+function previousCheckoutStep() {
+  goCheckoutStep(checkoutStep - 1);
+}
 
 function openCheckout() {
   if(!cart.length) {
@@ -8,6 +127,7 @@ function openCheckout() {
   }
   closeCart();
   renderCheckoutSummary();
+  goCheckoutStep(1);
   document.getElementById('checkoutOverlay')?.classList.add('open');
   document.getElementById('checkoutModal')?.classList.add('open');
 }
@@ -47,6 +167,7 @@ function selectDelivery(method, button) {
     }
     calculateShipping();
   }
+  if(checkoutStep === 2) setCheckoutStepError('');
 }
 
 function shippingEstimateText() {
@@ -298,6 +419,11 @@ async function sendOrderEmail() {
 
 async function submitCheckout(event) {
   event.preventDefault();
+  if(checkoutStep !== CHECKOUT_MAX_STEP) {
+    nextCheckoutStep();
+    return;
+  }
+  if(!validateCheckoutStep(CHECKOUT_MAX_STEP)) return;
   if(!cart.length) {
     closeCheckout();
     openCart();

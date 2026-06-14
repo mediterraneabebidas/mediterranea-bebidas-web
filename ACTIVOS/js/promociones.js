@@ -24,15 +24,7 @@
       variety: 'Rosado'
     }
   };
-  const CHENIN_VARIANTS = {
-    ...PROMO_VARIANTS,
-    viognier: {
-      label: 'Chacabuco Viognier',
-      shortLabel: 'Viognier',
-      image: 'PRODUCTOS/producto_027.png',
-      variety: 'Viognier'
-    }
-  };
+  const CHENIN_VARIANTS = PROMO_VARIANTS;
 
   let selectedPromoVariant = 'malbec';
   let selectedCheninVariant = 'malbec';

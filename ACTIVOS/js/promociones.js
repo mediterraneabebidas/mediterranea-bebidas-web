@@ -40,8 +40,26 @@
   function scrollPromos(direction) {
     const track = document.getElementById('promoTrack');
     if(!track) return;
-    const amount = Math.min(track.clientWidth * 0.82, 520);
-    track.scrollBy({ left: amount * direction, behavior: 'smooth' });
+    const items = Array.from(track.querySelectorAll(':scope > .promo-card, .promo-pair > .promo-card'))
+      .filter(item => item.offsetWidth > 0);
+    if(!items.length) return;
+
+    const trackCenter = track.scrollLeft + track.clientWidth / 2;
+    const currentIndex = items.reduce((closestIndex, item, index) => {
+      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const closest = items[closestIndex];
+      const closestCenter = closest.offsetLeft + closest.offsetWidth / 2;
+      return Math.abs(itemCenter - trackCenter) < Math.abs(closestCenter - trackCenter) ? index : closestIndex;
+    }, 0);
+    const nextIndex = Math.max(0, Math.min(items.length - 1, currentIndex + direction));
+    const target = items[nextIndex];
+    const snapAlign = window.getComputedStyle(target).scrollSnapAlign;
+    const trackStyle = window.getComputedStyle(track);
+    const paddingLeft = parseFloat(trackStyle.paddingLeft) || 0;
+    const left = snapAlign.includes('start')
+      ? target.offsetLeft - paddingLeft
+      : target.offsetLeft + target.offsetWidth / 2 - track.clientWidth / 2;
+    track.scrollTo({ left, behavior: 'smooth' });
   }
 
   function updateChacabucoPromoVisual() {

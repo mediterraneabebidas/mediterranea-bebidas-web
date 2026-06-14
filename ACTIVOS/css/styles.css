@@ -3139,27 +3139,37 @@
   }
 
   @media(max-width:600px) {
+    html,
+    body {
+      overflow-x:hidden;
+    }
     .promo-track {
-      display:grid;
-      grid-auto-flow:column;
-      grid-auto-columns:calc(100vw - 32px);
+      display:flex;
       gap:16px;
       overflow-x:auto;
       overflow-y:visible;
       padding-inline:16px;
-      margin-inline:-16px;
+      margin-inline:0;
       scroll-snap-type:x mandatory;
       scroll-padding-inline:16px;
     }
     .promo-pair {
       display:contents !important;
     }
-    .promo-track > .promo-card,
     .promo-pair > .promo-card {
+      flex:0 0 calc(100vw - 32px);
       width:calc(100vw - 32px);
       max-width:calc(100vw - 32px);
       min-width:0;
       scroll-snap-align:center;
+      scroll-snap-stop:always;
+    }
+    .promo-track > a.promo-card {
+      flex:0 0 calc((100vw - 48px) / 2);
+      width:calc((100vw - 48px) / 2);
+      max-width:calc((100vw - 48px) / 2);
+      min-width:0;
+      scroll-snap-align:start;
       scroll-snap-stop:always;
     }
     .promo-card.promo-featured,
@@ -3207,32 +3217,53 @@
       line-height:1.18;
     }
     .promo-bottle-row {
-      min-height:92px;
+      min-height:78px;
     }
     .promo-buy-bottles img {
-      height:92px;
+      height:78px;
     }
     .promo-gift-bottle {
       padding:0.5rem;
     }
     .promo-gift-bottle span {
-      font-size:0.98rem;
+      font-size:0.88rem;
+    }
+    .promo-gift-bottle small {
+      margin-top:0.26rem;
+      font-size:0.54rem;
     }
     .promo-bottle-stack {
-      gap:0.34rem;
+      gap:0.28rem;
     }
     .promo-gift-note {
-      padding:0.52rem 0.62rem;
-      font-size:0.55rem;
+      padding:0.48rem 0.58rem;
+      font-size:0.52rem;
     }
     .promo-chenin-media {
-      min-height:112px;
+      min-height:98px;
     }
     .promo-chenin-varietals img {
-      height:92px;
+      height:82px;
     }
     .promo-chenin-media .promo-chenin-main {
-      height:108px;
+      height:96px;
+    }
+    .promo-track > a.promo-card img {
+      width:82px;
+      height:128px;
+    }
+    .promo-track > a.promo-card strong {
+      font-size:0.82rem;
+      line-height:1.15;
+    }
+    .promo-track > a.promo-card span {
+      font-size:0.54rem;
+    }
+    .promo-track > a.promo-card small {
+      font-size:0.62rem;
+    }
+    .promo-track > a.promo-card .promo-price {
+      font-size:1.08rem;
     }
   }
 

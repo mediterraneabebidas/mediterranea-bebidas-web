@@ -137,13 +137,13 @@ function cheninPromoProduct() {
   return {
     cheninPromoId: CHACABUCO_CHENIN_PROMO_ID,
     name: 'Chacabuco Chenin Dulce',
-    meta: 'Promo independiente por compra de Chacabuco varietal',
+    meta: 'Comprando Chacabuco varietal lleva al mismo precio Chacabuco Chenin Dulce',
     specs: {
       variety: 'Chenin Dulce',
       provenance: 'Mendoza',
       quantity: 'Caja x6'
     },
-    type: 'Promo independiente',
+    type: 'Chacabuco + Chenin',
     image: CHACABUCO_CHENIN_IMAGE,
     price: CHACABUCO_CHENIN_PRICE,
     basePrice: CHACABUCO_CHENIN_PRICE,
@@ -248,8 +248,7 @@ function renderCartMeta(item, index) {
     return `
       <div class="cart-item-meta promo-cart-meta">
         <span class="promo-cart-pill">Promo Chenin</span>
-        <span>Habilitada por cajas normales Chacabuco varietal.</span>
-        <span class="promo-cart-gift">No es regalo. Se cobra al precio oficial del codigo 394.</span>
+        <span>Comprando Chacabuco varietal lleva al mismo precio Chacabuco Chenin Dulce.</span>
       </div>
     `;
   }
@@ -315,9 +314,9 @@ function renderCheninUpsell() {
         <img src="${CHACABUCO_CHENIN_IMAGE}" alt="Chacabuco Chenin Dulce">
       </div>
       <div class="cart-upsell-body">
-        <div class="cart-upsell-kicker">Promo independiente</div>
+        <div class="cart-upsell-kicker">Chacabuco + Chenin</div>
         <div class="cart-upsell-title">Sumar Chacabuco Chenin Dulce</div>
-        <p>Pod&eacute;s agregar la misma cantidad de Chenin que cajas normales Chacabuco varietal.</p>
+        <p>Comprando Chacabuco varietal llev&aacute; al mismo precio Chacabuco Chenin Dulce.</p>
         <strong>Caja x6: $36.887,20</strong>
         <small>No cuenta la Promo Chacabuco 3+1 como habilitante.</small>
       </div>

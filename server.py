@@ -44,8 +44,8 @@ PROMOTIONS = {
 CHACABUCO_CHENIN_PROMOTION = {
     "id": "chacabuco-chenin",
     "name": "Chacabuco Chenin Dulce",
-    "detail": "Promo independiente habilitada por cajas normales Chacabuco varietal",
-    "type": "Promo independiente",
+    "detail": "Comprando Chacabuco varietal lleva al mismo precio Chacabuco Chenin Dulce",
+    "type": "Chacabuco + Chenin",
     "price_code": "394",
     "eligible_price_codes": {"399", "397", "393", "392"},
 }

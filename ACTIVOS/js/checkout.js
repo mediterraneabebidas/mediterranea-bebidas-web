@@ -239,8 +239,7 @@ function renderCheckoutMeta(item) {
     return `
       <div class="checkout-summary-meta promo-cart-meta">
         <span class="promo-cart-pill">Promo Chenin</span>
-        <span>${escapeHtml(item?.meta || 'Promo independiente por compra de Chacabuco varietal')}</span>
-        <span class="promo-cart-gift">No es regalo. Se cobra al precio oficial del codigo 394.</span>
+        <span>${escapeHtml(item?.meta || 'Comprando Chacabuco varietal lleva al mismo precio Chacabuco Chenin Dulce')}</span>
       </div>
     `;
   }
@@ -249,7 +248,6 @@ function renderCheckoutMeta(item) {
       <div class="checkout-summary-meta promo-cart-meta">
         <span class="promo-cart-pill">Complemento pago</span>
         <span>${escapeHtml(item?.meta || 'Asociado a Promo Chacabuco 3+1')}</span>
-        <span class="promo-cart-gift">No es regalo. Cabernet Franc sigue sin cargo.</span>
       </div>
     `;
   }
@@ -300,7 +298,7 @@ function orderLine(item) {
   }
   if(isCheckoutCheninPromo(item)) {
     const price = Number.isFinite(item.price) ? checkoutLinePriceVisual(item) : 'precio a confirmar';
-    return `${item.qty} cajas x6 de ${item.name} (promo independiente Chenin; habilitada por cajas normales Chacabuco varietal) - ${price}`;
+    return `${item.qty} cajas x6 de ${item.name} (Chacabuco + Chenin; habilitada por cajas normales Chacabuco varietal) - ${price}`;
   }
   if(isCheckoutAddon(item)) {
     const price = Number.isFinite(item.price) ? checkoutLinePriceVisual(item) : 'precio a confirmar';

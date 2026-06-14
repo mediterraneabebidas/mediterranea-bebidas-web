@@ -26,6 +26,7 @@
   };
 
   let selectedPromoVariant = 'malbec';
+  let selectedCheninVariant = 'malbec';
 
   function promoVariant(key = selectedPromoVariant) {
     return PROMO_VARIANTS[key] || PROMO_VARIANTS.malbec;
@@ -57,6 +58,23 @@
   function selectChacabucoPromoVariant(key) {
     selectedPromoVariant = PROMO_VARIANTS[key] ? key : 'malbec';
     updateChacabucoPromoVisual();
+  }
+
+  function updateCheninPromoVisual() {
+    const variant = promoVariant(selectedCheninVariant);
+    document.querySelectorAll('[data-chenin-variant]').forEach(button => {
+      button.classList.toggle('active', button.dataset.cheninVariant === selectedCheninVariant);
+      button.setAttribute('aria-pressed', button.dataset.cheninVariant === selectedCheninVariant ? 'true' : 'false');
+    });
+    document.querySelectorAll('[data-chenin-varietal-bottle]').forEach(bottle => {
+      bottle.src = variant.image;
+      bottle.alt = variant.label;
+    });
+  }
+
+  function selectCheninPromoVariant(key) {
+    selectedCheninVariant = PROMO_VARIANTS[key] ? key : 'malbec';
+    updateCheninPromoVisual();
   }
 
   function chacabucoPromoMeta(key = selectedPromoVariant) {
@@ -151,9 +169,11 @@
 
   window.scrollPromos = scrollPromos;
   window.selectChacabucoPromoVariant = selectChacabucoPromoVariant;
+  window.selectCheninPromoVariant = selectCheninPromoVariant;
   window.updateChacabucoPromoVisual = updateChacabucoPromoVisual;
   window.addChacabucoPromoToCart = addChacabucoPromoToCart;
   window.addCheninPromoFromRail = addCheninPromoFromRail;
 
   updateChacabucoPromoVisual();
+  updateCheninPromoVisual();
 })();

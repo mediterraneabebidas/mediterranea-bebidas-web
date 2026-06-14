@@ -3138,6 +3138,104 @@
     .promo-chenin-copy strong { font-size:1.55rem; }
   }
 
+  @media(max-width:600px) {
+    .promo-track {
+      display:grid;
+      grid-auto-flow:column;
+      grid-auto-columns:calc(100vw - 32px);
+      gap:16px;
+      overflow-x:auto;
+      overflow-y:visible;
+      padding-inline:16px;
+      margin-inline:-16px;
+      scroll-snap-type:x mandatory;
+      scroll-padding-inline:16px;
+    }
+    .promo-pair {
+      display:contents !important;
+    }
+    .promo-track > .promo-card,
+    .promo-pair > .promo-card {
+      width:calc(100vw - 32px);
+      max-width:calc(100vw - 32px);
+      min-width:0;
+      scroll-snap-align:center;
+      scroll-snap-stop:always;
+    }
+    .promo-card.promo-featured,
+    .promo-chenin-card {
+      flex-basis:auto;
+      padding:0.82rem;
+    }
+    .promo-featured-kicker {
+      margin-bottom:0.42rem;
+      padding:0.3rem 0.52rem;
+      font-size:0.58rem;
+    }
+    .promo-featured-copy > strong {
+      font-size:1.58rem;
+      line-height:0.94;
+    }
+    .promo-featured-copy > span {
+      margin-top:0.36rem;
+      font-size:0.58rem;
+      line-height:1.45;
+    }
+    .promo-featured-copy > small {
+      margin-top:0.28rem;
+      font-size:0.66rem;
+      line-height:1.28;
+    }
+    .promo-variant-options {
+      gap:0.26rem;
+      margin-top:0.42rem;
+    }
+    .promo-variant {
+      min-height:28px;
+      padding:0.22rem 0.46rem;
+      font-size:0.48rem;
+    }
+    .promo-featured-price {
+      gap:0.24rem;
+      margin-top:0.42rem;
+    }
+    .promo-featured-price .promo-price {
+      font-size:1.28rem;
+    }
+    .promo-featured-price em {
+      font-size:0.56rem;
+      line-height:1.18;
+    }
+    .promo-bottle-row {
+      min-height:92px;
+    }
+    .promo-buy-bottles img {
+      height:92px;
+    }
+    .promo-gift-bottle {
+      padding:0.5rem;
+    }
+    .promo-gift-bottle span {
+      font-size:0.98rem;
+    }
+    .promo-bottle-stack {
+      gap:0.34rem;
+    }
+    .promo-gift-note {
+      padding:0.52rem 0.62rem;
+      font-size:0.55rem;
+    }
+    .promo-chenin-media {
+      min-height:112px;
+    }
+    .promo-chenin-varietals img {
+      height:92px;
+    }
+    .promo-chenin-media .promo-chenin-main {
+      height:108px;
+    }
+  }
+
   /* ── DIVIDERS ── */
   .divider-line {
     height:1px; background: linear-gradient(to right, transparent, var(--border), transparent);

@@ -3178,21 +3178,18 @@
       padding:0.82rem;
     }
     .promo-card.promo-featured {
-      min-height:460px;
-      overflow:visible;
+      min-height:0;
+      overflow:hidden;
     }
     .promo-card.promo-featured .promo-featured-grid {
       display:flex;
       flex-direction:column;
-      height:100%;
-      gap:0.44rem;
+      height:auto;
+      gap:0.5rem;
     }
     .promo-card.promo-featured .promo-bottle-stack {
-      flex:1;
-      justify-content:flex-end;
-    }
-    .promo-card.promo-featured .promo-gift-note {
-      order:-1;
+      flex:0 0 auto;
+      gap:0.36rem;
     }
     .promo-featured-kicker {
       margin-bottom:0.42rem;
@@ -3234,33 +3231,35 @@
       line-height:1.18;
     }
     .promo-bottle-row {
-      min-height:66px;
+      grid-template-columns:minmax(0, 1fr) minmax(84px, 0.46fr);
+      gap:0.34rem;
+      min-height:96px;
     }
     .promo-buy-bottles img {
-      height:66px;
+      height:96px;
     }
     .promo-gift-bottle {
-      min-height:66px;
-      padding:0.42rem;
+      min-height:92px;
+      padding:0.5rem;
     }
     .promo-gift-bottle strong {
       font-size:0.46rem;
       line-height:1.05;
     }
     .promo-gift-bottle span {
-      margin-top:0.22rem;
-      font-size:0.78rem;
+      margin-top:0.26rem;
+      font-size:0.82rem;
     }
     .promo-gift-bottle small {
-      margin-top:0.18rem;
+      margin-top:0.2rem;
       font-size:0.48rem;
     }
     .promo-bottle-stack {
-      gap:0.22rem;
+      gap:0.36rem;
     }
     .promo-gift-note {
       margin-top:0;
-      padding:0.5rem 0.58rem;
+      padding:0.54rem 0.62rem;
       font-size:0.52rem;
       line-height:1.08;
     }

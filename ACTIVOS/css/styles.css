@@ -3175,11 +3175,12 @@
     .promo-card.promo-featured,
     .promo-chenin-card {
       flex-basis:auto;
+      height:auto;
       padding:0.82rem;
     }
     .promo-card.promo-featured {
       min-height:0;
-      overflow:hidden;
+      overflow:visible;
     }
     .promo-card.promo-featured .promo-featured-grid {
       display:flex;
@@ -3234,6 +3235,9 @@
       grid-template-columns:minmax(0, 1fr) minmax(84px, 0.46fr);
       gap:0.34rem;
       min-height:96px;
+    }
+    .promo-card.promo-featured .promo-plus-sign {
+      display:none;
     }
     .promo-buy-bottles img {
       height:96px;

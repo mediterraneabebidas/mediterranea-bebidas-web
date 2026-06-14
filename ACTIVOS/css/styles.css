@@ -3079,34 +3079,53 @@
     .promo-rail-head { gap:0.75rem; padding-bottom:0.85rem; }
     .promo-rail-sub { font-size:0.66rem; line-height:1.45; }
     .promo-track {
-      gap:0.85rem;
-      scroll-padding-inline:0;
+      gap:0.8rem;
+      padding-inline:6vw;
       padding-bottom:0.9rem;
+      margin-inline:-1rem;
+      scroll-padding-inline:6vw;
     }
     .promo-card { min-width:0; }
-    .promo-pair { display:contents; }
+    .promo-pair {
+      flex:0 0 88vw;
+      width:88vw;
+      display:flex;
+      gap:0.8rem;
+      overflow-x:auto;
+      overflow-y:hidden;
+      scroll-snap-align:center;
+      scroll-snap-type:x mandatory;
+      scroll-padding-inline:0;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+    .promo-pair::-webkit-scrollbar { display:none; }
     .promo-track > .promo-card,
     .promo-pair .promo-card {
-      flex:0 0 min(92vw, calc(100vw - 2rem));
-      width:min(92vw, calc(100vw - 2rem));
+      flex:0 0 88vw;
+      width:88vw;
       min-width:0;
-      scroll-snap-align:start;
+      scroll-snap-align:center;
       scroll-snap-stop:always;
     }
-    .promo-card.promo-featured { flex-basis:min(92vw, calc(100vw - 2rem)); }
+    .promo-card.promo-featured { flex-basis:88vw; }
     .promo-card.promo-featured,
     .promo-chenin-card { height:auto; }
     .promo-chenin-grid { grid-template-columns:1fr; }
-    .promo-featured-copy > strong { font-size:2rem; }
-    .promo-featured-price { gap:0.35rem; }
-    .promo-featured-price .promo-price { font-size:1.58rem; }
-    .promo-variant-options { gap:0.35rem; margin-top:0.72rem; }
-    .promo-variant { min-height:32px; padding:0.3rem 0.58rem; font-size:0.56rem; }
-    .promo-bottle-row { grid-template-columns:1fr; justify-items:stretch; }
+    .promo-featured-copy > strong { font-size:1.82rem; }
+    .promo-featured-copy > span { margin-top:0.42rem; font-size:0.66rem; }
+    .promo-featured-copy > small { margin-top:0.34rem; font-size:0.74rem; }
+    .promo-featured-price { gap:0.3rem; margin-top:0.52rem; }
+    .promo-featured-price .promo-price { font-size:1.44rem; }
+    .promo-featured-price em { font-size:0.62rem; }
+    .promo-variant-options { gap:0.3rem; margin-top:0.52rem; }
+    .promo-variant { min-height:30px; padding:0.26rem 0.5rem; font-size:0.52rem; }
+    .promo-bottle-row { grid-template-columns:1fr; justify-items:stretch; min-height:112px; }
+    .promo-buy-bottles img { height:112px; }
     .promo-plus-sign { display:none; }
     .promo-gift-bottle { min-height:auto; }
-    .promo-bottle-stack { gap:0.55rem; }
-    .promo-gift-note { padding:0.66rem 0.7rem; font-size:0.6rem; }
+    .promo-bottle-stack { gap:0.42rem; }
+    .promo-gift-note { padding:0.58rem 0.66rem; font-size:0.58rem; }
     .promo-chenin-card { border-radius:18px; }
     .promo-chenin-media {
       display:grid;

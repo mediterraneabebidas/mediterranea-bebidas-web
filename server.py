@@ -47,7 +47,12 @@ CHACABUCO_CHENIN_PROMOTION = {
     "detail": "Comprando Chacabuco varietal lleva al mismo precio Chacabuco Chenin Dulce",
     "type": "Chacabuco + Chenin",
     "price_code": "394",
-    "eligible_price_codes": {"399", "397", "393", "392"},
+    "variants": {
+        "malbec": {"label": "Chacabuco Malbec", "price_code": "399"},
+        "cabernet": {"label": "Chacabuco Cabernet", "price_code": "397"},
+        "rosado": {"label": "Chacabuco Rosado", "price_code": "393"},
+        "viognier": {"label": "Chacabuco Viognier", "price_code": "392"},
+    },
 }
 
 
@@ -173,41 +178,48 @@ def validate_promo_item(raw, catalog):
     }
 
 
-def max_chenin_promo_qty(items):
-    eligible_codes = CHACABUCO_CHENIN_PROMOTION["eligible_price_codes"]
+def max_chenin_promo_qty(items, variant_key):
+    variant = CHACABUCO_CHENIN_PROMOTION["variants"].get(variant_key)
+    if not variant:
+        return 0
     normal_chacabuco_qty = 0
     for raw in items:
         if not isinstance(raw, dict):
             continue
         code = str(raw.get("priceCode") or "").strip()
         mode = str(raw.get("purchaseMode") or "box").strip().lower()
-        if code in eligible_codes and mode == "box":
+        if code == variant["price_code"] and mode == "box":
             normal_chacabuco_qty += normalize_qty(raw.get("quantity"))
     return normal_chacabuco_qty
 
 
-def chenin_promo_qty_total(items):
+def chenin_promo_qty_total(items, variant_key):
     total = 0
     for raw in items:
         if not isinstance(raw, dict):
             continue
-        if is_chenin_promo_item(raw):
+        if is_chenin_promo_item(raw) and str(raw.get("variantKey") or "").strip() == variant_key:
             total += normalize_qty(raw.get("quantity"))
     return total
 
 
 def validate_chenin_promo_item(raw, catalog, items):
     promo = CHACABUCO_CHENIN_PROMOTION
+    variant_key = str(raw.get("variantKey") or "").strip()
+    variant = promo["variants"].get(variant_key)
+    if not variant:
+        raise ValueError("Promo Chenin incompleta: selecciona Malbec, Cabernet, Rosado o Viognier")
+
     catalog_item = catalog.get(promo["price_code"])
     if not catalog_item:
         raise ValueError(f"No se encontro precio oficial para {promo['name']}")
 
     qty = normalize_qty(raw.get("quantity"))
-    max_qty = max_chenin_promo_qty(items)
+    max_qty = max_chenin_promo_qty(items, variant_key)
     if max_qty <= 0:
-        raise ValueError(f"{promo['name']} requiere cajas normales Chacabuco varietal")
-    if chenin_promo_qty_total(items) > max_qty:
-        raise ValueError(f"{promo['name']} supera el maximo permitido: {max_qty} cajas")
+        raise ValueError(f"{promo['name']} requiere cajas normales {variant['label']}")
+    if chenin_promo_qty_total(items, variant_key) > max_qty:
+        raise ValueError(f"{promo['name']} supera el maximo permitido para {variant['label']}: {max_qty} cajas")
 
     unit_price = catalog_item["price"]
     line_total = unit_price * qty
@@ -220,12 +232,13 @@ def validate_chenin_promo_item(raw, catalog, items):
         "price": f"{money(unit_price)} por caja x6",
         "total": money(line_total),
         "specs": {
-            "variety": "Chenin Dulce",
+            "variety": f"{variant['label']} + Chenin Dulce",
             "provenance": "Mendoza",
             "quantity": promo["detail"],
         },
         "code": promo["price_code"],
         "chenin_promo_id": promo["id"],
+        "variant_key": variant_key,
         "subtotal": line_total,
     }
 

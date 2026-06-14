@@ -359,6 +359,7 @@ function checkoutPayloadItem(item) {
     return {
       ...base,
       cheninPromoId: item.cheninPromoId || 'chacabuco-chenin',
+      variantKey: item.variantKey || 'malbec',
       displayName: item.name,
       priceVisual: Number.isFinite(item.price) ? formatPrice(item.price) : 'A confirmar',
       lineTotalVisual: checkoutLinePriceVisual(item)

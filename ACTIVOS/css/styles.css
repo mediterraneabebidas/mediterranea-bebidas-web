@@ -524,11 +524,12 @@
   }
   .promo-chenin-variant-options {
     margin-top:0.58rem;
+    gap:0.28rem;
   }
   .promo-chenin-variant-options .promo-variant {
-    min-height:32px;
-    padding:0.36rem 0.68rem;
-    font-size:0.56rem;
+    min-height:30px;
+    padding:0.32rem 0.48rem;
+    font-size:0.52rem;
   }
   .promo-chenin-price {
     margin-top:0.58rem;

@@ -24,12 +24,25 @@
       variety: 'Rosado'
     }
   };
+  const CHENIN_VARIANTS = {
+    ...PROMO_VARIANTS,
+    viognier: {
+      label: 'Chacabuco Viognier',
+      shortLabel: 'Viognier',
+      image: 'PRODUCTOS/producto_027.png',
+      variety: 'Viognier'
+    }
+  };
 
   let selectedPromoVariant = 'malbec';
   let selectedCheninVariant = 'malbec';
 
   function promoVariant(key = selectedPromoVariant) {
     return PROMO_VARIANTS[key] || PROMO_VARIANTS.malbec;
+  }
+
+  function cheninVariant(key = selectedCheninVariant) {
+    return CHENIN_VARIANTS[key] || CHENIN_VARIANTS.malbec;
   }
 
   function scrollPromos(direction) {
@@ -61,7 +74,7 @@
   }
 
   function updateCheninPromoVisual() {
-    const variant = promoVariant(selectedCheninVariant);
+    const variant = cheninVariant();
     document.querySelectorAll('[data-chenin-variant]').forEach(button => {
       button.classList.toggle('active', button.dataset.cheninVariant === selectedCheninVariant);
       button.setAttribute('aria-pressed', button.dataset.cheninVariant === selectedCheninVariant ? 'true' : 'false');
@@ -73,7 +86,7 @@
   }
 
   function selectCheninPromoVariant(key) {
-    selectedCheninVariant = PROMO_VARIANTS[key] ? key : 'malbec';
+    selectedCheninVariant = CHENIN_VARIANTS[key] ? key : 'malbec';
     updateCheninPromoVisual();
   }
 
@@ -151,18 +164,19 @@
       return;
     }
 
-    if(window.maxCheninPromoQty() <= 0) {
-      setCheninPromoStatus('Primero agregá cajas normales Chacabuco Malbec, Cabernet, Rosado o Viognier.', 'warning');
+    const variant = cheninVariant();
+    if(window.maxCheninPromoQty(selectedCheninVariant) <= 0) {
+      setCheninPromoStatus(`Primero agregá cajas normales ${variant.label}.`, 'warning');
       return;
     }
 
-    if(typeof window.canAddCheninPromo === 'function' && !window.canAddCheninPromo()) {
-      setCheninPromoStatus('Ya alcanzaste el máximo de Chenin para las cajas Chacabuco cargadas.', 'warning');
+    if(typeof window.canAddCheninPromo === 'function' && !window.canAddCheninPromo(selectedCheninVariant)) {
+      setCheninPromoStatus(`Ya alcanzaste el máximo de Chenin para ${variant.shortLabel}.`, 'warning');
       if(typeof window.openCart === 'function') window.openCart();
       return;
     }
 
-    window.addCheninPromo();
+    window.addCheninPromo(selectedCheninVariant);
     if(typeof window.openCart === 'function') window.openCart();
     setCheninPromoStatus('Promo Chenin agregada al carrito.', 'success');
   }

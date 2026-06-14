@@ -127,34 +127,33 @@
     window.setTimeout(() => featured.classList.remove('promo-added'), 1100);
   }
 
-  function addCheninPromoAddonFromRail() {
-    if(typeof window.addCheninAddon !== 'function' || typeof window.maxCheninAddonQty !== 'function') {
-      setCheninPromoStatus('El complemento Chenin se suma desde el carrito.', 'warning');
+  function addCheninPromoFromRail() {
+    if(typeof window.addCheninPromo !== 'function' || typeof window.maxCheninPromoQty !== 'function') {
+      setCheninPromoStatus('La promo Chenin se suma desde el carrito.', 'warning');
       return;
     }
 
-    if(window.maxCheninAddonQty() <= 0) {
-      setCheninPromoStatus('Primero agregá la Promo Chacabuco 3+1 para sumar Chenin como complemento.', 'warning');
-      pulseChacabucoPromoCard();
+    if(window.maxCheninPromoQty() <= 0) {
+      setCheninPromoStatus('Primero agregá cajas normales Chacabuco Malbec, Cabernet, Rosado o Viognier.', 'warning');
       return;
     }
 
-    if(typeof window.canAddCheninAddon === 'function' && !window.canAddCheninAddon()) {
-      setCheninPromoStatus('Ya alcanzaste el máximo de Chenin para las promos cargadas.', 'warning');
+    if(typeof window.canAddCheninPromo === 'function' && !window.canAddCheninPromo()) {
+      setCheninPromoStatus('Ya alcanzaste el máximo de Chenin para las cajas Chacabuco cargadas.', 'warning');
       if(typeof window.openCart === 'function') window.openCart();
       return;
     }
 
-    window.addCheninAddon();
+    window.addCheninPromo();
     if(typeof window.openCart === 'function') window.openCart();
-    setCheninPromoStatus('Chenin agregado como complemento pago en el carrito.', 'success');
+    setCheninPromoStatus('Promo Chenin agregada al carrito.', 'success');
   }
 
   window.scrollPromos = scrollPromos;
   window.selectChacabucoPromoVariant = selectChacabucoPromoVariant;
   window.updateChacabucoPromoVisual = updateChacabucoPromoVisual;
   window.addChacabucoPromoToCart = addChacabucoPromoToCart;
-  window.addCheninPromoAddonFromRail = addCheninPromoAddonFromRail;
+  window.addCheninPromoFromRail = addCheninPromoFromRail;
 
   updateChacabucoPromoVisual();
 })();

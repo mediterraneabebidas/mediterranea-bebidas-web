@@ -41,15 +41,13 @@ PROMOTIONS = {
     }
 }
 
-PROMO_ADDONS = {
-    "chacabuco-chenin": {
-        "name": "Chacabuco Chenin Dulce",
-        "detail": "Complemento pago de Promo Chacabuco 3+1",
-        "type": "Complemento pago",
-        "price_code": "394",
-        "promo_id": "chacabuco-3x1",
-        "boxes_per_promo": 3,
-    }
+CHACABUCO_CHENIN_PROMOTION = {
+    "id": "chacabuco-chenin",
+    "name": "Chacabuco Chenin Dulce",
+    "detail": "Promo independiente habilitada por cajas normales Chacabuco varietal",
+    "type": "Promo independiente",
+    "price_code": "394",
+    "eligible_price_codes": {"399", "397", "393", "392"},
 }
 
 
@@ -120,6 +118,17 @@ def is_promo_addon_item(raw):
     return raw.get("purchaseMode") == "promo-addon" or bool(raw.get("addonId"))
 
 
+def is_chenin_promo_item(raw):
+    price_code = str(raw.get("priceCode") or "").strip()
+    if is_promo_addon_item(raw):
+        return False
+    return (
+        raw.get("purchaseMode") == "chenin-promo"
+        or str(raw.get("cheninPromoId") or "").strip() == CHACABUCO_CHENIN_PROMOTION["id"]
+        or price_code == CHACABUCO_CHENIN_PROMOTION["price_code"]
+    )
+
+
 def validate_promo_item(raw, catalog):
     promo_id = str(raw.get("promoId") or "").strip()
     variant_key = str(raw.get("variantKey") or "").strip()
@@ -164,62 +173,59 @@ def validate_promo_item(raw, catalog):
     }
 
 
-def max_addon_qty(items, addon):
-    promo_id = addon["promo_id"]
-    promo_qty = 0
+def max_chenin_promo_qty(items):
+    eligible_codes = CHACABUCO_CHENIN_PROMOTION["eligible_price_codes"]
+    normal_chacabuco_qty = 0
     for raw in items:
         if not isinstance(raw, dict):
             continue
-        if str(raw.get("promoId") or "").strip() == promo_id and str(raw.get("purchaseMode") or "").strip() == "promo":
-            promo_qty += normalize_qty(raw.get("quantity"))
-    return promo_qty * int(addon["boxes_per_promo"])
+        code = str(raw.get("priceCode") or "").strip()
+        mode = str(raw.get("purchaseMode") or "box").strip().lower()
+        if code in eligible_codes and mode == "box":
+            normal_chacabuco_qty += normalize_qty(raw.get("quantity"))
+    return normal_chacabuco_qty
 
 
-def addon_qty_total(items, addon_id):
+def chenin_promo_qty_total(items):
     total = 0
     for raw in items:
         if not isinstance(raw, dict):
             continue
-        if str(raw.get("addonId") or "").strip() == addon_id:
+        if is_chenin_promo_item(raw):
             total += normalize_qty(raw.get("quantity"))
     return total
 
 
-def validate_promo_addon_item(raw, catalog, items):
-    addon_id = str(raw.get("addonId") or "").strip()
-    addon = PROMO_ADDONS.get(addon_id)
-    if not addon:
-        raise ValueError(f"Complemento de promocion desconocido: {addon_id}")
-
-    catalog_item = catalog.get(addon["price_code"])
+def validate_chenin_promo_item(raw, catalog, items):
+    promo = CHACABUCO_CHENIN_PROMOTION
+    catalog_item = catalog.get(promo["price_code"])
     if not catalog_item:
-        raise ValueError(f"No se encontro precio oficial para {addon['name']}")
+        raise ValueError(f"No se encontro precio oficial para {promo['name']}")
 
     qty = normalize_qty(raw.get("quantity"))
-    max_qty = max_addon_qty(items, addon)
+    max_qty = max_chenin_promo_qty(items)
     if max_qty <= 0:
-        raise ValueError(f"{addon['name']} solo se puede pedir junto a Promo Chacabuco 3+1")
-    if addon_qty_total(items, addon_id) > max_qty:
-        raise ValueError(f"{addon['name']} supera el maximo permitido: {max_qty} cajas")
+        raise ValueError(f"{promo['name']} requiere cajas normales Chacabuco varietal")
+    if chenin_promo_qty_total(items) > max_qty:
+        raise ValueError(f"{promo['name']} supera el maximo permitido: {max_qty} cajas")
 
     unit_price = catalog_item["price"]
     line_total = unit_price * qty
     return {
-        "name": addon["name"],
-        "type": addon["type"],
+        "name": promo["name"],
+        "type": promo["type"],
         "qty": qty,
         "label": purchase_label("box", catalog_item.get("pack_size") or 6, qty),
-        "mode": "promo-addon",
+        "mode": "chenin-promo",
         "price": f"{money(unit_price)} por caja x6",
         "total": money(line_total),
         "specs": {
             "variety": "Chenin Dulce",
             "provenance": "Mendoza",
-            "quantity": addon["detail"],
+            "quantity": promo["detail"],
         },
-        "code": addon["price_code"],
-        "addon_id": addon_id,
-        "addon_for": addon["promo_id"],
+        "code": promo["price_code"],
+        "chenin_promo_id": promo["id"],
         "subtotal": line_total,
     }
 
@@ -239,11 +245,13 @@ def validated_items(payload):
             subtotal += promo_item["subtotal"]
             validated.append(promo_item)
             continue
-        if is_promo_addon_item(raw):
-            addon_item = validate_promo_addon_item(raw, catalog, items)
-            subtotal += addon_item["subtotal"]
-            validated.append(addon_item)
+        if is_chenin_promo_item(raw):
+            chenin_item = validate_chenin_promo_item(raw, catalog, items)
+            subtotal += chenin_item["subtotal"]
+            validated.append(chenin_item)
             continue
+        if is_promo_addon_item(raw):
+            raise ValueError("Chenin ya no se acepta como addon de Promo Chacabuco 3+1")
 
         code = str(raw.get("priceCode") or "").strip()
         qty = normalize_qty(raw.get("quantity"))

@@ -2,10 +2,11 @@ let cart = [];
 
 const CHACABUCO_PROMO_ID = 'chacabuco-3x1';
 const CHACABUCO_PROMO_GIFT_DETAIL = '1 caja Chacabuco Cabernet Franc sin cargo';
-const CHACABUCO_CHENIN_ADDON_ID = 'chacabuco-chenin';
+const CHACABUCO_CHENIN_PROMO_ID = 'chacabuco-chenin';
 const CHACABUCO_CHENIN_PRICE_CODE = '394';
 const CHACABUCO_CHENIN_PRICE = 36887.20;
 const CHACABUCO_CHENIN_IMAGE = 'PRODUCTOS/producto_029.png';
+const CHACABUCO_CHENIN_ELIGIBLE_CODES = new Set(['399', '397', '393', '392']);
 const CHACABUCO_PROMO_VARIANTS = {
   malbec: {
     label: 'Chacabuco Malbec',
@@ -39,8 +40,19 @@ function isChacabucoPromo(item) {
   return isPromoPurchase(item) && item?.promoId === CHACABUCO_PROMO_ID;
 }
 
-function isChacabucoCheninAddon(item) {
-  return isPromoAddon(item) && item?.addonId === CHACABUCO_CHENIN_ADDON_ID;
+function isChacabucoCheninPromo(item) {
+  return item?.purchaseMode === 'chenin-promo' || item?.cheninPromoId === CHACABUCO_CHENIN_PROMO_ID;
+}
+
+function isChacabucoCheninCandidate(item) {
+  return String(item?.priceCode || '') === CHACABUCO_CHENIN_PRICE_CODE;
+}
+
+function isNormalChacabucoVarietalBox(item) {
+  return !isPromoPurchase(item)
+    && !isChacabucoCheninPromo(item)
+    && item?.purchaseMode === 'box'
+    && CHACABUCO_CHENIN_ELIGIBLE_CODES.has(String(item?.priceCode || ''));
 }
 
 function chacabucoCartVariant(key) {
@@ -80,6 +92,7 @@ function promoCartKey(product) {
 }
 
 function cartItemKey(product) {
+  if(isChacabucoCheninPromo(product)) return [product.cheninPromoId || product.name, product.purchaseMode].join('::');
   if(isPromoPurchase(product)) return promoCartKey(product);
   if(isPromoAddon(product)) return [product.addonId || product.name, product.purchaseMode].join('::');
   return [product.name, product.meta, product.purchaseMode].join('::');
@@ -104,67 +117,71 @@ function chacabucoPromoQtyTotal() {
   return cart.reduce((sum, item) => sum + (isChacabucoPromo(item) ? item.qty : 0), 0);
 }
 
-function maxCheninAddonQty() {
-  return chacabucoPromoQtyTotal() * 3;
+function chacabucoNormalVarietalQtyTotal() {
+  return cart.reduce((sum, item) => sum + (isNormalChacabucoVarietalBox(item) ? item.qty : 0), 0);
 }
 
-function cheninAddonQty() {
-  return cart.reduce((sum, item) => sum + (isChacabucoCheninAddon(item) ? item.qty : 0), 0);
+function maxCheninPromoQty() {
+  return chacabucoNormalVarietalQtyTotal();
 }
 
-function canAddCheninAddon() {
-  return maxCheninAddonQty() > cheninAddonQty();
+function cheninPromoQty() {
+  return cart.reduce((sum, item) => sum + (isChacabucoCheninPromo(item) ? item.qty : 0), 0);
 }
 
-function cheninAddonProduct() {
+function canAddCheninPromo() {
+  return maxCheninPromoQty() > cheninPromoQty();
+}
+
+function cheninPromoProduct() {
   return {
-    addonId: CHACABUCO_CHENIN_ADDON_ID,
+    cheninPromoId: CHACABUCO_CHENIN_PROMO_ID,
     name: 'Chacabuco Chenin Dulce',
-    meta: 'Complemento pago de Promo Chacabuco 3+1',
+    meta: 'Promo independiente por compra de Chacabuco varietal',
     specs: {
       variety: 'Chenin Dulce',
       provenance: 'Mendoza',
       quantity: 'Caja x6'
     },
-    type: 'Complemento pago',
+    type: 'Promo independiente',
     image: CHACABUCO_CHENIN_IMAGE,
     price: CHACABUCO_CHENIN_PRICE,
     basePrice: CHACABUCO_CHENIN_PRICE,
     packSize: 6,
-    purchaseMode: 'promo-addon',
-    purchaseLabel: 'complemento pago',
+    purchaseMode: 'chenin-promo',
+    purchaseLabel: 'promo Chenin',
     priceLabel: typeof window !== 'undefined' && typeof window.formatPrice === 'function' ? window.formatPrice(CHACABUCO_CHENIN_PRICE) : '$36.887,20',
     priceCode: CHACABUCO_CHENIN_PRICE_CODE
   };
 }
 
-function syncCheninAddonLimit() {
-  const maxQty = maxCheninAddonQty();
-  const addonItems = cart.filter(isChacabucoCheninAddon);
-  if(!addonItems.length) return;
+function syncCheninPromoLimit() {
+  const maxQty = maxCheninPromoQty();
+  const cheninItems = cart.filter(isChacabucoCheninPromo);
+  if(!cheninItems.length) return;
 
-  const totalQty = addonItems.reduce((sum, item) => sum + item.qty, 0);
-  cart = cart.filter(item => !isChacabucoCheninAddon(item));
+  const totalQty = cheninItems.reduce((sum, item) => sum + item.qty, 0);
+  cart = cart.filter(item => !isChacabucoCheninPromo(item));
   if(maxQty <= 0) return;
 
-  cart.push({ ...cheninAddonProduct(), qty: Math.min(totalQty, maxQty) });
+  cart.push({ ...cheninPromoProduct(), qty: Math.min(totalQty, maxQty) });
 }
 
-function setCheninAddonQty(qty) {
-  const maxQty = maxCheninAddonQty();
+function setCheninPromoQty(qty) {
+  const maxQty = maxCheninPromoQty();
   const nextQty = Math.max(0, Math.min(qty, maxQty));
-  cart = cart.filter(item => !isChacabucoCheninAddon(item));
-  if(nextQty > 0) cart.push({ ...cheninAddonProduct(), qty: nextQty });
+  cart = cart.filter(item => !isChacabucoCheninPromo(item));
+  if(nextQty > 0) cart.push({ ...cheninPromoProduct(), qty: nextQty });
   renderCart();
 }
 
-function addCheninAddon() {
-  if(maxCheninAddonQty() <= 0) return;
-  setCheninAddonQty(cheninAddonQty() + 1);
+function addCheninPromo() {
+  if(maxCheninPromoQty() <= 0) return;
+  setCheninPromoQty(cheninPromoQty() + 1);
 }
 
-function changeCheninAddonQty(delta) {
-  setCheninAddonQty(cheninAddonQty() + delta);
+function changeCheninPromoQty(delta) {
+  setCheninPromoQty(cheninPromoQty() + delta);
 }
 
 function cartTotals() {
@@ -182,8 +199,8 @@ function renderPriceLine(item) {
     if(!Number.isFinite(item.price)) return '<div class="cart-item-price">Precio promo a confirmar</div>';
     return `<div class="cart-item-price">${formatPrice(item.price)} por promo completa</div>`;
   }
-  if(isChacabucoCheninAddon(item)) {
-    return `<div class="cart-item-price">${formatPrice(item.price)} por caja x6 &middot; complemento pago</div>`;
+  if(isChacabucoCheninPromo(item)) {
+    return `<div class="cart-item-price">${formatPrice(item.price)} por caja x6 &middot; promo Chenin</div>`;
   }
   if(!Number.isFinite(item.price)) return `<div class="cart-item-price">Precio a confirmar por ${unitLabel(item)}</div>`;
   return `<div class="cart-item-price">${formatPrice(item.price)} por ${unitLabel(item)}</div>`;
@@ -194,7 +211,7 @@ function renderCheckoutPriceLine(item) {
     if(!Number.isFinite(item.price)) return '<div class="checkout-summary-price">Precio promo a confirmar</div>';
     return `<div class="checkout-summary-price">${formatPrice(item.price * item.qty)} &middot; ${item.qty} ${promoQuantityLabel(item)}</div>`;
   }
-  if(isChacabucoCheninAddon(item)) {
+  if(isChacabucoCheninPromo(item)) {
     return `<div class="checkout-summary-price">${formatPrice(item.price * item.qty)} &middot; ${item.qty} cajas x6 Chenin</div>`;
   }
   if(!Number.isFinite(item.price)) return `<div class="checkout-summary-price">Precio a confirmar por ${unitLabel(item)}</div>`;
@@ -227,12 +244,12 @@ function renderCartMeta(item, index) {
       </div>
     `;
   }
-  if(isChacabucoCheninAddon(item)) {
+  if(isChacabucoCheninPromo(item)) {
     return `
       <div class="cart-item-meta promo-cart-meta">
-        <span class="promo-cart-pill">Complemento pago</span>
-        <span>Asociado a Promo Chacabuco 3+1</span>
-        <span class="promo-cart-gift">No es regalo. Cabernet Franc sigue siendo la caja sin cargo.</span>
+        <span class="promo-cart-pill">Promo Chenin</span>
+        <span>Habilitada por cajas normales Chacabuco varietal.</span>
+        <span class="promo-cart-gift">No es regalo. Se cobra al precio oficial del codigo 394.</span>
       </div>
     `;
   }
@@ -241,11 +258,15 @@ function renderCartMeta(item, index) {
 
 function addToCart(product) {
   if(isChacabucoPromo(product)) applyChacabucoPromoVariant(product, product.variantKey);
+  if(isChacabucoCheninCandidate(product) && !isChacabucoCheninPromo(product)) {
+    if(maxCheninPromoQty() <= cheninPromoQty()) return;
+    product = cheninPromoProduct();
+  }
   const key = cartItemKey(product);
   const existing = cart.find(item => cartItemKey(item) === key);
   if(existing) existing.qty += 1;
   else cart.push({ ...product, qty: 1 });
-  syncCheninAddonLimit();
+  syncCheninPromoLimit();
   renderCart();
   openCart();
 }
@@ -254,7 +275,7 @@ function changeQty(index, delta) {
   if(!cart[index]) return;
   cart[index].qty += delta;
   if(cart[index].qty <= 0) cart.splice(index, 1);
-  syncCheninAddonLimit();
+  syncCheninPromoLimit();
   renderCart();
 }
 
@@ -273,7 +294,7 @@ function changePromoVariant(index, variantKey) {
   } else {
     applyChacabucoPromoVariant(item, variantKey);
   }
-  syncCheninAddonLimit();
+  syncCheninPromoLimit();
   renderCart();
 }
 
@@ -283,10 +304,10 @@ function clearCart() {
 }
 
 function renderCheninUpsell() {
-  const maxQty = maxCheninAddonQty();
+  const maxQty = maxCheninPromoQty();
   if(maxQty <= 0) return '';
 
-  const currentQty = cheninAddonQty();
+  const currentQty = cheninPromoQty();
   const canAdd = currentQty < maxQty;
   return `
     <div class="cart-upsell chenin-upsell">
@@ -294,18 +315,18 @@ function renderCheninUpsell() {
         <img src="${CHACABUCO_CHENIN_IMAGE}" alt="Chacabuco Chenin Dulce">
       </div>
       <div class="cart-upsell-body">
-        <div class="cart-upsell-kicker">Complemento pago</div>
+        <div class="cart-upsell-kicker">Promo independiente</div>
         <div class="cart-upsell-title">Sumar Chacabuco Chenin Dulce</div>
-        <p>Complemento pago: pod&eacute;s agregar hasta 3 cajas de Chenin por cada Promo 3+1.</p>
+        <p>Pod&eacute;s agregar la misma cantidad de Chenin que cajas normales Chacabuco varietal.</p>
         <strong>Caja x6: $36.887,20</strong>
-        <small>Cabernet Franc sigue siendo el regalo sin cargo.</small>
+        <small>No cuenta la Promo Chacabuco 3+1 como habilitante.</small>
       </div>
       <div class="cart-upsell-actions">
-        <button class="cart-upsell-add" type="button" onclick="addCheninAddon()" ${canAdd ? '' : 'disabled'}>Agregar Chenin</button>
+        <button class="cart-upsell-add" type="button" onclick="addCheninPromo()" ${canAdd ? '' : 'disabled'}>Agregar Chenin</button>
         <div class="qty-control chenin-addon-control">
-          <button type="button" onclick="changeCheninAddonQty(-1)" ${currentQty > 0 ? '' : 'disabled'}>-</button>
+          <button type="button" onclick="changeCheninPromoQty(-1)" ${currentQty > 0 ? '' : 'disabled'}>-</button>
           <span>${currentQty}/${maxQty}</span>
-          <button type="button" onclick="changeCheninAddonQty(1)" ${canAdd ? '' : 'disabled'}>+</button>
+          <button type="button" onclick="changeCheninPromoQty(1)" ${canAdd ? '' : 'disabled'}>+</button>
         </div>
       </div>
     </div>
@@ -334,7 +355,7 @@ function renderCart() {
     return;
   }
   const itemsHtml = cart.map((item, index) => `
-    <div class="cart-item${isPromoPurchase(item) ? ' promo-cart-item' : ''}">
+    <div class="cart-item${isPromoPurchase(item) || isChacabucoCheninPromo(item) ? ' promo-cart-item' : ''}">
       ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<div></div>'}
       <div>
         <div class="cart-item-name">${item.name}</div>

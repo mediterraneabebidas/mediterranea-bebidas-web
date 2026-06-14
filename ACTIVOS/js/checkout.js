@@ -201,6 +201,12 @@ function isCheckoutAddon(item) {
     : item?.purchaseMode === 'promo-addon' || Boolean(item?.addonId);
 }
 
+function isCheckoutCheninPromo(item) {
+  return typeof isChacabucoCheninPromo === 'function'
+    ? isChacabucoCheninPromo(item)
+    : item?.purchaseMode === 'chenin-promo' || Boolean(item?.cheninPromoId);
+}
+
 function checkoutPromoDetail(item) {
   return item?.promoDetail || '3 cajas + 1 de regalo';
 }
@@ -226,6 +232,15 @@ function renderCheckoutMeta(item) {
         <span class="promo-cart-pill">Promo</span>
         <span>${escapeHtml(checkoutPromoSelection(item))}</span>
         <span class="promo-cart-gift">${escapeHtml(checkoutPromoDetail(item))}</span>
+      </div>
+    `;
+  }
+  if(isCheckoutCheninPromo(item)) {
+    return `
+      <div class="checkout-summary-meta promo-cart-meta">
+        <span class="promo-cart-pill">Promo Chenin</span>
+        <span>${escapeHtml(item?.meta || 'Promo independiente por compra de Chacabuco varietal')}</span>
+        <span class="promo-cart-gift">No es regalo. Se cobra al precio oficial del codigo 394.</span>
       </div>
     `;
   }
@@ -283,6 +298,10 @@ function orderLine(item) {
     const price = Number.isFinite(item.price) ? checkoutLinePriceVisual(item) : 'precio a confirmar';
     return `${item.qty} ${checkoutPromoQuantityLabel(item)} de ${item.name} (${checkoutPromoDetail(item)}; ${checkoutPromoSelection(item)}) - ${price}`;
   }
+  if(isCheckoutCheninPromo(item)) {
+    const price = Number.isFinite(item.price) ? checkoutLinePriceVisual(item) : 'precio a confirmar';
+    return `${item.qty} cajas x6 de ${item.name} (promo independiente Chenin; habilitada por cajas normales Chacabuco varietal) - ${price}`;
+  }
   if(isCheckoutAddon(item)) {
     const price = Number.isFinite(item.price) ? checkoutLinePriceVisual(item) : 'precio a confirmar';
     return `${item.qty} cajas x6 de ${item.name} (complemento pago Promo Chacabuco 3+1) - ${price}`;
@@ -331,12 +350,22 @@ function checkoutPayloadItem(item) {
     name: item.name,
     type: item.type,
     quantity: item.qty,
-    purchaseMode: isCheckoutPromo(item) ? 'promo' : (isCheckoutAddon(item) ? 'promo-addon' : (item.purchaseMode === 'presentation' ? 'presentation' : 'box')),
+    purchaseMode: isCheckoutPromo(item) ? 'promo' : (isCheckoutCheninPromo(item) ? 'chenin-promo' : (isCheckoutAddon(item) ? 'promo-addon' : (item.purchaseMode === 'presentation' ? 'presentation' : 'box'))),
     priceCode: item.priceCode,
     packSize: item.packSize,
     clientPrice: item.price,
     specs: item.specs
   };
+
+  if(isCheckoutCheninPromo(item)) {
+    return {
+      ...base,
+      cheninPromoId: item.cheninPromoId || 'chacabuco-chenin',
+      displayName: item.name,
+      priceVisual: Number.isFinite(item.price) ? formatPrice(item.price) : 'A confirmar',
+      lineTotalVisual: checkoutLinePriceVisual(item)
+    };
+  }
 
   if(isCheckoutAddon(item)) {
     return {

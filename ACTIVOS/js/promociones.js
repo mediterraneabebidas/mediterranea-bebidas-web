@@ -44,21 +44,22 @@
       .filter(item => item.offsetWidth > 0);
     if(!items.length) return;
 
-    const trackCenter = track.scrollLeft + track.clientWidth / 2;
-    const currentIndex = items.reduce((closestIndex, item, index) => {
-      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-      const closest = items[closestIndex];
-      const closestCenter = closest.offsetLeft + closest.offsetWidth / 2;
-      return Math.abs(itemCenter - trackCenter) < Math.abs(closestCenter - trackCenter) ? index : closestIndex;
-    }, 0);
-    const nextIndex = Math.max(0, Math.min(items.length - 1, currentIndex + direction));
-    const target = items[nextIndex];
-    const snapAlign = window.getComputedStyle(target).scrollSnapAlign;
     const trackStyle = window.getComputedStyle(track);
     const paddingLeft = parseFloat(trackStyle.paddingLeft) || 0;
-    const left = snapAlign.includes('start')
-      ? target.offsetLeft - paddingLeft
-      : target.offsetLeft + target.offsetWidth / 2 - track.clientWidth / 2;
+    const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+    const positions = items.map(item => {
+      const snapAlign = window.getComputedStyle(item).scrollSnapAlign;
+      const left = snapAlign.includes('center')
+        ? item.offsetLeft + item.offsetWidth / 2 - track.clientWidth / 2
+        : item.offsetLeft - paddingLeft;
+      return Math.max(0, Math.min(maxScroll, Math.round(left)));
+    });
+    const current = Math.round(track.scrollLeft);
+    const tolerance = 8;
+    const targetLeft = direction > 0
+      ? positions.find(left => left > current + tolerance)
+      : positions.slice().reverse().find(left => left < current - tolerance);
+    const left = targetLeft ?? (direction > 0 ? maxScroll : 0);
     track.scrollTo({ left, behavior: 'smooth' });
   }
 

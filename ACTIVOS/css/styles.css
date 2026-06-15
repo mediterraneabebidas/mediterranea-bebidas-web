@@ -278,6 +278,16 @@
     display:flex; flex-direction:column; align-items:center; gap:0.5rem;
     color: var(--text-dim); font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase;
   }
+  .hero-scroll span {
+    display:block;
+    min-width:5.2rem;
+    text-align:center;
+    font-size:0;
+  }
+  .hero-scroll span::before {
+    content:'SCROLL';
+    font-size:0.72rem;
+  }
   .hero-scroll-line {
     width:1px; height:50px;
     background: linear-gradient(to bottom, transparent, var(--text-dim));
@@ -290,10 +300,10 @@
       padding-bottom:7.5rem;
     }
     .hero-content {
-      transform:translateY(-0.75rem);
+      transform:translateY(-1.15rem);
     }
     .hero-scroll {
-      bottom:3.25rem;
+      bottom:3.65rem;
     }
   }
 
@@ -454,7 +464,7 @@
   }
   .promo-pair {
     flex:0 0 min(1120px, calc(100vw - 6rem));
-    scroll-snap-align:start;
+    scroll-snap-align:none;
     display:grid;
     grid-template-columns:repeat(2, minmax(0, 1fr));
     gap:1.25rem;
@@ -465,11 +475,13 @@
     min-width:0;
     height:100%;
     min-height:360px;
-    scroll-snap-align:none;
+    scroll-snap-align:start;
   }
-  .promo-pair .promo-card:nth-child(even),
-  .promo-pair .promo-card:nth-child(even):hover {
+  .promo-pair .promo-card:nth-child(even) {
     transform:none;
+  }
+  .promo-pair .promo-card:hover {
+    transform:translateY(-0.35rem);
   }
   .promo-pair .promo-featured-grid,
   .promo-pair .promo-bottle-stack {
@@ -483,7 +495,7 @@
     text-align:left;
     padding:0.95rem;
     height:360px;
-    border:1px solid rgba(244,216,156,0.24);
+    border:0;
     border-radius:22px;
     background:linear-gradient(145deg, rgba(30,25,24,0.96), rgba(67,39,84,0.86));
     box-shadow:0 22px 54px rgba(37,24,53,0.18);

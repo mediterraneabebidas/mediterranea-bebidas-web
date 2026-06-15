@@ -60,6 +60,68 @@ function updateCatalogSectionVisibility(panel) {
   return visibleCount;
 }
 
+function ensureCatalogOriginalOrder(panel) {
+  panel.querySelectorAll('.bodega-section').forEach((section, sectionIndex) => {
+    if(!section.dataset.searchOrder) section.dataset.searchOrder = String(sectionIndex);
+    section.querySelectorAll('.wine-grid').forEach(grid => {
+      Array.from(grid.children).forEach((card, cardIndex) => {
+        if(!card.dataset.searchOrder) card.dataset.searchOrder = String(cardIndex);
+      });
+    });
+  });
+}
+
+function restoreCatalogOrder(panel) {
+  panel.querySelectorAll('.wine-grid').forEach(grid => {
+    Array.from(grid.children)
+      .sort((a, b) => Number(a.dataset.searchOrder || 0) - Number(b.dataset.searchOrder || 0))
+      .forEach(card => grid.appendChild(card));
+  });
+  Array.from(panel.querySelectorAll('.bodega-section'))
+    .sort((a, b) => Number(a.dataset.searchOrder || 0) - Number(b.dataset.searchOrder || 0))
+    .forEach(section => panel.appendChild(section));
+}
+
+function fieldSearchScore(value, term, weight) {
+  const text = normalizeCatalogSearch(value);
+  if(!term || !text.includes(term)) return 0;
+  const startsBonus = text.startsWith(term) ? weight * 0.2 : 0;
+  return weight + startsBonus;
+}
+
+function catalogCardSearchScore(card, term) {
+  if(!term) return 0;
+  return (
+    fieldSearchScore(card.dataset.searchName, term, 1000) +
+    fieldSearchScore(card.dataset.searchBrand, term, 700) +
+    fieldSearchScore(card.dataset.searchSpecs, term, 500) +
+    fieldSearchScore(card.dataset.searchDescription, term, 120) +
+    fieldSearchScore(card.dataset.searchCategory, term, 25)
+  );
+}
+
+function sortCatalogSearchResults(panel, term) {
+  if(!panel) return;
+  if(!term) {
+    restoreCatalogOrder(panel);
+    return;
+  }
+  panel.querySelectorAll('.wine-grid').forEach(grid => {
+    Array.from(grid.children)
+      .sort((a, b) => {
+        const scoreDiff = Number(b.dataset.searchScore || 0) - Number(a.dataset.searchScore || 0);
+        return scoreDiff || Number(a.dataset.searchOrder || 0) - Number(b.dataset.searchOrder || 0);
+      })
+      .forEach(card => grid.appendChild(card));
+  });
+  Array.from(panel.querySelectorAll('.bodega-section'))
+    .sort((a, b) => {
+      const scoreDiff = Number(b.dataset.searchScore || 0) - Number(a.dataset.searchScore || 0);
+      return scoreDiff || Number(a.dataset.searchOrder || 0) - Number(b.dataset.searchOrder || 0);
+    })
+    .forEach(section => panel.appendChild(section));
+}
+
 function activeCatalogPanel() {
   return document.querySelector('.catalog-panel.active');
 }
@@ -75,12 +137,21 @@ function updateCatalogSearchStatus(count = 0) {
 function applyCatalogSearch() {
   const term = normalizeCatalogSearch(catalogSearchTerm);
   document.querySelectorAll('.catalog-panel').forEach(panel => {
+    ensureCatalogOriginalOrder(panel);
     panel.querySelectorAll('.wine-card').forEach(card => {
-      const sectionText = card.closest('.bodega-section')?.dataset.searchSection || '';
-      const haystack = normalizeCatalogSearch(`${card.dataset.searchText || ''} ${sectionText}`);
-      card.dataset.hiddenSearch = term && !haystack.includes(term) ? 'true' : 'false';
+      const score = catalogCardSearchScore(card, term);
+      card.dataset.searchScore = String(score);
+      card.dataset.hiddenSearch = term && score <= 0 ? 'true' : 'false';
       updateCatalogCardVisibility(card);
     });
+    panel.querySelectorAll('.bodega-section').forEach(section => {
+      const sectionScore = Math.max(
+        0,
+        ...Array.from(section.querySelectorAll('.wine-card:not([hidden])')).map(card => Number(card.dataset.searchScore || 0))
+      );
+      section.dataset.searchScore = String(sectionScore);
+    });
+    sortCatalogSearchResults(panel, term);
     updateCatalogSectionVisibility(panel);
   });
   updateCatalogSearchStatus(updateCatalogSectionVisibility(activeCatalogPanel()));

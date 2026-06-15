@@ -37,8 +37,16 @@ function renderProductCard(product, otherBrands = catalogOtherBrands) {
     <div class="wine-price" data-price="${escapeHtml(price.value)}" data-price-label="${escapeHtml(price.label)}" data-price-code="${escapeHtml(price.code)}"${price.packSize ? ` data-pack-size="${escapeHtml(price.packSize)}"` : ''}><span>${escapeHtml(price.displayLabel)}</span><strong>${escapeHtml(price.displayValue)}</strong></div>` : '';
   const otherBrand = inferOtherBrand(product, otherBrands);
   const otherBrandAttr = otherBrand ? ` data-other-brand="${escapeHtml(otherBrand)}"` : '';
+  const searchText = [
+    product.name,
+    product.alt,
+    product.type,
+    product.varietal,
+    product.category,
+    otherBrand
+  ].filter(Boolean).join(' ');
   return `
-    <div class="wine-card"${otherBrandAttr}><div class="wine-image"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.alt || product.name)}"></div><div class="wine-type-badge ${escapeHtml(product.badgeClass)}">${escapeHtml(product.type)}</div><div class="wine-name">${escapeHtml(product.name)}</div><div class="wine-varietal">${escapeHtml(product.varietal)}</div>${priceHtml}</div>`;
+    <div class="wine-card"${otherBrandAttr} data-search-text="${escapeHtml(searchText)}"><div class="wine-image"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.alt || product.name)}"></div><div class="wine-type-badge ${escapeHtml(product.badgeClass)}">${escapeHtml(product.type)}</div><div class="wine-name">${escapeHtml(product.name)}</div><div class="wine-varietal">${escapeHtml(product.varietal)}</div>${priceHtml}</div>`;
 }
 
 function renderCatalogPanels(panels = [], otherBrands = catalogOtherBrands) {
@@ -59,15 +67,20 @@ function renderCatalogPanels(panels = [], otherBrands = catalogOtherBrands) {
           </div>
         </div>` : ''}
       ${panel.sections.map(section => `
-        <div class="bodega-section">
+        <div class="bodega-section" data-search-section="${escapeHtml([section.name, section.description, panel.label].filter(Boolean).join(' '))}">
           <div class="bodega-name">${escapeHtml(section.name)}</div>
           <div class="bodega-desc">${escapeHtml(section.description)}</div>
           <div class="wine-grid">
-            ${section.products.map(product => renderProductCard(product, otherBrands)).join('')}
+            ${section.products.map(product => renderProductCard({
+              ...product,
+              category: [panel.label, section.name, section.description].filter(Boolean).join(' ')
+            }, otherBrands)).join('')}
           </div>
         </div>`).join('')}
     </div>`).join('');
   if(typeof setupOtherBrandsMenu === 'function') setupOtherBrandsMenu();
+  if(typeof setupCatalogSearch === 'function') setupCatalogSearch();
+  if(typeof applyCatalogSearch === 'function') applyCatalogSearch();
 }
 
 async function loadCatalog() {

@@ -927,6 +927,98 @@
 
   /* ── CATÁLOGO ── */
   #catalogo { background: var(--bg); }
+  .catalog-search {
+    margin:-1.45rem 0 2rem;
+    max-width:780px;
+  }
+  .catalog-search-field {
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+    min-height:58px;
+    padding:0.42rem 0.48rem 0.42rem 1rem;
+    border:1px solid rgba(176,106,255,0.28);
+    border-radius:18px;
+    background:
+      linear-gradient(135deg, rgba(176,106,255,0.13), rgba(28,17,39,0.82)),
+      var(--bg2);
+    box-shadow:0 18px 46px rgba(0,0,0,0.18);
+  }
+  .catalog-search-icon {
+    flex:0 0 auto;
+    width:1rem;
+    height:1rem;
+    border:2px solid var(--accent);
+    border-radius:50%;
+    opacity:0.86;
+    position:relative;
+  }
+  .catalog-search-icon::after {
+    content:'';
+    position:absolute;
+    width:0.48rem;
+    height:2px;
+    right:-0.36rem;
+    bottom:-0.18rem;
+    border-radius:999px;
+    background:var(--accent);
+    transform:rotate(45deg);
+    transform-origin:center;
+  }
+  .catalog-search input {
+    flex:1 1 auto;
+    min-width:0;
+    width:100%;
+    appearance:none;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:var(--text);
+    font-family:'DM Sans', sans-serif;
+    font-size:0.98rem;
+    font-weight:600;
+    letter-spacing:0;
+  }
+  .catalog-search input::placeholder {
+    color:var(--text-muted);
+    opacity:0.82;
+  }
+  .catalog-search input::-webkit-search-cancel-button {
+    appearance:none;
+  }
+  .catalog-search-clear {
+    flex:0 0 auto;
+    border:1px solid rgba(176,106,255,0.28);
+    border-radius:999px;
+    background:rgba(176,106,255,0.14);
+    color:var(--accent);
+    cursor:pointer;
+    font-family:'DM Sans', sans-serif;
+    font-size:0.68rem;
+    font-weight:800;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:0.62rem 0.82rem;
+    transition:background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+  .catalog-search-clear:hover,
+  .catalog-search-clear:focus-visible {
+    background:rgba(176,106,255,0.22);
+    color:var(--text);
+    border-color:rgba(176,106,255,0.46);
+    outline:none;
+  }
+  .catalog-search-clear[hidden] { display:none; }
+  .catalog-search-status {
+    min-height:1.05rem;
+    margin-top:0.58rem;
+    color:var(--text-muted);
+    font-size:0.72rem;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
   .catalog-tabs {
     display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:3rem;
     border-bottom: 1px solid var(--border);
@@ -3104,6 +3196,47 @@
 
   /* ── RESPONSIVE ── */
   @media(max-width:760px) {
+    .catalog-search {
+      margin:-1.45rem 0 1.5rem;
+      max-width:none;
+    }
+    .catalog-search-field {
+      min-height:54px;
+      gap:0.62rem;
+      padding:0.38rem 0.42rem 0.38rem 0.86rem;
+      border-radius:16px;
+    }
+    .catalog-search input {
+      font-size:0.9rem;
+    }
+    .catalog-search-clear {
+      font-size:0;
+      width:2.35rem;
+      height:2.35rem;
+      padding:0;
+      position:relative;
+    }
+    .catalog-search-clear::before,
+    .catalog-search-clear::after {
+      content:'';
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:0.86rem;
+      height:2px;
+      border-radius:999px;
+      background:currentColor;
+    }
+    .catalog-search-clear::before {
+      transform:translate(-50%, -50%) rotate(45deg);
+    }
+    .catalog-search-clear::after {
+      transform:translate(-50%, -50%) rotate(-45deg);
+    }
+    .catalog-search-status {
+      font-size:0.66rem;
+      min-height:0.95rem;
+    }
     .catalog-tabs {
       gap:0.48rem;
       margin-bottom:2rem;
@@ -3585,6 +3718,21 @@
     border-bottom:none;
     gap:0.65rem;
     padding-bottom:0.7rem;
+  }
+  body:not(.dark-theme) .catalog-search-field {
+    background:
+      linear-gradient(135deg, rgba(123,47,190,0.10), rgba(255,255,255,0.94)),
+      #FFFFFF;
+    border-color:rgba(123,47,190,0.18);
+    box-shadow:0 18px 42px rgba(38,24,54,0.08);
+  }
+  body:not(.dark-theme) .catalog-search input {
+    color:#221729;
+  }
+  body:not(.dark-theme) .catalog-search-clear {
+    background:rgba(123,47,190,0.10);
+    border-color:rgba(123,47,190,0.20);
+    color:#7A2CC0;
   }
   body:not(.dark-theme) .tab-btn {
     background:rgba(255,255,255,0.82);

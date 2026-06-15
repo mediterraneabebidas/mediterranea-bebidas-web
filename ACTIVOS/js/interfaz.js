@@ -42,6 +42,71 @@ function normalizeOtherBrand(value) {
     .trim();
 }
 
+const normalizeCatalogSearch = normalizeOtherBrand;
+let catalogSearchTerm = '';
+
+function updateCatalogCardVisibility(card) {
+  card.hidden = card.dataset.hiddenOtherBrand === 'true' || card.dataset.hiddenSearch === 'true';
+}
+
+function updateCatalogSectionVisibility(panel) {
+  if(!panel) return 0;
+  let visibleCount = 0;
+  panel.querySelectorAll('.bodega-section').forEach(section => {
+    const visibleCards = section.querySelectorAll('.wine-card:not([hidden])').length;
+    section.hidden = visibleCards === 0;
+    visibleCount += visibleCards;
+  });
+  return visibleCount;
+}
+
+function activeCatalogPanel() {
+  return document.querySelector('.catalog-panel.active');
+}
+
+function updateCatalogSearchStatus(count = 0) {
+  const status = document.getElementById('catalogSearchStatus');
+  if(!status) return;
+  status.textContent = catalogSearchTerm
+    ? `${count} producto${count === 1 ? '' : 's'} encontrado${count === 1 ? '' : 's'}`
+    : '';
+}
+
+function applyCatalogSearch() {
+  const term = normalizeCatalogSearch(catalogSearchTerm);
+  document.querySelectorAll('.catalog-panel').forEach(panel => {
+    panel.querySelectorAll('.wine-card').forEach(card => {
+      const sectionText = card.closest('.bodega-section')?.dataset.searchSection || '';
+      const haystack = normalizeCatalogSearch(`${card.dataset.searchText || ''} ${sectionText}`);
+      card.dataset.hiddenSearch = term && !haystack.includes(term) ? 'true' : 'false';
+      updateCatalogCardVisibility(card);
+    });
+    updateCatalogSectionVisibility(panel);
+  });
+  updateCatalogSearchStatus(updateCatalogSectionVisibility(activeCatalogPanel()));
+}
+
+function setupCatalogSearch() {
+  const input = document.getElementById('catalogSearchInput');
+  if(!input || input.dataset.catalogSearchBound === 'true') return;
+  input.dataset.catalogSearchBound = 'true';
+  const clearButton = document.querySelector('[data-catalog-search-clear]');
+
+  input.addEventListener('input', () => {
+    catalogSearchTerm = input.value;
+    if(clearButton) clearButton.hidden = !catalogSearchTerm;
+    applyCatalogSearch();
+  });
+
+  clearButton?.addEventListener('click', () => {
+    input.value = '';
+    catalogSearchTerm = '';
+    clearButton.hidden = true;
+    applyCatalogSearch();
+    input.focus();
+  });
+}
+
 function activateCatalogTab(id) {
   document.querySelectorAll('.tab-btn').forEach(button => {
     button.classList.toggle('active', button.dataset.tabId === id);
@@ -72,9 +137,11 @@ function resetOtherBrandFilter() {
   const panel = document.getElementById('tab-otros');
   if(!panel) return;
   panel.dataset.activeOtherBrand = '';
-  panel.querySelectorAll('.wine-card, .bodega-section').forEach(element => {
-    element.hidden = false;
+  panel.querySelectorAll('.wine-card').forEach(card => {
+    card.dataset.hiddenOtherBrand = 'false';
+    updateCatalogCardVisibility(card);
   });
+  updateCatalogSectionVisibility(panel);
   updateOtherBrandFilterBar('', 0);
   activateOtherBrandOption('');
 }
@@ -86,6 +153,7 @@ function showTab(id, evt) {
   activateCatalogTab(id);
   resetOtherBrandFilter();
   if(id !== 'otros') activateOtherBrandOption('');
+  applyCatalogSearch();
   closeOtherBrandsMenu();
 }
 
@@ -97,12 +165,11 @@ function showOtherBrand(brand) {
   let visibleCount = 0;
   panel.querySelectorAll('.wine-card').forEach(card => {
     const matches = normalizeOtherBrand(card.dataset.otherBrand) === normalizedBrand;
-    card.hidden = !matches;
-    if(matches) visibleCount += 1;
+    card.dataset.hiddenOtherBrand = matches ? 'false' : 'true';
+    updateCatalogCardVisibility(card);
+    if(!card.hidden) visibleCount += 1;
   });
-  panel.querySelectorAll('.bodega-section').forEach(section => {
-    section.hidden = !section.querySelector('.wine-card:not([hidden])');
-  });
+  updateCatalogSectionVisibility(panel);
   panel.dataset.activeOtherBrand = brand;
   updateOtherBrandFilterBar(brand, visibleCount);
   activateCatalogTab('otros');

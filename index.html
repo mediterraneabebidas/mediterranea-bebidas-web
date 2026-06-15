@@ -258,6 +258,15 @@
     <h2 class="section-title">Nuestros vinos.</h2>
     <p class="section-body" style="margin-bottom:3rem;">Explorá la selección completa. Filtrá por bodega para encontrar exactamente lo que buscás.</p>
 
+    <div class="catalog-search" role="search" aria-label="Buscar vinos">
+      <div class="catalog-search-field">
+        <span class="catalog-search-icon" aria-hidden="true"></span>
+        <input type="search" id="catalogSearchInput" placeholder="Buscá el vino que querés acá" autocomplete="off">
+        <button type="button" class="catalog-search-clear" data-catalog-search-clear aria-label="Limpiar búsqueda" hidden>Limpiar</button>
+      </div>
+      <div class="catalog-search-status" id="catalogSearchStatus" aria-live="polite"></div>
+    </div>
+
     <div class="catalog-tabs" id="catalogTabs"></div>
     <div id="catalogPanels"></div>
   </div>

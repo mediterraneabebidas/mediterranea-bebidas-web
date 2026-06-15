@@ -225,6 +225,60 @@ function checkoutLinePriceVisual(item) {
   return formatPrice(item.price * item.qty);
 }
 
+function checkoutReviewValue(id, fallback = 'A confirmar') {
+  const value = document.getElementById(id)?.value.trim();
+  return value || fallback;
+}
+
+function checkoutReviewRows(rows) {
+  return rows.map(([label, value]) => `
+    <div class="checkout-review-line">
+      <span>${escapeHtml(label)}</span>
+      <strong>${escapeHtml(value)}</strong>
+    </div>
+  `).join('');
+}
+
+function checkoutVisibleTotalText() {
+  const totals = cartTotals();
+  if(!totals.subtotal) return 'Total a corroborar';
+  return `${totals.missing ? 'Subtotal' : 'Total'} ${cartUnitSummary()} ${formatPrice(totals.subtotal)}`;
+}
+
+function renderCheckoutFinalReview() {
+  const contact = document.getElementById('checkoutReviewContact');
+  const delivery = document.getElementById('checkoutReviewDelivery');
+  const products = document.getElementById('checkoutReviewProducts');
+  const total = document.getElementById('checkoutReviewTotal');
+
+  if(contact) {
+    contact.innerHTML = checkoutReviewRows([
+      ['Nombre', checkoutReviewValue('buyerName')],
+      ['Telefono', checkoutReviewValue('buyerPhone')],
+      ['Email', checkoutReviewValue('buyerEmail')],
+      ['Comercio', checkoutReviewValue('buyerBusiness', 'No informado')]
+    ]);
+  }
+
+  if(delivery) {
+    delivery.innerHTML = checkoutReviewRows([
+      ['Modalidad', deliveryLabel()],
+      ['Codigo postal', checkoutReviewValue('deliveryZip')],
+      ['Direccion/retiro', checkoutReviewValue('buyerAddress')],
+      ['Costo estimado', shippingEstimateText()],
+      ['Notas', checkoutReviewValue('checkoutNotes', 'Sin observaciones')]
+    ]);
+  }
+
+  if(products) {
+    products.innerHTML = cart.length
+      ? cart.map(item => `<div class="checkout-review-item">${escapeHtml(orderLine(item))}</div>`).join('')
+      : '<div class="cart-empty">No hay productos en el carrito.</div>';
+  }
+
+  if(total) total.textContent = checkoutVisibleTotalText();
+}
+
 function renderCheckoutMeta(item) {
   if(isCheckoutPromo(item)) {
     return `
@@ -263,10 +317,11 @@ function renderCheckoutSummary() {
     summary.innerHTML = '<div class="cart-empty">No hay productos en el carrito.</div>';
     if(totalEl) totalEl.textContent = 'Total a corroborar';
     if(totalNote) totalNote.textContent = 'Stock, precios, impuestos y envÃ­o se validan antes de generar el pago.';
+    renderCheckoutFinalReview();
     return;
   }
   const totals = cartTotals();
-  if(totalEl) totalEl.textContent = totals.subtotal ? `${totals.missing ? 'Subtotal' : 'Total'} ${cartUnitSummary()} ${formatPrice(totals.subtotal)}` : 'Total a corroborar';
+  if(totalEl) totalEl.textContent = checkoutVisibleTotalText();
   if(totalNote) totalNote.textContent = totals.missing
     ? 'Hay productos sin precio en lista. El total final se confirma antes de generar el pago.'
     : 'Vinos y tetras se piden por caja. BIB y damajuanas se manejan como presentacion unica. Envio e impuestos se confirman antes de generar el pago.';
@@ -280,6 +335,7 @@ function renderCheckoutSummary() {
       <strong>x${item.qty}</strong>
     </div>
   `).join('');
+  renderCheckoutFinalReview();
 }
 
 function deliveryLabel() {
@@ -475,3 +531,7 @@ async function submitCheckout(event) {
     }
   }
 }
+
+document.getElementById('checkoutForm')?.addEventListener('input', () => {
+  if(checkoutStep === CHECKOUT_MAX_STEP) renderCheckoutFinalReview();
+});

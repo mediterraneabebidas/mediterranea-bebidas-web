@@ -456,6 +456,30 @@
         </div>
       </div>
 
+      <div class="checkout-panel checkout-step-panel checkout-final-review" data-checkout-step="3">
+        <div class="checkout-panel-title">Resumen final</div>
+        <div class="checkout-panel-sub">Revis&aacute; los datos del pedido antes de enviarlo.</div>
+        <div class="checkout-review-grid">
+          <section class="checkout-review-block" aria-label="Datos de contacto">
+            <h3>Contacto</h3>
+            <div class="checkout-review-lines" id="checkoutReviewContact"></div>
+          </section>
+          <section class="checkout-review-block" aria-label="Entrega o retiro">
+            <h3>Entrega/retiro</h3>
+            <div class="checkout-review-lines" id="checkoutReviewDelivery"></div>
+          </section>
+        </div>
+        <section class="checkout-review-block checkout-review-products" aria-label="Productos y promociones">
+          <h3>Productos y promos</h3>
+          <div class="checkout-review-items" id="checkoutReviewProducts"></div>
+        </section>
+        <div class="checkout-review-total">
+          <span>Total</span>
+          <strong id="checkoutReviewTotal">Total a corroborar</strong>
+        </div>
+        <div class="checkout-review-confirmation">Te vamos a contactar para confirmar stock, entrega y forma de pago.</div>
+      </div>
+
       <div class="checkout-panel checkout-step-panel" data-checkout-step="3">
         <div class="checkout-panel-title">Medio de pago</div>
         <div class="payment-logos" aria-label="Medio de pago disponible">
@@ -479,7 +503,7 @@
         </div>
       </div>
 
-      <div class="checkout-panel checkout-step-panel" data-checkout-step="3">
+      <div class="checkout-panel checkout-step-panel checkout-policy-panel" data-checkout-step="3">
         <div class="checkout-panel-title">Cambios y devoluciones</div>
         <div class="trust-grid">
           <div class="trust-item">

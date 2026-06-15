@@ -2071,6 +2071,102 @@
     line-height:1.1;
   }
   .checkout-summary-total span { color:var(--text-muted); font-size:0.78rem; }
+  .checkout-final-review {
+    background:linear-gradient(135deg, rgba(123,47,190,0.10), var(--bg));
+  }
+  .checkout-review-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0.8rem;
+  }
+  .checkout-review-block {
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:var(--bg2);
+    padding:0.9rem;
+  }
+  .checkout-review-block h3 {
+    margin:0 0 0.7rem;
+    color:var(--text);
+    font-size:0.76rem;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+  }
+  .checkout-review-lines {
+    display:flex;
+    flex-direction:column;
+    gap:0.55rem;
+  }
+  .checkout-review-line {
+    display:grid;
+    grid-template-columns:minmax(82px, 0.38fr) minmax(0, 1fr);
+    gap:0.7rem;
+    align-items:start;
+  }
+  .checkout-review-line span {
+    color:var(--text-muted);
+    font-size:0.72rem;
+    line-height:1.35;
+  }
+  .checkout-review-line strong {
+    min-width:0;
+    color:var(--text);
+    font-size:0.8rem;
+    line-height:1.35;
+    overflow-wrap:anywhere;
+  }
+  .checkout-review-products {
+    margin-top:0.8rem;
+  }
+  .checkout-review-items {
+    display:flex;
+    flex-direction:column;
+    gap:0.5rem;
+  }
+  .checkout-review-item {
+    border-bottom:1px solid var(--border);
+    padding-bottom:0.5rem;
+    color:var(--text);
+    font-size:0.8rem;
+    line-height:1.45;
+  }
+  .checkout-review-item:last-child {
+    border-bottom:0;
+    padding-bottom:0;
+  }
+  .checkout-review-total {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    margin-top:0.8rem;
+    border:1px solid rgba(123,47,190,0.24);
+    border-radius:14px;
+    background:var(--bg3);
+    padding:0.85rem 0.95rem;
+  }
+  .checkout-review-total span {
+    color:var(--text-muted);
+    font-size:0.72rem;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+  }
+  .checkout-review-total strong {
+    color:var(--text);
+    font-size:1rem;
+    line-height:1.25;
+    text-align:right;
+  }
+  .checkout-review-confirmation {
+    margin-top:0.8rem;
+    border:1px solid rgba(37,211,102,0.26);
+    border-radius:14px;
+    background:rgba(37,211,102,0.08);
+    color:var(--text);
+    padding:0.82rem 0.9rem;
+    font-size:0.82rem;
+    line-height:1.45;
+  }
   .checkout-submit {
     width:100%;
     border:none;
@@ -2766,8 +2862,57 @@
     }
     .payment-logos,
     .secure-note,
-    .checkout-column .checkout-panel:nth-child(4) {
+    .checkout-policy-panel {
       display:none;
+    }
+    .checkout-review-grid {
+      grid-template-columns:1fr;
+      gap:0.55rem;
+    }
+    .checkout-review-block {
+      border-radius:12px;
+      padding:0.68rem;
+    }
+    .checkout-review-block h3 {
+      margin-bottom:0.5rem;
+      font-size:0.68rem;
+    }
+    .checkout-review-lines {
+      gap:0.42rem;
+    }
+    .checkout-review-line {
+      grid-template-columns:minmax(72px, 0.34fr) minmax(0, 1fr);
+      gap:0.5rem;
+    }
+    .checkout-review-line span {
+      font-size:0.66rem;
+    }
+    .checkout-review-line strong,
+    .checkout-review-item {
+      font-size:0.72rem;
+      line-height:1.34;
+    }
+    .checkout-review-products,
+    .checkout-review-total,
+    .checkout-review-confirmation {
+      margin-top:0.55rem;
+    }
+    .checkout-review-total {
+      align-items:flex-start;
+      flex-direction:column;
+      gap:0.24rem;
+      padding:0.68rem;
+      border-radius:12px;
+    }
+    .checkout-review-total strong {
+      text-align:left;
+      font-size:0.86rem;
+    }
+    .checkout-review-confirmation {
+      padding:0.68rem;
+      border-radius:12px;
+      font-size:0.72rem;
+      line-height:1.35;
     }
     .mp-box {
       padding:0.72rem;

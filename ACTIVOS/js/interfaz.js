@@ -107,6 +107,8 @@ function setupCatalogSearch() {
   });
 }
 
+setupCatalogSearch();
+
 function activateCatalogTab(id) {
   document.querySelectorAll('.tab-btn').forEach(button => {
     button.classList.toggle('active', button.dataset.tabId === id);

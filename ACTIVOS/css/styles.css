@@ -3523,7 +3523,8 @@
     }
     .promo-card.promo-featured {
       min-height:0;
-      overflow:visible;
+      position:relative;
+      overflow:hidden;
     }
     .promo-card.promo-featured .promo-featured-grid {
       display:flex;
@@ -3533,6 +3534,7 @@
     }
     .promo-card.promo-featured .promo-bottle-stack {
       flex:0 0 auto;
+      height:auto;
       gap:0.36rem;
     }
     .promo-featured-kicker {
@@ -3616,8 +3618,13 @@
       line-height:1.08;
     }
     .promo-card.promo-featured .promo-gift-note {
+      position:absolute;
+      left:0.82rem;
+      right:0.82rem;
+      bottom:0.82rem;
+      width:auto;
       min-height:40px;
-      margin-top:0.12rem;
+      margin-top:0;
     }
     .promo-chenin-media {
       min-height:98px;

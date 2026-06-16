@@ -6,12 +6,11 @@ const CHACABUCO_CHENIN_PROMO_ID = 'chacabuco-chenin';
 const CHACABUCO_CHENIN_PRICE_CODE = '394';
 const CHACABUCO_CHENIN_PRICE = 36887.20;
 const CHACABUCO_CHENIN_IMAGE = 'PRODUCTOS/producto_029.png';
-const CHACABUCO_CHENIN_ELIGIBLE_CODES = new Set(['399', '397', '393', '392']);
+const CHACABUCO_CHENIN_ELIGIBLE_CODES = new Set(['399', '397', '393']);
 const CHACABUCO_CHENIN_VARIANTS = {
   malbec: { label: 'Chacabuco Malbec', shortLabel: 'Malbec', priceCode: '399' },
   cabernet: { label: 'Chacabuco Cabernet', shortLabel: 'Cabernet', priceCode: '397' },
-  rosado: { label: 'Chacabuco Rosado', shortLabel: 'Rosado', priceCode: '393' },
-  viognier: { label: 'Chacabuco Viognier', shortLabel: 'Viognier', priceCode: '392' }
+  rosado: { label: 'Chacabuco Rosado', shortLabel: 'Rosado', priceCode: '393' }
 };
 const CHACABUCO_PROMO_VARIANTS = {
   malbec: {
@@ -415,4 +414,13 @@ function cartMessage() {
 
 function sendCartToWhatsApp() {
   window.location.href = whatsAppUrl(cartMessage());
+}
+
+if(typeof window !== 'undefined') {
+  window.addCheninPromo = addCheninPromo;
+  window.changeCheninPromoQty = changeCheninPromoQty;
+  window.maxCheninPromoQty = maxCheninPromoQty;
+  window.canAddCheninPromo = canAddCheninPromo;
+  window.isChacabucoCheninPromo = isChacabucoCheninPromo;
+  window.openCart = openCart;
 }

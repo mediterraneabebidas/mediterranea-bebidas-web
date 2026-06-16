@@ -51,7 +51,6 @@ CHACABUCO_CHENIN_PROMOTION = {
         "malbec": {"label": "Chacabuco Malbec", "price_code": "399"},
         "cabernet": {"label": "Chacabuco Cabernet", "price_code": "397"},
         "rosado": {"label": "Chacabuco Rosado", "price_code": "393"},
-        "viognier": {"label": "Chacabuco Viognier", "price_code": "392"},
     },
 }
 
@@ -208,7 +207,7 @@ def validate_chenin_promo_item(raw, catalog, items):
     variant_key = str(raw.get("variantKey") or "").strip()
     variant = promo["variants"].get(variant_key)
     if not variant:
-        raise ValueError("Promo Chenin incompleta: selecciona Malbec, Cabernet, Rosado o Viognier")
+        raise ValueError("Promo Chenin incompleta: selecciona Malbec, Cabernet o Rosado")
 
     catalog_item = catalog.get(promo["price_code"])
     if not catalog_item:

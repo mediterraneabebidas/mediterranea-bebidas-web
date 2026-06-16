@@ -3605,10 +3605,19 @@
       gap:0.36rem;
     }
     .promo-gift-note {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      z-index:2;
       margin-top:0;
       padding:0.54rem 0.62rem;
       font-size:0.52rem;
       line-height:1.08;
+    }
+    .promo-card.promo-featured .promo-gift-note {
+      min-height:40px;
+      margin-top:0.12rem;
     }
     .promo-chenin-media {
       min-height:98px;

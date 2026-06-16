@@ -192,6 +192,17 @@
     setCheninPromoStatus('Promo Chenin agregada al carrito.', 'success');
   }
 
+  function addCheninPromoFromRail() {
+    if(typeof window.addCheninPromoBundle !== 'function') {
+      setCheninPromoStatus('La promo Chenin se suma desde el carrito.', 'warning');
+      return;
+    }
+
+    const variant = cheninVariant();
+    window.addCheninPromoBundle(selectedCheninVariant);
+    setCheninPromoStatus(`${variant.shortLabel} + Chenin agregados al carrito.`, 'success');
+  }
+
   window.scrollPromos = scrollPromos;
   window.selectChacabucoPromoVariant = selectChacabucoPromoVariant;
   window.selectCheninPromoVariant = selectCheninPromoVariant;

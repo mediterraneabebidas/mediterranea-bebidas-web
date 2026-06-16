@@ -3524,7 +3524,7 @@
     .promo-card.promo-featured {
       min-height:0;
       position:relative;
-      overflow:hidden;
+      overflow:visible;
     }
     .promo-card.promo-featured .promo-featured-grid {
       display:flex;
@@ -3618,13 +3618,10 @@
       line-height:1.08;
     }
     .promo-card.promo-featured .promo-gift-note {
-      position:absolute;
-      left:0.82rem;
-      right:0.82rem;
-      bottom:0.82rem;
-      width:auto;
+      position:static;
+      width:100%;
       min-height:40px;
-      margin-top:0;
+      margin-top:0.12rem;
     }
     .promo-chenin-media {
       min-height:98px;

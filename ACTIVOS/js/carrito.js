@@ -8,10 +8,11 @@ const CHACABUCO_CHENIN_PRICE = 36887.20;
 const CHACABUCO_CHENIN_IMAGE = 'PRODUCTOS/producto_029.png';
 const CHACABUCO_CHENIN_ELIGIBLE_CODES = new Set(['399', '397', '393']);
 const CHACABUCO_CHENIN_VARIANTS = {
-  malbec: { label: 'Chacabuco Malbec', shortLabel: 'Malbec', priceCode: '399' },
-  cabernet: { label: 'Chacabuco Cabernet', shortLabel: 'Cabernet', priceCode: '397' },
-  rosado: { label: 'Chacabuco Rosado', shortLabel: 'Rosado', priceCode: '393' }
+  malbec: { label: 'Chacabuco Malbec', shortLabel: 'Malbec', priceCode: '399', image: 'PRODUCTOS/producto_025.png', type: 'Tinto', variety: '100% Malbec' },
+  cabernet: { label: 'Chacabuco Cabernet', shortLabel: 'Cabernet', priceCode: '397', image: 'PRODUCTOS/producto_026.png', type: 'Tinto', variety: '100% Cabernet' },
+  rosado: { label: 'Chacabuco Rosado', shortLabel: 'Rosado', priceCode: '393', image: 'PRODUCTOS/producto_028.png', type: 'Rosado', variety: '100% Malbec' }
 };
+const CHACABUCO_VARIETAL_BOX_PRICE = 24129;
 const CHACABUCO_PROMO_VARIANTS = {
   malbec: {
     label: 'Chacabuco Malbec',
@@ -179,6 +180,29 @@ function cheninPromoProduct(variantKey = firstAvailableCheninVariantKey()) {
   };
 }
 
+function chacabucoNormalBoxProduct(variantKey = 'malbec') {
+  const normalizedKey = CHACABUCO_CHENIN_VARIANTS[variantKey] ? variantKey : 'malbec';
+  const variant = cheninVariantForKey(normalizedKey);
+  return {
+    name: variant.label,
+    type: variant.type,
+    meta: 'Caja normal Chacabuco varietal',
+    specs: {
+      variety: variant.variety,
+      provenance: 'Mendoza',
+      quantity: 'Caja x6'
+    },
+    image: variant.image,
+    price: CHACABUCO_VARIETAL_BOX_PRICE,
+    basePrice: CHACABUCO_VARIETAL_BOX_PRICE,
+    packSize: 6,
+    purchaseMode: 'box',
+    purchaseLabel: 'caja x6',
+    priceLabel: typeof window !== 'undefined' && typeof window.formatPrice === 'function' ? window.formatPrice(CHACABUCO_VARIETAL_BOX_PRICE) : '$24.129,00',
+    priceCode: variant.priceCode
+  };
+}
+
 function syncCheninPromoLimit() {
   const cheninItems = cart.filter(isChacabucoCheninPromo);
   if(!cheninItems.length) return;
@@ -210,6 +234,17 @@ function addCheninPromo(variantKey = firstAvailableCheninVariantKey()) {
   const normalizedKey = CHACABUCO_CHENIN_VARIANTS[variantKey] ? variantKey : firstAvailableCheninVariantKey();
   if(maxCheninPromoQty(normalizedKey) <= 0) return;
   setCheninPromoQty(cheninPromoQty(normalizedKey) + 1, normalizedKey);
+}
+
+function addCheninPromoBundle(variantKey = firstAvailableCheninVariantKey()) {
+  const normalizedKey = CHACABUCO_CHENIN_VARIANTS[variantKey] ? variantKey : firstAvailableCheninVariantKey();
+  const normalBox = chacabucoNormalBoxProduct(normalizedKey);
+  const key = cartItemKey(normalBox);
+  const existing = cart.find(item => cartItemKey(item) === key);
+  if(existing) existing.qty += 1;
+  else cart.push({ ...normalBox, qty: 1 });
+  setCheninPromoQty(cheninPromoQty(normalizedKey) + 1, normalizedKey);
+  openCart();
 }
 
 function changeCheninPromoQty(delta, variantKey = firstAvailableCheninVariantKey()) {
@@ -418,6 +453,7 @@ function sendCartToWhatsApp() {
 
 if(typeof window !== 'undefined') {
   window.addCheninPromo = addCheninPromo;
+  window.addCheninPromoBundle = addCheninPromoBundle;
   window.changeCheninPromoQty = changeCheninPromoQty;
   window.maxCheninPromoQty = maxCheninPromoQty;
   window.canAddCheninPromo = canAddCheninPromo;
